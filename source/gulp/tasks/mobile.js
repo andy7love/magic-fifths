@@ -7,8 +7,6 @@ var gulp = require('gulp'),
     config = require('../config');
 
 gulp.task('mobile', ['mobile:copy'], function () {
-    var mobileIndex = config.paths.mobileDir + '/index-mobile.html';
-
     return gulp.src('dist/index-mobile.html')
         .pipe(rename(function (path) {
             path.basename = "index";

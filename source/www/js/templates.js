@@ -1,0 +1,1 @@
+!function(t){try{t=angular.module("templates")}catch(a){t=angular.module("templates",[])}t.run(["$templateCache",function(t){t.put("scales/major.html","Major template")}])}();

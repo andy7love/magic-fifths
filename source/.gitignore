@@ -2,4 +2,3 @@ app/vendor
 node_modules
 dist
 .tmp
-phonegap/www/*

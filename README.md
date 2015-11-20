@@ -1,5 +1,6 @@
 # magic-fifths
-##Description: It is a mobile app for exploring musical fifth sheets very easy, fast an intuitive, 
+##Description: 
+It is a mobile app for exploring musical fifth sheets very easy, fast an intuitive, 
 useful for learning or simply review them while you are composing or performing music.
 
 ###INSTALLATION:

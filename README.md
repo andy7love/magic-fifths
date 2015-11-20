@@ -12,20 +12,16 @@ source/www folder is auto-generated and the only reason to not be added on the .
 - npm install -g phonegap gulp bower
 
 ####DOWNLOAD DEPENDENCIES:
-- cd source/
 - npm install
 - bower install
 
 ####RUN APP ON LOCAL ENVIRONMENT:
-- cd source/
 - gulp serve
 
 ####RUN DISTRIBUTION PACKAGE FOR WEB:
-- cd source/
 - gulp serve:dist
 
 ####COPY DISTRIBUTION PACKAGE FOR MOBILE PHONEGAP:
-- cd source/
 - gulp mobile (after previously doing a "gulp serve:dist").
 
 ####TESTS

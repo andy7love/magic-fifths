@@ -1,0 +1,25 @@
+{
+  "version": "0.0.1",
+  "name": "Magic Fifths",
+  "launch_path": "/index.html",
+  "description": "It is a mobile app for exploring musical fifth sheets very easy, fast and intuitive, useful for learning or simply review them while you are composing or performing music.",
+  "icons": {
+    "128": "/images/touch/icon-128x128.png"
+  },
+  "developer": {
+    "name": "Andres Amor",
+    "url": "https://github.com/andy7love"
+  },
+  "installs_allowed_from": [
+    "*"
+  ],
+  "default_locale": "en",
+  "permissions": {
+  },
+  "locales": {
+    "en": {
+      "name": "Magic Fifths",
+      "description": "It is a mobile app for exploring musical fifth sheets very easy, fast and intuitive, useful for learning or simply review them while you are composing or performing music."
+    }
+  }
+}

@@ -1,0 +1,42 @@
+.bg-transition {
+  @include breakpoint(medium down) {
+    transition: background 0.15s ease-out;
+  }
+
+  @include breakpoint(medium) {
+    transition: background 0.25s ease-out;
+  }
+}
+
+.action-button {
+  @extend .button;
+  @extend .expand;
+  font-size: rem-calc(25);
+
+  &:active {
+    background-color: $body-click-color;
+  }
+}
+
+.grid-content-shrink {
+  @include grid-content(
+    $size: shrink, // Can be expand, shrink, or a number of columns
+    $offset: 0
+  );
+  padding: 0;
+}
+
+.blink {
+  animation: blink 1s steps(20, start) infinite;
+  -webkit-animation: blink 1s steps(20, start) infinite;
+}
+@keyframes blink {
+  to {
+    opacity: 0;
+  }
+}
+@-webkit-keyframes blink {
+  to {
+    opacity: 1;
+  }
+}

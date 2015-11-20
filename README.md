@@ -24,10 +24,22 @@ useful for learning or simply review them while you are composing or performing 
 - cd source/
 - gulp mobile (after previously doing a "gulp serve:dist").
 
-####Thanks (created with)
+####TESTS
+Tests (both unit and e2e) are still work in progress.
+
+####Contributing
+This project uses:
 - Web Starter Kit
 - Gulp
 - Angular
+- Bower
 - Foundation
 - Phonegap
+- requireJS
+- hammerJS
 - ngCordova
+- jshint
+- karma
+- protractor
+- jasmine
+- sass

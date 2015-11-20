@@ -2,7 +2,7 @@
 
 var gulp = require('gulp'),
     $ = require('gulp-load-plugins')(),
-    del = require('del'),
+    //del = require('del'),
     rename = require('gulp-rename'),
     config = require('../config');
 
@@ -14,9 +14,9 @@ gulp.task('mobile', ['mobile:copy'], function () {
         .pipe(gulp.dest(config.paths.mobileDir));
 });
 
-gulp.task('mobile:copy', ['mobile:clean'], function () {
+gulp.task('mobile:copy', function () {
     return gulp.src(config.paths.mobileCopy)
         .pipe(gulp.dest(config.paths.mobileDir));
 });
 
-gulp.task('mobile:clean', del.bind(null, config.paths.mobileDir + '/**/*', {dot: true}));
+//gulp.task('mobile:clean', del.bind(null, config.paths.mobileDir + '/**/*', {dot: true}));

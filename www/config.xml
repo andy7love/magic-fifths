@@ -7,7 +7,7 @@
     <author email="andy.7love@gmail.com" href="https://github.com/andy7love/">
         Andres Amor
     </author>
-    <content src="www/index.html" />
+    <content src="index.html" />
     <preference name="permissions" value="none" />
     <preference name="orientation" value="landscape" />
     <preference name="target-device" value="universal" />

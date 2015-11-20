@@ -28,7 +28,7 @@ define([
             'templates',
             // App modules
             'magicFifths.config',
-            'magicFifths.restaurants-list'
+            'magicFifths.major'
         ])
         .config(config)
         .run(run);

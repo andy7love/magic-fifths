@@ -1,14 +1,14 @@
 'use strict';
 
-describe('myApp.view1 module', function () {
+describe('magicFifths.major module', function () {
 
-    beforeEach(module('myApp.view1'));
+    beforeEach(module('magicFifths.major'));
 
     describe('view1 controller', function () {
 
         it('should ....', inject(function ($controller) {
             //spec body
-            var view1Ctrl = $controller('View1Ctrl');
+            var view1Ctrl = $controller('MajorController');
             expect(view1Ctrl).toBeDefined();
         }));
 

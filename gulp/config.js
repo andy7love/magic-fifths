@@ -68,7 +68,7 @@ module.exports = {
             '.tmp/js/templates.js',
             '.tmp/js/require.js'
         ],
-        mobileDir: 'www',
+        mobileDir: 'phonegap/www',
         mobileCopy: [
             'dist/**/*',
             '!dist/index.html',

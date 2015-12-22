@@ -14,7 +14,7 @@ define(function () {
                     }
                 });
         })
-        .controller('MajorController', function ($scope, FoundationApi) {
+        .controller('MajorController', function ($scope) {
             $scope.modes = [
                 {id: 1, name: 'Lidio'},
                 {id: 2, name: 'Jonico'},

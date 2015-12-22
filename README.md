@@ -33,7 +33,6 @@ This project uses:
 - Gulp
 - Angular
 - Bower
-- Foundation
 - Phonegap
 - requireJS
 - hammerJS

@@ -13,9 +13,6 @@ module.exports = {
         'bb >= 10'
     ],
     paths : {
-        foundationComponents: [
-            'app/vendor/foundation-apps/js/angular/components/**/*.html'
-        ],
         templates: [
             'app/src/**/*.html'
         ],
@@ -24,8 +21,6 @@ module.exports = {
         ],
         libs: [
             'app/vendor/fastclick/lib/fastclick.js',
-            'app/vendor/viewport-units-buggyfill/viewport-units-buggyfill.js',
-            'app/vendor/tether/tether.js',
             'app/vendor/hammerjs/hammer.js',
             'app/vendor/angular/angular.js',
             'app/vendor/html5-boilerplate/dist/js/vendor/modernizr-2.8.3.min.js',
@@ -33,12 +28,7 @@ module.exports = {
             'app/vendor/angular-animate/angular-animate.js',
             'app/vendor/angular-ui-router/release/angular-ui-router.js',
             'app/vendor/AngularHammer/angular.hammer.min.js',
-            //'app/vendor/ngCordova/dist/ng-cordova.min.js',
-            'app/vendor/foundation-apps/js/angular/components/**/*.js',
-            'app/vendor/foundation-apps/js/angular/services/*.js',
-            'app/vendor/foundation-apps/js/angular/vendor/*.js',
-            'app/vendor/foundation-apps/js/angular/foundation.js',
-            '.tmp/js/components.js'
+            //'app/vendor/ngCordova/dist/ng-cordova.min.js'
         ],
         styles: [
             'app/src/*.scss',

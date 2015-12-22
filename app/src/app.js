@@ -20,12 +20,9 @@ define([
             'ngRoute',
             'ngAnimate',
             'hmTouchEvents',
-            // ngCordova,
             //'ngCordova',
-            // Foundation UI components
-            'foundation',
-            // Templates
             'templates',
+
             // App modules
             'magicFifths.config',
             'magicFifths.major'

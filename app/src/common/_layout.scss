@@ -1,8 +1,6 @@
 html {
   user-select: none;
-  @include breakpoint(small) {
-    font-size: 2.5vw;
-  }
+  font-size: 2.5vw;
 }
 
 body {
@@ -32,12 +30,9 @@ body {
 }
 
 #app-container {
-  @include grid-frame($orientation: vertical);
+
 }
 
 #content {
-  @include grid-block(
-    $size: expand, // Can be expand, shrink, or a number of columns
-    $orientation: vertical // Set to vertical for a vertical grid
-  );
+
 }

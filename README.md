@@ -4,8 +4,7 @@ It is a mobile app for exploring musical fifth sheets very easy, fast an intuiti
 useful for learning or simply review them while you are composing or performing music.
 
 ####Source code:
-Application code is under source/app/ folder.
-source/www folder is auto-generated and the only reason to not be added on the .gitignore is to be accessible from the Adobe Phonegap cloud build.
+Application code is under app/ folder.
 
 ####INSTALLATION:
 - Install NodeJS (https://nodejs.org/en/)

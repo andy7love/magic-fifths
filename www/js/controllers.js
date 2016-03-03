@@ -9,48 +9,96 @@ angular.module('starter.controllers', [])
   //$scope.$on('$ionicView.enter', function(e) {
   //});
 
-  // Form data for the login modal
-  $scope.loginData = {};
-
-  // Create the login modal that we will use later
-  $ionicModal.fromTemplateUrl('templates/login.html', {
-    scope: $scope
-  }).then(function(modal) {
-    $scope.modal = modal;
-  });
-
-  // Triggered in the login modal to close it
-  $scope.closeLogin = function() {
-    $scope.modal.hide();
-  };
-
-  // Open the login modal
-  $scope.login = function() {
-    $scope.modal.show();
-  };
-
-  // Perform the login action when the user submits the login form
-  $scope.doLogin = function() {
-    console.log('Doing login', $scope.loginData);
-
-    // Simulate a login delay. Remove this and replace with your login
-    // code if using a login system
-    $timeout(function() {
-      $scope.closeLogin();
-    }, 1000);
-  };
 })
 
-.controller('PlaylistsCtrl', function($scope) {
-  $scope.playlists = [
-    { title: 'Reggae', id: 1 },
-    { title: 'Chill', id: 2 },
-    { title: 'Dubstep', id: 3 },
-    { title: 'Indie', id: 4 },
-    { title: 'Rap', id: 5 },
-    { title: 'Cowbell', id: 6 }
-  ];
-})
+.controller('MajorCtrl', function($scope, $ionicActionSheet, $ionicPopup) {
+    $scope.modes = [
+      {id: 1, name: 'Lidio', chord: 'Maj(#11)'},
+      {id: 2, name: 'Jonico', chord: 'Maj7'},
+      {id: 3, name: 'Mixolidio', chord: '7'},
+      {id: 4, name: 'Dorico', chord: 'm7'},
+      {id: 5, name: 'Eolico', chord: 'm(b6)'},
+      {id: 6, name: 'Frigio', chord: 'm7(b9)'},
+      {id: 7, name: 'Locrio', chord: 'm7(b5)'}
+    ];
 
-.controller('PlaylistCtrl', function($scope, $stateParams) {
+    var notes = [
+      {id: 1, name: 'Fa'},
+      {id: 2, name: 'Do'},
+      {id: 3, name: 'Sol'},
+      {id: 4, name: 'Re'},
+      {id: 5, name: 'La'},
+      {id: 6, name: 'Mi'},
+      {id: 7, name: 'Si'}
+    ];
+
+    var alts = [
+      {id: 1, name: 'bb'},
+      {id: 2, name: 'b'},
+      {id: 3, name: '[]'},
+      {id: 4, name: '#'},
+      {id: 5, name: 'x'}
+    ];
+
+    var combineAltNotes = function(alts, notes) {
+      var combinedNotes = [];
+      var i = 0;
+      alts.forEach(function(alt) {
+        notes.forEach(function(note) {
+          combinedNotes.push({
+            id: i,
+            alt: alt.name,
+            note: note.name
+          });
+          i++;
+        });
+      });
+      return combinedNotes;
+    };
+
+    $scope.scrollPosition = 0;
+    $scope.selectedNoteId = 0;
+    var startDragPos = $scope.scrollPosition;
+
+    $scope.uinotes = combineAltNotes(alts, notes);
+
+    $scope.$on('$ionicView.enter', function(e) {
+
+    });
+
+    $scope.onHoldMode = function() {
+      var hideSheet = $ionicActionSheet.show({
+        buttons: [
+          { text: 'About this mode' },
+          { text: 'Listen field using this mode' },
+          { text: 'Show synonym field' }
+        ],
+        titleText: 'Mode options',
+        cancelText: 'Cancel',
+        cancel: function() {
+          // add cancel code..
+        },
+        buttonClicked: function(index) {
+          switch (index) {
+            case 0:
+              $ionicPopup.alert({
+                title: 'About this mode',
+                template: 'Lorem ipsum dolor sit amet.'
+              });
+              break;
+            case 1:
+              $ionicPopup.alert({
+                title: 'Listen field from a mode',
+                template: 'This feature is not implemented yet.'
+              });
+            break;
+            case 2:
+              // TODO.
+              break;
+          }
+
+          return true;
+        }
+      });
+    };
 });

@@ -14,21 +14,33 @@
 
   <ion-side-menu side="left">
     <ion-header-bar class="bar-stable">
-      <h1 class="title">Left</h1>
+      <h1 class="title">Magic Fifths</h1>
     </ion-header-bar>
     <ion-content>
       <ion-list>
-        <ion-item menu-close ng-click="login()">
-          Login
+        <div class="item item-divider">
+          Scales
+        </div>
+        <ion-item menu-close href="#/app/major">
+          Major
         </ion-item>
-        <ion-item menu-close href="#/app/search">
-          Search
+        <ion-item menu-close href="#/app/minor">
+          Minor
         </ion-item>
-        <ion-item menu-close href="#/app/browse">
-          Browse
+        <div class="item item-divider">
+          About
+        </div>
+        <ion-item menu-close class="item item-icon-left" href="#/app/howto">
+          <i class="icon ion-ios-help"></i>
+          How to use it?
         </ion-item>
-        <ion-item menu-close href="#/app/playlists">
-          Playlists
+        <ion-item menu-close class="item item-icon-left" href="#/app/theory">
+          <i class="icon ion-university"></i>
+          Fifths theory
+        </ion-item>
+        <ion-item menu-close class="item item-icon-left" href="#/app/donate">
+          <i class="icon ion-social-usd"></i>
+          Donate
         </ion-item>
       </ion-list>
     </ion-content>

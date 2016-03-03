@@ -21,3 +21,109 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 // Include all of Ionic
 @import "www/lib/ionic/scss/ionic";
 
+$cardboard-brown: #a58855;
+$blue-ink: #000F55;
+$borders: #ddd;
+
+$magic-fifth-items: 7*5; // notes * alts.
+
+$major-scale-items: 7;
+$major-scale-item-width: calc(#{100vw/$major-scale-items} - 6px);
+$major-scale-scroller-width: calc((#{100vw/$major-scale-items} - 6px)*#{$magic-fifth-items});
+
+.flex-stretch {
+  display: flex;
+  align-items: stretch;
+}
+
+.magic-board {
+  padding: 20px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: $stable;
+}
+
+.major {
+  .board-list-item {
+    width: $major-scale-item-width;
+  }
+}
+
+.board-list {
+
+  .board-list-item {
+    float: left;
+    border: 1px solid $borders;
+  }
+}
+
+
+.modes-list {
+  @extend .flex-stretch;
+  flex: 4;
+  box-shadow: -2px -2px 8px 2px rgba(0,0,0,0.2);
+
+  .mode {
+    position: relative;
+
+    &:active {
+      background-color: $calm;
+    }
+
+    .chord {
+      text-align: center;
+      border-bottom: 1px solid $borders;
+    }
+
+    .name {
+      font-size: 1.2rem;
+      transform: rotateZ(-90deg);
+      transform-origin: 0 0;
+      position: absolute;
+      bottom: 5%;
+      left: calc(50% - 0.6rem);
+
+
+      /*
+      transform: rotateZ(-90deg);
+      margin-top: 100%;
+      margin-left: -50%;
+      font-size: 1.2rem;
+      width: 200%;
+      */
+    }
+  }
+}
+
+.fifths-list {
+  @extend .flex-stretch;
+  flex: 1;
+  min-height: 50px;
+  overflow-x: hidden !important;
+
+  .scroll {
+    @extend .flex-stretch;
+  }
+
+  .fifths-scroller {
+    @extend .flex-stretch;
+    width: $major-scale-scroller-width;
+
+    .note {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+
+      .alt {
+        text-align: center;
+      }
+
+      .name {
+        text-align: center;
+        font-size: 1.2rem;
+      }
+    }
+  }
+}

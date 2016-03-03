@@ -1,0 +1,25 @@
+<ion-view view-title="Major scale">
+  <ion-content scroll="false">
+
+    <div class="magic-board major">
+
+      <div class="board-list modes-list">
+        <div class="board-list-item mode" on-hold="onHoldMode()" ng-repeat="mode in ::modes track by mode.id">
+          <div class="chord">{{mode.chord}}</div>
+          <div class="name">{{mode.name}}</div>
+        </div>
+      </div>
+
+      <!-- move to fifths directive -->
+      <ion-scroll zooming="false" direction="x" scrollbar-x="true" class="fifths-list">
+        <div class="board-list fifths-scroller">
+          <div class="board-list-item note" ng-repeat="note in ::uinotes track by note.id">
+            <div class="alt">{{note.alt}}</div>
+            <div class="name">{{note.note}}</div>
+          </div>
+        </div>
+      </ion-scroll>
+      <!-- end of fifths directive -->
+    </div>
+  </ion-content>
+</ion-view>

@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <widget id="com.ionicframework.magicfifths520313" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-  <name>magic-fifths</name>
+  <name>Magic Fifths</name>
   <description>
-        An Ionic Framework and Cordova project.
+      It is a mobile app for exploring musical fifth sheets very easy, fast an intuitive,
+      useful for learning or simply review them while you are composing or performing music.
     </description>
-  <author email="you@example.com" href="http://example.com.com/">
-      Your Name Here
+  <author email="andy.7love@gmail.com" href="https://github.com/andy7love">
+      Andres Amor
     </author>
   <content src="index.html"/>
   <access origin="*"/>
+  <preference name="orientation" value="landscape" />
   <preference name="webviewbounce" value="false"/>
   <preference name="UIWebViewBounce" value="false"/>
   <preference name="DisallowOverscroll" value="true"/>

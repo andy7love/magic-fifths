@@ -37,7 +37,6 @@ $major-scale-scroller-width: calc((#{100vw/$major-scale-items} - 6px)*#{$magic-f
 }
 
 .magic-board {
-  padding: 20px;
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -62,6 +61,7 @@ $major-scale-scroller-width: calc((#{100vw/$major-scale-items} - 6px)*#{$magic-f
 
 .modes-list {
   @extend .flex-stretch;
+  margin: 20px 20px 0 20px;
   flex: 4;
   box-shadow: -2px -2px 8px 2px rgba(0,0,0,0.2);
 
@@ -70,6 +70,7 @@ $major-scale-scroller-width: calc((#{100vw/$major-scale-items} - 6px)*#{$magic-f
 
     &:active {
       background-color: $calm;
+      transition: background-color 0.7s;
     }
 
     .chord {
@@ -84,45 +85,50 @@ $major-scale-scroller-width: calc((#{100vw/$major-scale-items} - 6px)*#{$magic-f
       position: absolute;
       bottom: 5%;
       left: calc(50% - 0.6rem);
-
-
-      /*
-      transform: rotateZ(-90deg);
-      margin-top: 100%;
-      margin-left: -50%;
-      font-size: 1.2rem;
-      width: 200%;
-      */
     }
   }
 }
 
-.fifths-list {
-  @extend .flex-stretch;
-  flex: 1;
-  min-height: 50px;
-  overflow-x: hidden !important;
+.fifths-board {
+  background-color: $dark;
+  margin: 0 0 15px 0;
+  padding: 5px 20px;
+  box-shadow: -2px -2px 8px 2px rgba(0,0,0,0.2);
 
-  .scroll {
+  .fifths-list {
     @extend .flex-stretch;
-  }
+    background-color: $light;
+    flex: 1;
+    min-height: 50px;
+    overflow-x: hidden !important;
 
-  .fifths-scroller {
-    @extend .flex-stretch;
-    width: $major-scale-scroller-width;
 
-    .note {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
+    .scroll {
+      @extend .flex-stretch;
+    }
 
-      .alt {
-        text-align: center;
+    .fifths-scroller {
+      @extend .flex-stretch;
+      width: $major-scale-scroller-width;
+      transition: transform 0.5s ease-out;
+
+      &.dragging {
+        transition: transform 0s ease-out;
       }
 
-      .name {
-        text-align: center;
-        font-size: 1.2rem;
+      .note {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+
+        .alt {
+          text-align: center;
+        }
+
+        .name {
+          text-align: center;
+          font-size: 1.2rem;
+        }
       }
     }
   }

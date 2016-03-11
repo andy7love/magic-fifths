@@ -4,7 +4,7 @@ angular.module('starter.directives', [])
     return {
       restrict :  'A',
       scope: {
-        noteIndex: '='
+        model: "="
       },
 
       link : function($scope, elem, attrs) {
@@ -22,11 +22,15 @@ angular.module('starter.directives', [])
             var itemWidth = totalWidth/totalItems;
             var newPosition = -itemWidth*noteIndex;
             return newPosition;
+          },
+
+          updatePosition = function() {
+            setPosition(noteIndexToPosition($scope.model.selectedNote));
           };
 
-        $scope.$watch('noteIndex', function() {
-          setPosition(noteIndexToPosition($scope.noteIndex));
-        });
+        $scope.$watch('model', function() {
+          updatePosition();
+        }, true);
 
         $ionicGesture.on('touch', function(e) {
           $ionicSideMenuDelegate.canDragContent(false);
@@ -50,14 +54,20 @@ angular.module('starter.directives', [])
           var itemsPerPage = scrollerWidth / itemWidth;
           var maxItemToSelect = totalItems - itemsPerPage;
           // Selected item with decelerate effect = current item position + swipe velocity factor.
-          var selectedItem = Math.round(-scrollPosition/itemWidth) + Math.round(e.gesture.velocityX*Math.sign(-e.gesture.deltaX));
+          var selectedItem = Math.round(-scrollPosition/itemWidth) + Math.round(e.gesture.velocityX*Math.sign(-e.gesture.deltaX))*2;
           if(selectedItem > maxItemToSelect) {
-            selectedItem = maxItemToSelect;
+            selectedItem = Math.round(maxItemToSelect);
           } else if(selectedItem < 0) {
             selectedItem = 0;
           }
 
-          $scope.$emit('note-change', selectedItem);
+          if(selectedItem == $scope.model.selectedNote) {
+            updatePosition();
+          }
+
+          $scope.$apply(function() {
+            $scope.model.selectedNote = selectedItem;
+          });
         }, elem);
       }
     }

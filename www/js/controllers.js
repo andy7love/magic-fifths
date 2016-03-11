@@ -12,26 +12,22 @@ angular.module('starter.controllers', [])
 })
 
 .controller('MajorCtrl', function($scope, $ionicActionSheet, $ionicPopup, theory) {
-    $scope.selectedNote = 14;
+    $scope.model = {
+      selectedNote: 14
+    };
     $scope.modes = theory.getModes();
     $scope.uinotes = theory.getCombinedAlteredNotes();
-
-    $scope.$on('note-change', function(event, data) {
-      $scope.$apply(function() {
-        $scope.selectedNote = data;
-      });
-    });
 
     $scope.$on('$ionicView.enter', function(e) {
       // restore note?
     });
 
     var showSynonymField = function() {
-      var synonymFieldNote = $scope.selectedNote+12;
+      var synonymFieldNote = $scope.model.selectedNote+12;
       if(synonymFieldNote > 24) {
-        synonymFieldNote = $scope.selectedNote-12;
+        synonymFieldNote = $scope.model.selectedNote-12;
       }
-      $scope.selectedNote = synonymFieldNote;
+      $scope.model.selectedNote = synonymFieldNote;
     };
 
     $scope.onTapMode = function() {

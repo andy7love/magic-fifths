@@ -13,7 +13,7 @@
       <!-- move to fifths directive -->
       <div class="fifths-board">
         <div class="fifths-list">
-          <div mf-scroller note-index="selectedNote" class="board-list fifths-scroller">
+          <div mf-scroller model="model" class="board-list fifths-scroller">
             <div class="board-list-item note" ng-repeat="note in ::uinotes track by note.id">
               <div class="alt">{{note.alt}}</div>
               <div class="name">{{note.note}}</div>

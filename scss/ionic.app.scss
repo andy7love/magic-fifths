@@ -99,7 +99,7 @@ $major-scale-scroller-width: calc((#{100vw/$major-scale-items} - 6px)*#{$magic-f
     @extend .flex-stretch;
     background-color: $light;
     flex: 1;
-    min-height: 50px;
+    min-height: 70px;
     overflow-x: hidden !important;
 
 

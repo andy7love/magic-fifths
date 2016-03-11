@@ -9777,7 +9777,7 @@ a.button {
   .fifths-board .fifths-list {
     background-color: #fff;
     flex: 1;
-    min-height: 50px;
+    min-height: 70px;
     overflow-x: hidden !important; }
     .fifths-board .fifths-list .fifths-scroller {
       width: calc((14.28571vw - 6px)*35);

@@ -62,7 +62,11 @@
     "updateBody": "Recarga para actualizar. Se conserva tu posici\u00f3n actual.",
     "update": "Recargar",
     "dismiss": "M\u00e1s tarde",
-    "offlineReady": "Lista para funcionar sin conexi\u00f3n"
+    "offlineReady": "Lista para funcionar sin conexi\u00f3n",
+    "install": {
+      "label": "Instalar app",
+      "menu": "Instalar app"
+    }
   },
   "dialog": {
     "close": "Cerrar"

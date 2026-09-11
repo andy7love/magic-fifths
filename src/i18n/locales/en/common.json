@@ -62,7 +62,11 @@
     "updateBody": "Reload to pick it up. Your current position is kept.",
     "update": "Reload",
     "dismiss": "Later",
-    "offlineReady": "Ready to work offline"
+    "offlineReady": "Ready to work offline",
+    "install": {
+      "label": "Install app",
+      "menu": "Install app"
+    }
   },
   "dialog": {
     "close": "Close"

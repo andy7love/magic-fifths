@@ -1,5 +1,6 @@
 import { useTranslation } from 'react-i18next'
 
+import { InstallButton } from '@/components/InstallButton'
 import { ShareButton } from '@/components/ShareButton'
 import { SidebarTrigger } from '@/components/ui/sidebar'
 
@@ -13,6 +14,7 @@ export function Toolbar() {
     >
       <SidebarTrigger data-testid="sidebar-trigger" aria-label={t('sidebar.openMenu')} />
       <ShareButton variant="icon" />
+      <InstallButton variant="icon" />
     </header>
   )
 }

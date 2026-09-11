@@ -8,8 +8,8 @@ export const MIN_LANDSCAPE_WIDTH = Number(
   import.meta.env.VITE_MIN_LANDSCAPE_WIDTH ?? 468,
 )
 
-/** Hard cap on the cardboard canvas so it stays readable on large screens. */
-export const CANVAS_MAX_WIDTH = 1100
+/** Hard cap on the cardboard canvas so columns stay slim like the physical tool. */
+export const CANVAS_MAX_WIDTH = 720
 
 /**
  * The persistent sidebar rail needs both width and height: a phone in landscape

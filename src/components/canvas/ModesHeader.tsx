@@ -11,8 +11,8 @@ export function ModesHeader({ measureRef }: ModesHeaderProps) {
 
   return (
     <>
-      <div className="mf-label" aria-hidden="true">
-        {t('rows.modes')}
+      <div className="mf-label mf-label-modes" aria-hidden="true">
+        <span className="mf-mode-label">{t('rows.modes')}</span>
       </div>
       {MODES.map((mode, index) => (
         <div

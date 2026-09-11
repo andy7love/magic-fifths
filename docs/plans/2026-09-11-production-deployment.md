@@ -59,8 +59,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v4
-        with:
-          version: 10
       - uses: actions/setup-node@v4
         with:
           node-version: 22
@@ -74,7 +72,8 @@ jobs:
 
 Notes:
 
-- `pnpm/action-setup@v4` with `version: 10` matches `packageManager: pnpm@10.29.3`.
+- `pnpm/action-setup@v4` omits `version` so it reads `packageManager: pnpm@10.29.3` from
+  `package.json`. Specifying both causes a "Multiple versions of pnpm specified" failure.
 - `--frozen-lockfile` relies on the committed `pnpm-lock.yaml` (lockfile version 9.0).
 - `src/components/ui/**` is committed, so `shadcn add` is not needed in CI.
 - E2E (`pnpm e2e`) is intentionally excluded here (it needs Chromium and preview servers). To

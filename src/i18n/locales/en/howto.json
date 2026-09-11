@@ -1,0 +1,19 @@
+{
+  "title": "How to Use It",
+  "intro": "The brown board never moves. The white strip slides, and everything you read follows from where it stops.",
+  "steps": [
+    "Drag the white strip sideways. It snaps so that each note lands exactly under one mode column.",
+    "The note under the grade marked 1 is the tonic. By default that is Ionian (Major). Tap a mode name to make that column grade 1 instead.",
+    "Ionian is the common Major scale; Aeolian is the common Minor. Both are labelled on the board.",
+    "Read down any column to get the chord built on that note: its triad, then its seventh chord.",
+    "Tap any note on the strip to send it straight to the tonic column (wherever grade 1 currently sits).",
+    "Slide one column to the right to add a sharp to the key, one to the left to add a flat.",
+    "Use Share to copy a link that reopens the exact position and tonic mode you are looking at."
+  ],
+  "keyboard": {
+    "title": "Keyboard",
+    "arrows": "Left and right arrows move one column.",
+    "pages": "Page Up and Page Down jump a whole block of seven.",
+    "homeEnd": "Home and End go to the far ends of the strip."
+  }
+}

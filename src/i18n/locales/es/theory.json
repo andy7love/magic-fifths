@@ -1,0 +1,34 @@
+{
+  "title": "Teor\u00eda de quintas",
+  "intro": "Por qu\u00e9 una sola tira recta puede mostrarte siete modos a la vez.",
+  "sections": [
+    {
+      "heading": "Siete quintas forman una escala",
+      "body": "Empieza en Fa y sigue subiendo quintas justas: Fa, Do, Sol, Re, La, Mi, Si. Tras siete notas has usado cada nombre una sola vez, y esas siete notas son exactamente las de Do mayor. Ah\u00ed est\u00e1 todo el truco: como una escala mayor es en realidad una pila de quintas, alinear las quintas en una l\u00ednea recta permite que una sola tira contenga una escala completa."
+    },
+    {
+      "heading": "Una escala, siete hogares",
+      "body": "Un modo no es un conjunto distinto de notas, es una nota distinta tratada como hogar. Las mismas siete notas dan siete modos seg\u00fan d\u00f3nde empieces. Las columnas est\u00e1n ordenadas por quintas y no por grado, y por eso las siete se alinean a la vez en lugar de una por una."
+    },
+    {
+      "heading": "La t\u00f3nica es el grado 1",
+      "body": "La columna de modo que marques como grado 1 es la t\u00f3nica: el hogar de la escala que est\u00e1s leyendo. Por defecto es J\u00f3nico, que no es m\u00e1s que la escala mayor con su nombre antiguo. Toca el nombre de otro modo y los n\u00fameros de grado rotan para que esa columna sea el 1; Lidio, Mixolidio y el resto mantienen el orden por quintas, solo cambia el conteo."
+    },
+    {
+      "heading": "J\u00f3nico es Mayor, E\u00f3lico es Menor",
+      "body": "J\u00f3nico y E\u00f3lico son las escalas Mayor y Menor de siempre. El cart\u00f3n las etiqueta as\u00ed para que las encuentres sin memorizar primero los nombres griegos. Elegir E\u00f3lico como grado 1 es c\u00f3mo lees una tonalidad menor natural en la misma tira."
+    },
+    {
+      "heading": "Las cualidades de los acordes no se mueven",
+      "body": "Tres mayores, tres menores y uno disminuido, siempre en ese orden. Las cualidades est\u00e1n impresas en el cart\u00f3n y no en la tira porque dependen de la posici\u00f3n dentro de la escala mayor madre, no de qu\u00e9 modo trates como hogar. Cambia la ventana y todos los acordes cambian de nombre, pero el patr\u00f3n de mayores y menores se queda donde est\u00e1."
+    },
+    {
+      "heading": "Deslizar cambia la armadura",
+      "body": "Cada columna a la derecha a\u00f1ade un sostenido y cada columna a la izquierda a\u00f1ade un bemol. Es el c\u00edrculo de quintas haciendo su trabajo habitual: las tonalidades vecinas se diferencian en una sola alteraci\u00f3n, que es tambi\u00e9n la raz\u00f3n por la que suenan tan emparentadas."
+    },
+    {
+      "heading": "Por qu\u00e9 existen las alteraciones dobles",
+      "body": "Los extremos llegan a grafias como Do doble bemol y Do doble sostenido. Parecen raras, pero son reales: en una tonalidad con seis o siete sostenidos, las notas restantes necesitan dobles sostenidos para mantener un nombre por grado de la escala. El cart\u00f3n f\u00edsico las incluye, y por eso esta app tambi\u00e9n."
+    }
+  ]
+}

@@ -1,0 +1,74 @@
+{
+  "app": {
+    "name": "Magic Fifths",
+    "tagline": "Los siete modos de la escala mayor, en una sola tira deslizante."
+  },
+  "loading": "Cargando\u2026",
+  "sidebar": {
+    "openMenu": "Abrir men\u00fa",
+    "settings": "Ajustes",
+    "learn": "Aprender"
+  },
+  "scale": {
+    "label": "Escala",
+    "comingSoon": "Pr\u00f3ximamente"
+  },
+  "language": {
+    "label": "Idioma"
+  },
+  "theme": {
+    "label": "Tema",
+    "light": "Claro",
+    "dark": "Oscuro",
+    "system": "Sistema"
+  },
+  "howto": {
+    "open": "C\u00f3mo se usa"
+  },
+  "theory": {
+    "open": "Teor\u00eda de quintas"
+  },
+  "share": {
+    "open": "Compartir",
+    "title": "Magic Fifths",
+    "textMajor": "{{key}} mayor en Magic Fifths",
+    "textMinor": "{{key}} menor en Magic Fifths",
+    "textMode": "{{key}} {{mode}} en Magic Fifths",
+    "copied": "Enlace copiado",
+    "copiedDescriptionMajor": "Quien lo abra ver\u00e1 {{key}} mayor.",
+    "copiedDescriptionMinor": "Quien lo abra ver\u00e1 {{key}} menor.",
+    "copiedDescriptionMode": "Quien lo abra ver\u00e1 {{key}} {{mode}}.",
+    "failed": "No se pudo copiar el enlace"
+  },
+  "readout": {
+    "label": "Tonalidad",
+    "valueMajor": "{{note}} mayor",
+    "valueMinor": "{{note}} menor",
+    "valueMode": "{{note}} {{mode}}"
+  },
+  "strip": {
+    "label": "Cadena de quintas",
+    "valueMajor": "{{note}} mayor",
+    "valueMinor": "{{note}} menor",
+    "valueMode": "{{note}} {{mode}}"
+  },
+  "orientation": {
+    "title": "Gira tu dispositivo",
+    "body": "El cart\u00f3n necesita una pantalla m\u00e1s ancha. Pon el dispositivo en horizontal para continuar.",
+    "hint": "Requiere al menos {{width}}px de ancho."
+  },
+  "pwa": {
+    "updateTitle": "Hay una versi\u00f3n nueva",
+    "updateBody": "Recarga para actualizar. Se conserva tu posici\u00f3n actual.",
+    "update": "Recargar",
+    "dismiss": "M\u00e1s tarde",
+    "offlineReady": "Lista para funcionar sin conexi\u00f3n",
+    "install": {
+      "label": "Instalar app",
+      "menu": "Instalar app"
+    }
+  },
+  "dialog": {
+    "close": "Cerrar"
+  }
+}

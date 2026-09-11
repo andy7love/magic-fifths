@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Magic Fifths">
+  <rect width="512" height="512" rx="64" fill="#8b5e34"/>
+  <rect x="64" y="200" width="384" height="112" rx="12" fill="#f5efe3"/>
+  <text x="256" y="275" text-anchor="middle" font-family="Georgia, serif" font-size="72" fill="#3b2414">F C G</text>
+</svg>

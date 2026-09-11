@@ -1,0 +1,46 @@
+{
+  "rows": {
+    "modes": "Modes",
+    "grades": "Degrees",
+    "triads": "Triads",
+    "tetrads": "Tetrads"
+  },
+  "modes": {
+    "lydian": "Lydian",
+    "ionian": "Ionian",
+    "mixolydian": "Mixolydian",
+    "dorian": "Dorian",
+    "aeolian": "Aeolian",
+    "phrygian": "Phrygian",
+    "locrian": "Locrian"
+  },
+  "modeSelect": {
+    "label": "Set {{mode}} as tonic",
+    "withAlias": "Set {{mode}} ({{alias}}) as tonic"
+  },
+  "triads": {
+    "major": "M",
+    "minor": "m",
+    "diminished": "dim"
+  },
+  "tetrads": {
+    "maj7": "Maj7",
+    "dom7": "7",
+    "min7": "m7",
+    "min7b5": "m7(b5)"
+  },
+  "solfege": {
+    "fa": "Fa",
+    "do": "Do",
+    "sol": "Sol",
+    "re": "Re",
+    "la": "La",
+    "mi": "Mi",
+    "si": "Si"
+  },
+  "scales": {
+    "major": "Major",
+    "minor": "Minor",
+    "harmonicMinor": "Harmonic minor"
+  }
+}

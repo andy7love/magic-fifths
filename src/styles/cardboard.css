@@ -1,0 +1,246 @@
+/*
+ * The cardboard tool. This is the one part of the app written as hand-rolled
+ * CSS rather than Tailwind utilities: layered textures, a recessed channel the
+ * paper appears to thread through, and a transform-only animation surface.
+ *
+ * Geometry contract: `--col-w` is published in px onto `.mf-canvas` by
+ * `useColumnWidth`, and is the single source of truth shared by the grid, the
+ * track and every cell. Nothing here may reintroduce a percentage width, since
+ * percentages inside the track would resolve against the 35-column track rather
+ * than the 7-column window.
+ */
+
+.mf-stage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  padding: clamp(0.5rem, 2vh, 2rem) 0;
+  /* Clips the bleeding strip at the viewport, never at the canvas. */
+  overflow-x: clip;
+}
+
+.mf-canvas {
+  --label-w: clamp(3.75rem, 8vw, 6.5rem);
+  --board-radius: 6px;
+
+  position: relative;
+  display: grid;
+  grid-template-columns: var(--label-w) repeat(7, 1fr);
+  grid-template-rows: auto auto auto auto;
+  width: min(100%, var(--canvas-max-w, 1100px));
+  /* Overflow stays visible so the paper can stick out past the board. */
+  overflow: visible;
+  font-family: var(--font-hand);
+  color: var(--board-ink);
+}
+
+/* ---------------------------------------------------------------- the board */
+
+.mf-board {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  border-radius: var(--board-radius);
+  background-color: var(--board);
+  background-image:
+    /* fibre noise */
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E"),
+    /* corrugation, very faint */ repeating-linear-gradient(
+      90deg,
+      color-mix(in oklab, var(--board-edge) 12%, transparent) 0 1px,
+      transparent 1px 7px
+    ),
+    linear-gradient(
+      160deg,
+      color-mix(in oklab, white 8%, transparent),
+      transparent 45%,
+      color-mix(in oklab, var(--board-edge) 22%, transparent)
+    );
+  background-blend-mode: soft-light, normal, normal;
+  box-shadow:
+    0 1px 0 color-mix(in oklab, white 22%, transparent) inset,
+    0 -2px 6px color-mix(in oklab, var(--board-edge) 45%, transparent) inset,
+    0 10px 28px -12px color-mix(in oklab, black 55%, transparent);
+}
+
+/* --------------------------------------------------------------- face cells */
+
+.mf-label {
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-inline: 0.35rem 0.6rem;
+  font-size: clamp(0.7rem, 1.6vh, 1.05rem);
+  line-height: 1.1;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.mf-mode-column {
+  z-index: 10;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  /* Vertical labels, as on the physical tool. Also buys back a lot of
+     horizontal room, which is scarce in phone landscape. */
+  min-height: clamp(3.25rem, 13vh, 7rem);
+  padding-block: 0.4rem;
+  border-left: 1px solid color-mix(in oklab, var(--board-ink) 35%, transparent);
+}
+
+.mf-mode-column:last-of-type {
+  border-right: 1px solid color-mix(in oklab, var(--board-ink) 35%, transparent);
+}
+
+.mf-mode-label {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  font-size: clamp(0.72rem, 1.75vh, 1.15rem);
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
+.mf-quality-cell {
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-block: clamp(0.2rem, 0.9vh, 0.55rem);
+  border-top: 1px solid color-mix(in oklab, var(--board-ink) 30%, transparent);
+  border-left: 1px solid color-mix(in oklab, var(--board-ink) 35%, transparent);
+  font-size: clamp(0.72rem, 1.7vh, 1.15rem);
+  line-height: 1;
+}
+
+.mf-quality-cell:last-of-type {
+  border-right: 1px solid color-mix(in oklab, var(--board-ink) 35%, transparent);
+}
+
+.mf-quality-row-label {
+  border-top: 1px solid color-mix(in oklab, var(--board-ink) 30%, transparent);
+}
+
+/* Tetrad symbols are written sideways on the cardboard too. */
+.mf-quality-cell[data-row='tetrads'] span {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  white-space: nowrap;
+}
+
+/* ------------------------------------------------------- the channel + strip */
+
+.mf-strip-window {
+  position: relative;
+  z-index: 20;
+  grid-column: 2 / span 7;
+  /* The window's left edge IS the first mode column's left edge, because it is
+     placed on the same grid tracks. That is what makes alignment exact rather
+     than tuned. */
+  overflow: visible;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  cursor: grab;
+}
+
+.mf-strip-window:active {
+  cursor: grabbing;
+}
+
+.mf-strip-window:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+.mf-strip-track {
+  --strip-x: 0px;
+
+  display: flex;
+  width: calc(35 * var(--col-w));
+  /* Transform only: no layout, no paint, stays on the compositor. */
+  transform: translate3d(var(--strip-x), 0, 0);
+  will-change: transform;
+  background-color: var(--paper);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='90' height='90'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.1' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='90' height='90' filter='url(%23p)' opacity='0.22'/%3E%3C/svg%3E");
+  background-blend-mode: multiply;
+  box-shadow:
+    0 1px 2px color-mix(in oklab, black 18%, transparent),
+    0 -1px 0 color-mix(in oklab, var(--paper-edge) 80%, transparent) inset;
+  color: var(--paper-ink);
+}
+
+.mf-note-cell {
+  display: grid;
+  grid-template-rows: 1fr auto 1fr;
+  place-items: center;
+  flex: 0 0 auto;
+  width: var(--col-w);
+  min-height: clamp(3.1rem, 12vh, 6rem);
+  padding-block: 0.3rem;
+  border-right: 1px solid color-mix(in oklab, var(--paper-ink) 28%, transparent);
+  line-height: 1;
+}
+
+.mf-note-cell:first-child {
+  border-left: 1px solid color-mix(in oklab, var(--paper-ink) 28%, transparent);
+}
+
+/* Notes outside the seven-column window are the part of the paper hanging off
+   the board: still visible, but clearly not in play. */
+.mf-note-cell[data-in-window='false'] {
+  opacity: 0.55;
+}
+
+.mf-note-solfege {
+  font-size: clamp(0.75rem, 1.9vh, 1.25rem);
+}
+
+.mf-note-accidental {
+  font-size: clamp(0.7rem, 1.7vh, 1.1rem);
+  min-height: 1em;
+}
+
+.mf-note-letter {
+  font-size: clamp(0.8rem, 2vh, 1.35rem);
+  font-weight: 600;
+}
+
+/*
+ * The slot lips. Drawn above the paper and spanning only the board's width, so
+ * the strip looks threaded through the cardboard while the parts hanging off
+ * the sides stay un-shadowed, exactly as in the photo.
+ */
+.mf-channel {
+  position: relative;
+  z-index: 30;
+  grid-column: 1 / -1;
+  grid-row: 2;
+  pointer-events: none;
+  box-shadow:
+    0 3px 5px -2px color-mix(in oklab, black 60%, transparent) inset,
+    0 -3px 5px -2px color-mix(in oklab, black 45%, transparent) inset;
+}
+
+/* The tonic column gets a quiet highlight; it is the answer the tool exists to
+   give, and without it users have to count columns. */
+.mf-tonic-marker {
+  position: absolute;
+  z-index: 25;
+  top: 0;
+  bottom: 0;
+  left: calc(var(--tonic-column, 1) * var(--col-w));
+  width: var(--col-w);
+  pointer-events: none;
+  border-inline: 1px solid color-mix(in oklab, var(--board-ink) 55%, transparent);
+  background: color-mix(in oklab, var(--board-ink) 7%, transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mf-strip-track {
+    will-change: auto;
+  }
+}

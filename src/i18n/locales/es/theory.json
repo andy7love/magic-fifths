@@ -1,0 +1,30 @@
+{
+  "title": "Teor\u00eda de quintas",
+  "intro": "Por qu\u00e9 una sola tira recta puede mostrarte siete modos a la vez.",
+  "sections": [
+    {
+      "heading": "Siete quintas forman una escala",
+      "body": "Empieza en Fa y sigue subiendo quintas justas: Fa, Do, Sol, Re, La, Mi, Si. Tras siete notas has usado cada nombre una sola vez, y esas siete notas son exactamente las de Do mayor. Ah\u00ed est\u00e1 todo el truco: como una escala mayor es en realidad una pila de quintas, alinear las quintas en una l\u00ednea recta permite que una sola tira contenga una escala completa."
+    },
+    {
+      "heading": "Una escala, siete hogares",
+      "body": "Un modo no es un conjunto distinto de notas, es una nota distinta tratada como hogar. Las mismas siete notas dan siete modos seg\u00fan d\u00f3nde empieces. Las columnas est\u00e1n ordenadas por quintas y no por grado, y por eso las siete se alinean a la vez en lugar de una por una."
+    },
+    {
+      "heading": "La t\u00f3nica va bajo J\u00f3nico",
+      "body": "J\u00f3nico no es m\u00e1s que la escala mayor con su nombre antiguo, as\u00ed que la nota que se detenga bajo esa columna es la tonalidad en la que est\u00e1s. Lidio queda una columna a su izquierda porque el cuarto grado est\u00e1 una quinta por debajo de la t\u00f3nica, y Mixolidio queda una a su derecha porque el quinto grado est\u00e1 una quinta por encima."
+    },
+    {
+      "heading": "Las cualidades de los acordes no se mueven",
+      "body": "Tres mayores, tres menores y uno disminuido, siempre en ese orden. Las cualidades est\u00e1n impresas en el cart\u00f3n y no en la tira porque dependen de la posici\u00f3n dentro de la escala, no de la tonalidad. Cambia la tonalidad y todos los acordes cambian de nombre, pero el patr\u00f3n de mayores y menores se queda donde est\u00e1."
+    },
+    {
+      "heading": "Deslizar cambia la armadura",
+      "body": "Cada columna a la derecha a\u00f1ade un sostenido y cada columna a la izquierda a\u00f1ade un bemol. Es el c\u00edrculo de quintas haciendo su trabajo habitual: las tonalidades vecinas se diferencian en una sola alteraci\u00f3n, que es tambi\u00e9n la raz\u00f3n por la que suenan tan emparentadas."
+    },
+    {
+      "heading": "Por qu\u00e9 existen las alteraciones dobles",
+      "body": "Los extremos llegan a grafias como Do doble bemol y Do doble sostenido. Parecen raras, pero son reales: en una tonalidad con seis o siete sostenidos, las notas restantes necesitan dobles sostenidos para mantener un nombre por grado de la escala. El cart\u00f3n f\u00edsico las incluye, y por eso esta app tambi\u00e9n."
+    }
+  ]
+}

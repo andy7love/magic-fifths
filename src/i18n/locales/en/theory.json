@@ -1,0 +1,30 @@
+{
+  "title": "Fifths Theory",
+  "intro": "Why a single straight strip can show you seven modes at once.",
+  "sections": [
+    {
+      "heading": "Seven fifths make a scale",
+      "body": "Start on F and keep going up a perfect fifth: F, C, G, D, A, E, B. After seven notes you have used every letter once, and those seven notes are exactly the notes of C major. That is the whole trick. Because a major scale is a stack of fifths in disguise, laying the fifths out in a straight line lets one strip carry a complete scale."
+    },
+    {
+      "heading": "One scale, seven homes",
+      "body": "A mode is not a different set of notes, it is a different note treated as home. The same seven notes give seven modes depending on where you start. The columns are ordered by fifths rather than by scale degree, which is why all seven line up at once instead of one at a time."
+    },
+    {
+      "heading": "The tonic sits under Ionian",
+      "body": "Ionian is just the major scale under its older name, so whichever note stops under that column is the key you are in. Lydian sits one column to its left because the fourth degree is a fifth below the tonic, and Mixolydian sits one to its right because the fifth degree is a fifth above."
+    },
+    {
+      "heading": "The chord qualities never move",
+      "body": "Three major, three minor, one diminished, in that order, always. The qualities are printed on the board rather than on the strip because they depend on position within the scale, not on the key. Change the key and every chord changes name, but the pattern of majors and minors stays where it is."
+    },
+    {
+      "heading": "Sliding changes the key signature",
+      "body": "Each column to the right adds one sharp, each column to the left adds one flat. That is the circle of fifths doing its usual job: neighbouring keys differ by exactly one accidental, which is also why they sound closely related."
+    },
+    {
+      "heading": "Why double accidentals are there",
+      "body": "The far ends reach spellings like C double-flat and C double-sharp. They look strange, but they are real: once you are in a key with six or seven sharps, the remaining notes need double sharps to keep one letter per scale degree. The physical cardboard includes them, so this does too."
+    }
+  ]
+}

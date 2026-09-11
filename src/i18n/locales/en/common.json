@@ -1,0 +1,62 @@
+{
+  "app": {
+    "name": "Magic Fifths",
+    "tagline": "The seven modes of the major scale, on one sliding strip."
+  },
+  "loading": "Loading\u2026",
+  "sidebar": {
+    "openMenu": "Open menu",
+    "settings": "Settings",
+    "learn": "Learn"
+  },
+  "scale": {
+    "label": "Scale",
+    "comingSoon": "Coming soon"
+  },
+  "language": {
+    "label": "Language"
+  },
+  "theme": {
+    "label": "Theme",
+    "light": "Light",
+    "dark": "Dark",
+    "system": "System"
+  },
+  "howto": {
+    "open": "How to Use It"
+  },
+  "theory": {
+    "open": "Fifths Theory"
+  },
+  "share": {
+    "open": "Share",
+    "title": "Magic Fifths",
+    "text": "{{key}} major on Magic Fifths",
+    "copied": "Link copied",
+    "copiedDescription": "Whoever opens it lands on {{key}} major.",
+    "failed": "Couldn't copy the link"
+  },
+  "readout": {
+    "label": "Key",
+    "value": "{{note}} major"
+  },
+  "strip": {
+    "label": "Chain of fifths",
+    "value": "{{note}} major"
+  },
+  "orientation": {
+    "title": "Rotate your device",
+    "body": "The cardboard needs a wider screen than this. Turn your device sideways to keep going.",
+    "hint": "Needs at least {{width}}px of width."
+  },
+  "pwa": {
+    "updateTitle": "A new version is ready",
+    "updateBody": "Reload to pick it up. Your current position is kept.",
+    "update": "Reload",
+    "dismiss": "Later",
+    "offlineReady": "Ready to work offline"
+  },
+  "dialog": {
+    "close": "Close"
+  }
+}

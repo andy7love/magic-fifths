@@ -10,11 +10,23 @@
 export type TriadQuality = 'major' | 'minor' | 'diminished'
 export type TetradQuality = 'maj7' | 'dom7' | 'min7' | 'min7b5'
 
+export type ModeId =
+  | 'lydian'
+  | 'ionian'
+  | 'mixolydian'
+  | 'dorian'
+  | 'aeolian'
+  | 'phrygian'
+  | 'locrian'
+
 export interface Mode {
-  id: string
+  id: ModeId
   /** 0-6, left to right on the face. */
   column: number
-  /** Degree of the major scale this mode starts on. */
+  /**
+   * Degree of the parent major scale this mode starts on (Ionian = 1).
+   * Used to rotate the grades row when a different mode is chosen as tonic.
+   */
   degree: number
   triad: TriadQuality
   tetrad: TetradQuality
@@ -33,8 +45,43 @@ export const MODES: readonly Mode[] = [
 /** Number of mode columns, and therefore of notes visible in the window. */
 export const COLUMNS = MODES.length
 
+/** Default home mode: Ionian, i.e. the major scale. */
+export const DEFAULT_TONIC_MODE: ModeId = 'ionian'
+
 /**
- * The Ionian column holds the tonic of the current major scale. This is the
- * app's load-bearing invariant: `tonic = snapIndex + TONIC_COLUMN`.
+ * Ionian's column index. Historically this was *the* tonic column; now the
+ * tonic is whichever mode the user picks as grade 1. Keep the name for the
+ * many call sites that mean "the major-scale home column".
  */
 export const TONIC_COLUMN = 1
+
+const MODE_BY_ID: Record<ModeId, Mode> = Object.fromEntries(
+  MODES.map((mode) => [mode.id, mode]),
+) as Record<ModeId, Mode>
+
+export function isModeId(value: unknown): value is ModeId {
+  return typeof value === 'string' && value in MODE_BY_ID
+}
+
+export function modeById(id: ModeId): Mode {
+  return MODE_BY_ID[id]
+}
+
+/** Column that currently holds grade 1 (the tonic). */
+export function tonicColumnFor(tonicModeId: ModeId): number {
+  return MODE_BY_ID[tonicModeId].column
+}
+
+/**
+ * Scale degree of `modeDegree` when `tonicDegree` is treated as 1.
+ * Both inputs are 1..7 (major-scale degrees of the mode roots).
+ */
+export function gradeRelativeTo(modeDegree: number, tonicDegree: number): number {
+  return ((modeDegree - tonicDegree + 7) % 7) + 1
+}
+
+/** Grade number (1..7) shown under each mode column for the chosen tonic. */
+export function gradesForTonic(tonicModeId: ModeId): readonly number[] {
+  const tonicDegree = MODE_BY_ID[tonicModeId].degree
+  return MODES.map((mode) => gradeRelativeTo(mode.degree, tonicDegree))
+}

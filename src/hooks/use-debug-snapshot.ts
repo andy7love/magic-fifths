@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react'
 
+import { DEFAULT_TONIC_MODE, tonicColumnFor } from '@/lib/music/modes'
 import { tonicNote } from '@/lib/music/snap'
 
 export interface DebugSnapshot {
   snapIndex: number
   tonic: string
+  tonicModeId: string
   columnWidth: number
   offset: number
   deltas: number[]
@@ -21,9 +23,11 @@ export function useDebugSnapshot(enabled: boolean): DebugSnapshot | null {
       const bridge = window.__mf__
       if (!bridge) return
       const geometry = bridge.getGeometry()
+      const tonicModeId = bridge.getTonicModeId?.() ?? DEFAULT_TONIC_MODE
       setSnapshot({
         snapIndex: geometry.snapIndex,
-        tonic: tonicNote(geometry.snapIndex).ascii,
+        tonic: tonicNote(geometry.snapIndex, tonicColumnFor(tonicModeId)).ascii,
+        tonicModeId,
         columnWidth: geometry.columnWidth,
         offset: geometry.offset,
         deltas: bridge.getAlignmentDeltas(),

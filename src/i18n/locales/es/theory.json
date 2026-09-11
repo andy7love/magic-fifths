@@ -11,12 +11,16 @@
       "body": "Un modo no es un conjunto distinto de notas, es una nota distinta tratada como hogar. Las mismas siete notas dan siete modos seg\u00fan d\u00f3nde empieces. Las columnas est\u00e1n ordenadas por quintas y no por grado, y por eso las siete se alinean a la vez en lugar de una por una."
     },
     {
-      "heading": "La t\u00f3nica va bajo J\u00f3nico",
-      "body": "J\u00f3nico no es m\u00e1s que la escala mayor con su nombre antiguo, as\u00ed que la nota que se detenga bajo esa columna es la tonalidad en la que est\u00e1s. Lidio queda una columna a su izquierda porque el cuarto grado est\u00e1 una quinta por debajo de la t\u00f3nica, y Mixolidio queda una a su derecha porque el quinto grado est\u00e1 una quinta por encima."
+      "heading": "La t\u00f3nica es el grado 1",
+      "body": "La columna de modo que marques como grado 1 es la t\u00f3nica: el hogar de la escala que est\u00e1s leyendo. Por defecto es J\u00f3nico, que no es m\u00e1s que la escala mayor con su nombre antiguo. Toca el nombre de otro modo y los n\u00fameros de grado rotan para que esa columna sea el 1; Lidio, Mixolidio y el resto mantienen el orden por quintas, solo cambia el conteo."
+    },
+    {
+      "heading": "J\u00f3nico es Mayor, E\u00f3lico es Menor",
+      "body": "J\u00f3nico y E\u00f3lico son las escalas Mayor y Menor de siempre. El cart\u00f3n las etiqueta as\u00ed para que las encuentres sin memorizar primero los nombres griegos. Elegir E\u00f3lico como grado 1 es c\u00f3mo lees una tonalidad menor natural en la misma tira."
     },
     {
       "heading": "Las cualidades de los acordes no se mueven",
-      "body": "Tres mayores, tres menores y uno disminuido, siempre en ese orden. Las cualidades est\u00e1n impresas en el cart\u00f3n y no en la tira porque dependen de la posici\u00f3n dentro de la escala, no de la tonalidad. Cambia la tonalidad y todos los acordes cambian de nombre, pero el patr\u00f3n de mayores y menores se queda donde est\u00e1."
+      "body": "Tres mayores, tres menores y uno disminuido, siempre en ese orden. Las cualidades est\u00e1n impresas en el cart\u00f3n y no en la tira porque dependen de la posici\u00f3n dentro de la escala mayor madre, no de qu\u00e9 modo trates como hogar. Cambia la ventana y todos los acordes cambian de nombre, pero el patr\u00f3n de mayores y menores se queda donde est\u00e1."
     },
     {
       "heading": "Deslizar cambia la armadura",

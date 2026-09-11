@@ -19,6 +19,7 @@ export function DebugOverlay() {
     >
       <div>snap={snapshot.snapIndex}</div>
       <div>tonic={snapshot.tonic}</div>
+      <div>mode={snapshot.tonicModeId}</div>
       <div>colW={snapshot.columnWidth.toFixed(2)}px</div>
       <div>offset={snapshot.offset.toFixed(2)}px</div>
       <div>

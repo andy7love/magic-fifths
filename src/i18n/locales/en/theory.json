@@ -11,12 +11,16 @@
       "body": "A mode is not a different set of notes, it is a different note treated as home. The same seven notes give seven modes depending on where you start. The columns are ordered by fifths rather than by scale degree, which is why all seven line up at once instead of one at a time."
     },
     {
-      "heading": "The tonic sits under Ionian",
-      "body": "Ionian is just the major scale under its older name, so whichever note stops under that column is the key you are in. Lydian sits one column to its left because the fourth degree is a fifth below the tonic, and Mixolydian sits one to its right because the fifth degree is a fifth above."
+      "heading": "The tonic is grade 1",
+      "body": "Whichever mode column you mark as grade 1 is the tonic — the home of the scale you are reading. By default that is Ionian, which is just the major scale under its older name. Tap another mode name and the degree numbers rotate so that column becomes 1; Lydian, Mixolydian and the rest keep their fifths order, only the counting changes."
+    },
+    {
+      "heading": "Ionian is Major, Aeolian is Minor",
+      "body": "Ionian and Aeolian are the everyday Major and Minor scales. The board labels them that way so you can find them without memorising Greek names first. Choosing Aeolian as grade 1 is how you read a natural minor key on the same strip."
     },
     {
       "heading": "The chord qualities never move",
-      "body": "Three major, three minor, one diminished, in that order, always. The qualities are printed on the board rather than on the strip because they depend on position within the scale, not on the key. Change the key and every chord changes name, but the pattern of majors and minors stays where it is."
+      "body": "Three major, three minor, one diminished, in that order, always. The qualities are printed on the board rather than on the strip because they depend on position within the parent major scale, not on which mode you treat as home. Change the window and every chord changes name, but the pattern of majors and minors stays where it is."
     },
     {
       "heading": "Sliding changes the key signature",

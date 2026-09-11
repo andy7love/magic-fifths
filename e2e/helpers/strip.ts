@@ -33,6 +33,8 @@ declare global {
     __mf__?: {
       getSnapIndex: () => number
       setSnapIndex: (index: number) => void
+      getTonicModeId: () => string
+      setTonicModeId: (modeId: string) => void
       getGeometry: () => { columnWidth: number; offset: number; snapIndex: number }
       getAlignmentDeltas: () => number[]
     }

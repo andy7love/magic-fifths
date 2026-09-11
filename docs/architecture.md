@@ -3,14 +3,16 @@
 ## Data flow
 
 ```
-URL ?key= ──┐
-localStorage ┼─► resolveInitialSnap() ─► useFifthsStrip(initialIndex)
-            │                              │
-            │                              ├─ drag/spring ─► --strip-x (DOM only)
-            │                              └─ onSettle(index)
-            │                                    ├─ setSnapIndex (React)
-            │                                    ├─ localStorage
-            │                                    └─ history.replaceState(?key=)
+URL ?key=&mode= ──┐
+localStorage ─────┼─► resolveInitialSnap() + resolveInitialTonicMode()
+                  │         │
+                  │         ├─ useFifthsStrip(initialIndex, tonicColumn)
+                  │         │     ├─ drag/spring ─► --strip-x (DOM only)
+                  │         │     └─ onSettle(index)
+                  │         │           ├─ setSnapIndex (React)
+                  │         │           ├─ localStorage
+                  │         │           └─ history.replaceState(?key=&mode=)
+                  │         └─ tonicModeId (grade 1 column; tap a mode name)
 SettingsContext ── theme / language / scaleId
 i18next ────────── catalogs as dynamic import() chunks (precached offline)
 ```

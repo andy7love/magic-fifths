@@ -1,6 +1,7 @@
 {
   "rows": {
     "modes": "Modos",
+    "grades": "Grados",
     "triads": "Tr\u00edadas",
     "tetrads": "T\u00e9tradas"
   },
@@ -12,6 +13,10 @@
     "aeolian": "E\u00f3lico",
     "phrygian": "Frigio",
     "locrian": "Locrio"
+  },
+  "modeSelect": {
+    "label": "Usar {{mode}} como t\u00f3nica",
+    "withAlias": "Usar {{mode}} ({{alias}}) como t\u00f3nica"
   },
   "triads": {
     "major": "M",

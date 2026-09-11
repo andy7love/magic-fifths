@@ -35,8 +35,9 @@
   position: relative;
   display: grid;
   grid-template-columns: var(--label-w) repeat(7, 1fr);
-  grid-template-rows: auto auto auto auto;
-  width: min(100%, var(--canvas-max-w, 720px));
+  /* modes | grades | strip | triads | tetrads */
+  grid-template-rows: auto auto auto auto auto;
+  width: min(100%, var(--canvas-max-w, 600px));
   /* Overflow stays visible so the paper can stick out past the board. */
   overflow: visible;
   font-family: var(--font-hand);
@@ -93,18 +94,36 @@
 }
 
 .mf-mode-column {
+  position: relative;
   z-index: 10;
   display: flex;
-  align-items: flex-end;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
   /* Tall header so vertical mode names read clearly in slim columns. */
   min-height: clamp(4.5rem, 18vh, 8.5rem);
   padding-block: 0.35rem 0.45rem;
+  border: 0;
   border-left: 1px solid var(--ink-line);
+  border-radius: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .mf-mode-column:last-of-type {
   border-right: 1px solid var(--ink-line);
+}
+
+.mf-mode-column:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: -2px;
+}
+
+.mf-mode-column[data-tonic-mode='true'] {
+  background: color-mix(in oklab, var(--board-ink) 8%, transparent);
 }
 
 .mf-mode-label {
@@ -114,6 +133,22 @@
   letter-spacing: 0.04em;
   white-space: nowrap;
   font-weight: 500;
+}
+
+.mf-mode-alias {
+  /* Parked at the top so vertical mode names stay bottom-aligned with siblings. */
+  position: absolute;
+  top: 0.35rem;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--font-sans);
+  font-size: clamp(0.55rem, 1.2vh, 0.72rem);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  line-height: 1;
+  opacity: 0.78;
+  white-space: nowrap;
 }
 
 .mf-quality-cell {
@@ -134,6 +169,24 @@
   border-top: 1px solid var(--ink-line);
   font-size: clamp(0.72rem, 1.55vh, 0.98rem);
   letter-spacing: 0.01em;
+}
+
+/* Grades: short numeric row between mode names and the strip. */
+.mf-quality-cell[data-row='grades'] {
+  min-height: clamp(1.35rem, 3.6vh, 2rem);
+  padding-block: 0.1rem;
+}
+
+.mf-quality-cell[data-row='grades'] span {
+  font-family: var(--font-sans);
+  font-size: clamp(0.78rem, 1.85vh, 1.05rem);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.mf-quality-cell[data-row='grades'][data-tonic-grade='true'] span {
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
 }
 
 /* Triads: short row, horizontal symbols — match the cardboard. */
@@ -177,7 +230,7 @@
   position: relative;
   z-index: 20;
   grid-column: 2 / span 7;
-  grid-row: 2;
+  grid-row: 3;
   /* The window's left edge IS the first mode column's left edge, because it is
      placed on the same grid tracks. That is what makes alignment exact rather
      than tuned. */
@@ -262,7 +315,7 @@
   position: relative;
   z-index: 30;
   grid-column: 2 / -1;
-  grid-row: 2;
+  grid-row: 3;
   pointer-events: none;
   box-shadow:
     0 3px 5px -2px color-mix(in oklab, black 60%, transparent) inset,

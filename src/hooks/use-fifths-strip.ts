@@ -49,6 +49,8 @@ interface DragState {
 export interface UseFifthsStripOptions {
   /** Measured width of one mode column, in px. 0 until first layout. */
   columnWidth: number
+  /** Column that currently holds grade 1; taps animate notes here. */
+  tonicColumn: number
   initialIndex: number
   onSettle?: (index: number) => void
 }
@@ -103,6 +105,7 @@ function easeOutQuart(t: number): number {
 
 export function useFifthsStrip({
   columnWidth,
+  tonicColumn,
   initialIndex,
   onSettle,
 }: UseFifthsStripOptions): UseFifthsStripResult {
@@ -117,6 +120,7 @@ export function useFifthsStrip({
   const frameRef = useRef<number | null>(null)
   const dragRef = useRef<DragState | null>(null)
   const columnWidthRef = useRef(columnWidth)
+  const tonicColumnRef = useRef(tonicColumn)
   const wheelAtRef = useRef(0)
   const onSettleRef = useRef(onSettle)
 
@@ -262,7 +266,7 @@ export function useFifthsStrip({
         const cell = under instanceof Element ? under.closest('[data-chain-index]') : null
         const chainIndex = Number(cell?.getAttribute('data-chain-index'))
         if (Number.isInteger(chainIndex)) {
-          animateTo(snapForTonic(chainIndex))
+          animateTo(snapForTonic(chainIndex, tonicColumnRef.current))
         } else {
           animateTo(indexRef.current)
         }
@@ -352,6 +356,10 @@ export function useFifthsStrip({
     cancelAnimation()
     applyOffset(offsetFor(indexRef.current, columnWidth))
   }, [columnWidth, applyOffset, cancelAnimation])
+
+  useEffect(() => {
+    tonicColumnRef.current = tonicColumn
+  }, [tonicColumn])
 
   useEffect(() => cancelAnimation, [cancelAnimation])
 

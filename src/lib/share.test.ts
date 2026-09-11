@@ -1,7 +1,13 @@
 import { describe, expect, it } from 'vitest'
 
 import { DEFAULT_SNAP, MAX_SNAP, tonicNote } from './music/snap'
-import { buildShareUrl, encodeKeyToken, parseKeyToken, readShareParam } from './share'
+import {
+  buildShareUrl,
+  encodeKeyToken,
+  parseKeyToken,
+  readShareParam,
+  readSharePosition,
+} from './share'
 
 const ORIGIN = 'https://magic-fifths.example/'
 
@@ -56,11 +62,17 @@ describe('key tokens', () => {
     expect(parseKeyToken('14')).toBeNull()
   })
 
-  it('rejects notes that exist in the chain but can never be a tonic', () => {
-    // Fbb is chain index 0; the tonic column is index 1, so no snap position
-    // can ever put it under Ionian.
+  it('rejects notes that exist in the chain but can never be a tonic under Ionian', () => {
+    // Fbb is chain index 0; Ionian is column 1, so no snap position can put it there.
     expect(parseKeyToken('Fbb')).toBeNull()
     expect(parseKeyToken('Bss')).toBeNull()
+  })
+
+  it('round-trips a non-Ionian tonic mode', () => {
+    // Natural block, Dorian as home → tonic D at snap 14.
+    expect(encodeKeyToken(DEFAULT_SNAP, 'dorian')).toBe('D')
+    expect(parseKeyToken('D', 'dorian')).toBe(DEFAULT_SNAP)
+    expect(tonicNote(parseKeyToken('D', 'dorian')!, 3).ascii).toBe('D')
   })
 })
 
@@ -69,10 +81,25 @@ describe('share urls', () => {
     expect(buildShareUrl(DEFAULT_SNAP, ORIGIN)).toBe(`${ORIGIN}?key=C`)
   })
 
+  it('omits mode when Ionian is home and includes it otherwise', () => {
+    expect(buildShareUrl(DEFAULT_SNAP, ORIGIN, 'ionian')).toBe(`${ORIGIN}?key=C`)
+    expect(buildShareUrl(DEFAULT_SNAP, ORIGIN, 'dorian')).toBe(
+      `${ORIGIN}?key=D&mode=dorian`,
+    )
+  })
+
   it('round-trips through readShareParam', () => {
     for (let index = 0; index <= MAX_SNAP; index += 1) {
       expect(readShareParam(buildShareUrl(index, ORIGIN))).toBe(index)
     }
+  })
+
+  it('round-trips mode through readSharePosition', () => {
+    const url = buildShareUrl(DEFAULT_SNAP, ORIGIN, 'aeolian')
+    expect(readSharePosition(url)).toEqual({
+      snapIndex: DEFAULT_SNAP,
+      tonicModeId: 'aeolian',
+    })
   })
 
   it('preserves unrelated query params and drops the fragment', () => {

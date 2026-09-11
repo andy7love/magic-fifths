@@ -23,8 +23,13 @@ describe('snap positions', () => {
     expect(MAX_SNAP).toBe(28)
   })
 
-  it('defaults to C major', () => {
+  it('defaults to C as tonic under Ionian', () => {
     expect(tonicNote(DEFAULT_SNAP).ascii).toBe('C')
+  })
+
+  it('reads the tonic from a non-Ionian grade-1 column', () => {
+    // Natural block with Dorian as home → D is tonic.
+    expect(tonicNote(DEFAULT_SNAP, 3).ascii).toBe('D')
   })
 
   it('clamps out-of-range and non-finite input', () => {
@@ -99,11 +104,20 @@ describe('mode assignments', () => {
     ])
   })
 
-  it('puts the tonic under the Ionian column', () => {
+  it('puts the default tonic under the Ionian column', () => {
     for (let index = 0; index <= MAX_SNAP; index += 1) {
       const ionian = assignmentsFor(index)[TONIC_COLUMN]
       expect(ionian.mode.id).toBe('ionian')
       expect(ionian.note.ascii).toBe(tonicNote(index).ascii)
+    }
+  })
+
+  it('puts a chosen tonic under its own column', () => {
+    const dorianColumn = 3
+    for (let index = 0; index <= MAX_SNAP; index += 1) {
+      const dorian = assignmentsFor(index)[dorianColumn]
+      expect(dorian.mode.id).toBe('dorian')
+      expect(dorian.note.ascii).toBe(tonicNote(index, dorianColumn).ascii)
     }
   })
 

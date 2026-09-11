@@ -13,19 +13,24 @@ A mode is the same seven notes with a different note treated as home. The
 columns are ordered by fifths rather than by scale degree, which is why all
 seven line up at once.
 
-## The tonic sits under Ionian
+## The tonic is grade 1
 
-Ionian is the major scale. Whichever note stops under that column is the key.
-`tonic = snapIndex + 1` (`TONIC_COLUMN = 1`).
+The degrees row shows 1–7 relative to whichever mode you treat as home. Tap a
+mode name to move grade 1 there. The note under that column is the tonic:
+
+`tonic = snapIndex + tonicColumn`
+
+By default `tonicColumn` is Ionian (column 1). Ionian is the everyday **Major**
+scale; Aeolian is the everyday **Minor** — both are labelled on the board.
 
 ## Chord qualities never move
 
-Three major, three minor, one diminished, always in that order. Qualities are
-printed on the board because they depend on position in the scale, not on the
-key.
+Three major, three minor, one diminished, always in that order relative to the
+parent major scale. Qualities are printed on the board because they depend on
+position in that parent scale, not on which mode is currently grade 1.
 
 ## The 35-note chain
 
 Five blocks of `F C G D A E B` at bb / b / natural / # / ##. Continuity holds
-across block seams (`Bb → F`, `B → F#`). 29 valid snap positions (0..28), 29
-distinct tonics from Cbb to C##.
+across block seams (`Bb → F`, `B → F#`). 29 valid snap positions (0..28). With
+Ionian as home there are 29 distinct tonics from Cbb to C##.

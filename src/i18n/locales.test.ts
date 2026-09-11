@@ -78,9 +78,17 @@ describe.each(Object.entries(CATALOGS))('%s namespace', (_namespace, catalog) =>
   })
 
   it('is actually translated rather than copied from English', () => {
-    // Chord symbols and the app name are intentionally identical, everything
-    // else should differ between the two languages.
-    const shared = ['triads.', 'tetrads.', 'solfege.', 'app.name', 'share.title']
+    // Chord symbols, the app name, and a few template-only strings that keep
+    // the same word order in Spanish are intentionally identical.
+    const shared = [
+      'triads.',
+      'tetrads.',
+      'solfege.',
+      'app.name',
+      'share.title',
+      'readout.valueMode',
+      'strip.valueMode',
+    ]
     const en = leaves(catalog.en)
     const es = leaves(catalog.es)
     const untranslated = [...en.entries()].filter(

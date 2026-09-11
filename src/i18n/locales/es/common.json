@@ -31,18 +31,26 @@
   "share": {
     "open": "Compartir",
     "title": "Magic Fifths",
-    "text": "{{key}} mayor en Magic Fifths",
+    "textMajor": "{{key}} mayor en Magic Fifths",
+    "textMinor": "{{key}} menor en Magic Fifths",
+    "textMode": "{{key}} {{mode}} en Magic Fifths",
     "copied": "Enlace copiado",
-    "copiedDescription": "Quien lo abra ver\u00e1 {{key}} mayor.",
+    "copiedDescriptionMajor": "Quien lo abra ver\u00e1 {{key}} mayor.",
+    "copiedDescriptionMinor": "Quien lo abra ver\u00e1 {{key}} menor.",
+    "copiedDescriptionMode": "Quien lo abra ver\u00e1 {{key}} {{mode}}.",
     "failed": "No se pudo copiar el enlace"
   },
   "readout": {
     "label": "Tonalidad",
-    "value": "{{note}} mayor"
+    "valueMajor": "{{note}} mayor",
+    "valueMinor": "{{note}} menor",
+    "valueMode": "{{note}} {{mode}}"
   },
   "strip": {
     "label": "Cadena de quintas",
-    "value": "{{note}} mayor"
+    "valueMajor": "{{note}} mayor",
+    "valueMinor": "{{note}} menor",
+    "valueMode": "{{note}} {{mode}}"
   },
   "orientation": {
     "title": "Gira tu dispositivo",

@@ -31,18 +31,26 @@
   "share": {
     "open": "Share",
     "title": "Magic Fifths",
-    "text": "{{key}} major on Magic Fifths",
+    "textMajor": "{{key}} major on Magic Fifths",
+    "textMinor": "{{key}} minor on Magic Fifths",
+    "textMode": "{{key}} {{mode}} on Magic Fifths",
     "copied": "Link copied",
-    "copiedDescription": "Whoever opens it lands on {{key}} major.",
+    "copiedDescriptionMajor": "Whoever opens it lands on {{key}} major.",
+    "copiedDescriptionMinor": "Whoever opens it lands on {{key}} minor.",
+    "copiedDescriptionMode": "Whoever opens it lands on {{key}} {{mode}}.",
     "failed": "Couldn't copy the link"
   },
   "readout": {
     "label": "Key",
-    "value": "{{note}} major"
+    "valueMajor": "{{note}} major",
+    "valueMinor": "{{note}} minor",
+    "valueMode": "{{note}} {{mode}}"
   },
   "strip": {
     "label": "Chain of fifths",
-    "value": "{{note}} major"
+    "valueMajor": "{{note}} major",
+    "valueMinor": "{{note}} minor",
+    "valueMode": "{{note}} {{mode}}"
   },
   "orientation": {
     "title": "Rotate your device",

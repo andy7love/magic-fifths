@@ -2,10 +2,11 @@
 
 An offline-capable PWA that reproduces a physical cardboard music tool.
 
-A brown **board** holds the seven Greek modes and their triad / tetrad qualities.
-A white paper **strip** slides through a channel in the board — one continuous chain
-of perfect fifths. Whichever seven consecutive notes land in the channel are the
-seven modes of one major scale. The note under **Ionian** is the tonic.
+A brown **board** holds the seven Greek modes, their scale degrees, and their
+triad / tetrad qualities. A white paper **strip** slides through a channel in the
+board — one continuous chain of perfect fifths. Whichever seven consecutive notes
+land in the channel are the seven modes of one major scale. The note under
+**grade 1** is the tonic (Ionian / Major by default; tap a mode name to move it).
 
 There is no backend and no runtime network request of any kind.
 
@@ -43,18 +44,21 @@ Chrome already provides the shared libraries on this machine.
 
 ## Share links
 
-Positions are addressable by musical key, not by raw index:
+Positions are addressable by musical key (the note under grade 1), not by raw index:
 
 | URL | Meaning |
 |---|---|
-| `/?key=C` | C major (default rest position) |
+| `/?key=C` | C major (Ionian as tonic, default rest position) |
 | `/?key=Eb` | E♭ major |
 | `/?key=Fs` | F♯ major (`s` = sharp, URL-safe) |
 | `/?key=Css` | C𝄪 major |
+| `/?key=D&mode=dorian` | D Dorian (same window as C major, Dorian as grade 1) |
+| `/?key=A&mode=aeolian` | A minor (Aeolian as grade 1) |
 
 Sharps are spelled `s` / `ss` so the link survives chat apps and QR codes. The
-parser also accepts `#` and `x`. The URL is updated with `history.replaceState`
-on every settle, so the back button stays usable.
+parser also accepts `#` and `x`. The `mode` param is omitted when Ionian is home.
+The URL is updated with `history.replaceState` on every settle, so the back
+button stays usable.
 
 ## Orientation gate
 

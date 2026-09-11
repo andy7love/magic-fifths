@@ -25,11 +25,14 @@ Break any of these and the app is wrong, not just ugly.
 1. **The chain is 35 notes and continuous.** Five blocks of `F C G D A E B` at double-flat,
    flat, natural, sharp, double-sharp. Every adjacent pair is a perfect fifth apart,
    *including across block seams* (`Bb -> F`, `B -> F#`). It is one strip, not five.
-2. **`tonic = snapIndex + TONIC_COLUMN`**, where `TONIC_COLUMN = 1` (Ionian). The note under
-   the Ionian column is the key you are in. `snapIndex` is the chain index of the note under
-   the *first* column (Lydian).
+2. **`tonic = snapIndex + tonicColumn`**, where `tonicColumn` is the column of
+   whichever mode is currently grade 1 (default: Ionian at column `1`). The note
+   under grade **1** is the tonic — not necessarily Ionian. Tap a mode name to
+   move grade 1. `snapIndex` is still the chain index of the note under the
+   *first* column (Lydian).
 3. **`snapIndex` ranges 0..28 inclusive** (`MAX_SNAP = 35 - 7`), so the window is always
-   full. 29 positions, 29 distinct tonics, `Cbb` through `C##`.
+   full. 29 positions. With Ionian as home there are 29 distinct tonics (`Cbb` through
+   `C##`); other home modes shift which chain notes are reachable as tonic.
 4. **`--col-w` is the only geometry source of truth.** Published in **px** onto `.mf-canvas`
    by `useColumnWidth`, consumed by the grid, the track and every cell.
 5. **All derived state is computed in `onSettle`, never mid-drag.** During motion the engine
@@ -167,15 +170,18 @@ Everything below runs unattended.
 **Browser.** `pnpm dev`, then drive `http://localhost:5173` with the Cursor browser tools.
 The DOM is instrumented for exactly this:
 
-- `[data-testid="fifths-strip"]` carries `data-snap-index`, `data-tonic`, `data-settled`.
-  Wait on `data-settled="true"` rather than sleeping.
+- `[data-testid="fifths-strip"]` carries `data-snap-index`, `data-tonic`,
+  `data-tonic-mode`, `data-settled`. Wait on `data-settled="true"` rather than sleeping.
 - `[data-testid="note-cell"]` carries `data-chain-index`, `data-note`, `data-in-window`, and
   `data-mode` when inside the channel.
-- `[data-testid="mode-column"]` carries `data-mode`, `data-triad`, `data-tetrad`.
+- `[data-testid="mode-column"]` carries `data-mode`, `data-triad`, `data-tetrad`,
+  `data-tonic-mode`.
+- `[data-testid="grade-cell"]` carries `data-grade` and `data-tonic-grade`.
 - `window.__mf__` (dev / `VITE_E2E` only) exposes `getSnapIndex`, `setSnapIndex`,
-  `getGeometry`, `getAlignmentDeltas` - reachable via `browser_cdp` `Runtime.evaluate`.
-- `?debug=1` renders an overlay with `snapIndex`, `colW`, the offset and the per-column
-  alignment delta in px, so a single screenshot proves or disproves alignment.
+  `getTonicModeId`, `setTonicModeId`, `getGeometry`, `getAlignmentDeltas` - reachable via
+  `browser_cdp` `Runtime.evaluate`.
+- `?debug=1` renders an overlay with `snapIndex`, tonic, tonic mode, `colW`, the offset and
+  the per-column alignment delta in px, so a single screenshot proves or disproves alignment.
 
 **Playwright.** `pnpm e2e`. Configured with `reporter: [['list'], ['html', { open: 'never' }]]`,
 `trace: 'on-first-retry'`, `screenshot: 'only-on-failure'`, `video: 'retain-on-failure'`, so

@@ -7,11 +7,12 @@ import { useTranslation } from 'react-i18next'
 
 import { NoteCell } from '@/components/canvas/NoteCell'
 import { FIFTHS_CHAIN } from '@/lib/music/notes'
-import { COLUMNS, MODES } from '@/lib/music/modes'
+import { COLUMNS, MODES, type ModeId, tonicColumnFor } from '@/lib/music/modes'
 import { tonicNote } from '@/lib/music/snap'
 
 interface FifthsStripProps {
   snapIndex: number
+  tonicModeId: ModeId
   settled: boolean
   trackRef: RefObject<HTMLDivElement | null>
   windowRef: RefObject<HTMLDivElement | null>
@@ -23,6 +24,7 @@ interface FifthsStripProps {
 
 export function FifthsStrip({
   snapIndex,
+  tonicModeId,
   settled,
   trackRef,
   windowRef,
@@ -31,8 +33,22 @@ export function FifthsStrip({
   onPointerUp,
   onKeyDown,
 }: FifthsStripProps) {
-  const { t } = useTranslation('common')
-  const tonic = tonicNote(snapIndex)
+  const { t: tCommon } = useTranslation('common')
+  const { t: tMusic } = useTranslation('music')
+  const tonicColumn = tonicColumnFor(tonicModeId)
+  const tonic = tonicNote(snapIndex, tonicColumn)
+
+  let valueText: string
+  if (tonicModeId === 'ionian') {
+    valueText = tCommon('strip.valueMajor', { note: tonic.ascii })
+  } else if (tonicModeId === 'aeolian') {
+    valueText = tCommon('strip.valueMinor', { note: tonic.ascii })
+  } else {
+    valueText = tCommon('strip.valueMode', {
+      note: tonic.ascii,
+      mode: tMusic(`modes.${tonicModeId}` as 'modes.dorian'),
+    })
+  }
 
   return (
     <div
@@ -41,14 +57,15 @@ export function FifthsStrip({
       data-testid="fifths-strip"
       data-snap-index={snapIndex}
       data-tonic={tonic.ascii}
+      data-tonic-mode={tonicModeId}
       data-settled={settled ? 'true' : 'false'}
       role="slider"
       tabIndex={0}
-      aria-label={t('strip.label')}
+      aria-label={tCommon('strip.label')}
       aria-valuemin={0}
       aria-valuemax={28}
       aria-valuenow={snapIndex}
-      aria-valuetext={t('strip.value', { note: tonic.ascii })}
+      aria-valuetext={valueText}
       onPointerDown={onPointerDown}
       onPointerMove={onPointerMove}
       onPointerUp={onPointerUp}

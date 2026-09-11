@@ -7,12 +7,15 @@ import { COLUMNS, MODES, TONIC_COLUMN } from './modes'
  *
  * `snapIndex` is the chain index of the note aligned to the *first* mode column
  * (Lydian). The window is always full, so it ranges 0..MAX_SNAP inclusive.
+ *
+ * The *tonic* is the note under grade 1 — whichever mode column the user has
+ * chosen as home — so `tonic = snapIndex + tonicColumn`.
  */
 
 /** 35 - 7 = 28, giving 29 valid positions. */
 export const MAX_SNAP = CHAIN_LENGTH - COLUMNS
 
-/** The natural block, i.e. `F C G D A E B`, i.e. C major. */
+/** The natural block, i.e. `F C G D A E B`, i.e. C major with Ionian as home. */
 export const DEFAULT_SNAP = 14
 
 export function clampSnap(index: number): number {
@@ -40,18 +43,27 @@ export function snapFor(offset: number, columnWidth: number): number {
   return clampSnap(-offset / columnWidth)
 }
 
-/** Chain index of the tonic (the note under Ionian) for a snap position. */
-export function tonicIndex(snapIndex: number): number {
-  return snapIndex + TONIC_COLUMN
+/** Chain index of the tonic (the note under grade 1) for a snap position. */
+export function tonicIndex(
+  snapIndex: number,
+  tonicColumn: number = TONIC_COLUMN,
+): number {
+  return snapIndex + tonicColumn
 }
 
-/** Inverse of `tonicIndex`. Together they form a bijection over the 29 positions. */
-export function snapForTonic(chainIndex: number): number {
-  return clampSnap(chainIndex - TONIC_COLUMN)
+/** Inverse of `tonicIndex`. A bijection only when `tonicColumn` is held fixed. */
+export function snapForTonic(
+  chainIndex: number,
+  tonicColumn: number = TONIC_COLUMN,
+): number {
+  return clampSnap(chainIndex - tonicColumn)
 }
 
-export function tonicNote(snapIndex: number): ChainNote {
-  return noteAt(tonicIndex(snapIndex))
+export function tonicNote(
+  snapIndex: number,
+  tonicColumn: number = TONIC_COLUMN,
+): ChainNote {
+  return noteAt(tonicIndex(snapIndex, tonicColumn))
 }
 
 export interface ModeAssignment {

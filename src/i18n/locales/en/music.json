@@ -1,6 +1,7 @@
 {
   "rows": {
     "modes": "Modes",
+    "grades": "Degrees",
     "triads": "Triads",
     "tetrads": "Tetrads"
   },
@@ -12,6 +13,10 @@
     "aeolian": "Aeolian",
     "phrygian": "Phrygian",
     "locrian": "Locrian"
+  },
+  "modeSelect": {
+    "label": "Set {{mode}} as tonic",
+    "withAlias": "Set {{mode}} ({{alias}}) as tonic"
   },
   "triads": {
     "major": "M",

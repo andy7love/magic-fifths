@@ -9,7 +9,7 @@ export const MIN_LANDSCAPE_WIDTH = Number(
 )
 
 /** Hard cap on the cardboard canvas so columns stay slim like the physical tool. */
-export const CANVAS_MAX_WIDTH = 720
+export const CANVAS_MAX_WIDTH = 600
 
 /**
  * The persistent sidebar rail needs both width and height: a phone in landscape
@@ -35,3 +35,10 @@ export const VELOCITY_SAMPLE_MS = 80
 
 /** Query-string parameter carrying the shared position, as a musical key. */
 export const SHARE_PARAM = 'key'
+
+/**
+ * Optional query-string parameter for which mode column is grade 1 (the tonic).
+ * Omitted from URLs when the home mode is Ionian, so classic `?key=C` links stay
+ * short and mean C major.
+ */
+export const SHARE_MODE_PARAM = 'mode'

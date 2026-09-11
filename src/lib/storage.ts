@@ -14,6 +14,7 @@ export const STORAGE_KEYS = {
   language: 'language',
   scale: 'scale',
   snapIndex: 'snapIndex',
+  tonicMode: 'tonicMode',
 } as const
 
 export type StorageKey = (typeof STORAGE_KEYS)[keyof typeof STORAGE_KEYS]

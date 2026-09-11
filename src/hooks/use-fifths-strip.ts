@@ -66,7 +66,7 @@ export interface UseFifthsStripResult {
   onKeyDown: (event: ReactKeyboardEvent<HTMLElement>) => void
 }
 
-const TAP_SLOP_PX = 4
+const TAP_SLOP_PX = 12
 const WHEEL_THROTTLE_MS = 140
 
 /**
@@ -255,8 +255,11 @@ export function useFifthsStrip({
       }
 
       // A tap that never moved means "bring this note to the tonic column".
+      // After setPointerCapture, event.target is the strip window itself, so
+      // we hit-test under the pointer instead of walking from the target.
       if (!drag.moved) {
-        const cell = (event.target as HTMLElement | null)?.closest('[data-chain-index]')
+        const under = document.elementFromPoint(event.clientX, event.clientY)
+        const cell = under instanceof Element ? under.closest('[data-chain-index]') : null
         const chainIndex = Number(cell?.getAttribute('data-chain-index'))
         if (Number.isInteger(chainIndex)) {
           animateTo(snapForTonic(chainIndex))

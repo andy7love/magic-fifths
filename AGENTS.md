@@ -185,33 +185,19 @@ failures leave readable artifacts. `--ui` and `--headed` are never required.
 
 | Phase | State |
 |---|---|
-| 1. Scaffold (Vite / React / TS / Tailwind / shadcn / ESLint) | **Done**, verified in browser |
-| 2. Music domain, share tokens, i18n EN+ES, settings context, storage | **Done**, 52 unit tests green, both locales verified in browser |
-| 3. Canvas + gesture engine | **In progress.** `use-column-width.ts`, `use-fifths-strip.ts` and `styles/cardboard.css` are written, typechecked and linted, but no component consumes them yet. |
-| 4. Shell: sidebar/drawer, toolbar, theme, dialogs, orientation gate, ShareButton + `?key=` deep links | Not started |
-| 5. PWA: plugin, manifest, icons, update prompt | Not started |
-| 6. Playwright config + 9 specs, remaining docs, README | Not started |
+| 1. Scaffold (Vite / React / TS / Tailwind / shadcn / ESLint) | **Done** |
+| 2. Music domain, share tokens, i18n EN+ES, settings context, storage | **Done**, 52 unit tests |
+| 3. Canvas + gesture engine | **Done**, alignment within ~0.1 px |
+| 4. Shell: sidebar/drawer, toolbar, theme, dialogs, orientation gate, ShareButton + `?key=` deep links | **Done** |
+| 5. PWA: plugin, manifest, icons, update prompt | **Done**, offline reload verified |
+| 6. Playwright config + specs, docs, README | **Done**, 46 E2E passed (4 keyboard skips on touch projects) |
 
-### Next steps for phase 3
+### Known follow-ups
 
-Build the components that consume the finished engine:
-
-- `src/lib/alignment.ts` - `getAlignmentDeltas()`, comparing each in-window
-  `note-cell` rect against its `mode-column` rect. Used by both the debug overlay and the
-  `window.__mf__` bridge.
-- `src/components/canvas/Canvas.tsx` - owns the grid, wires `useColumnWidth` to `--col-w`,
-  wires `useFifthsStrip`, installs the `window.__mf__` bridge.
-- `ModesHeader.tsx` (vertical mode labels), `QualityRows.tsx` (Tríadas / Tétradas),
-  `FifthsStrip.tsx` (window + track), `NoteCell.tsx` (`React.memo`, three rows: solfège /
-  accidental glyph / letter), `KeyReadout.tsx`.
-- `src/components/DebugOverlay.tsx` behind `?debug=1`.
-- Import `styles/cardboard.css` and replace the phase-2 harness in `src/App.tsx`.
-
-Existing CSS class names the components must use are defined in `src/styles/cardboard.css`:
-`.mf-stage`, `.mf-canvas`, `.mf-board`, `.mf-label`, `.mf-mode-column`, `.mf-mode-label`,
-`.mf-quality-cell`, `.mf-quality-row-label`, `.mf-strip-window`, `.mf-strip-track`,
-`.mf-note-cell`, `.mf-note-solfege`, `.mf-note-accidental`, `.mf-note-letter`,
-`.mf-channel`, `.mf-tonic-marker`.
+- Restore a `LICENSE` file if desired (removed with the old Ionic app).
+- Keyboard strip controls are covered on the `desktop` Playwright project only;
+  touch projects skip them because focus is unreliable under `isMobile`.
+- Re-running `shadcn add sidebar` will clobber `src/hooks/use-mobile.ts` (gotcha 4).
 
 ## Conventions
 

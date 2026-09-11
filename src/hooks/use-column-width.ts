@@ -7,6 +7,11 @@ import { useCallback, useState } from 'react'
  * arithmetic to get wrong; this hook then turns the resulting layout into the
  * single px value that the strip, the track and every cell are built from.
  *
+ * Always uses `getBoundingClientRect().width` (border-box). `contentRect` from
+ * ResizeObserver excludes borders, and the mode columns have a 1 px left border
+ * - using contentRect made every note cell ~1 px too narrow and alignment
+ * deltas accumulated as 0, -1, -2, ... across the window.
+ *
  * It measures through a ref callback rather than an effect, which gets the first
  * value during commit (no frame of zero-width cells) and lets React 19's ref
  * cleanup tear the observer down.
@@ -17,12 +22,14 @@ export function useColumnWidth(): [number, (element: HTMLElement | null) => void
   const measureRef = useCallback((element: HTMLElement | null) => {
     if (!element) return
 
-    setColumnWidth(element.getBoundingClientRect().width)
+    const publish = () => {
+      const width = element.getBoundingClientRect().width
+      setColumnWidth((prev) => (Math.abs(prev - width) < 0.01 ? prev : width))
+    }
 
-    const observer = new ResizeObserver((entries) => {
-      const entry = entries[0]
-      if (entry) setColumnWidth(entry.contentRect.width)
-    })
+    publish()
+
+    const observer = new ResizeObserver(publish)
     observer.observe(element)
 
     return () => observer.disconnect()

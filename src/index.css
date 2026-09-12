@@ -136,9 +136,10 @@
 
   html,
   body {
-    /* Without this, a horizontal flick near the screen edge triggers the
-       browser's back-navigation gesture instead of moving the strip. */
-    overscroll-behavior-x: none;
+    /* Without this, a flick near a screen edge triggers the browser's
+       navigation gesture instead of moving the strip: back-navigation on the
+       horizontal (landscape) board, pull-to-refresh on the vertical one. */
+    overscroll-behavior: none;
     overflow: hidden;
     height: 100%;
   }

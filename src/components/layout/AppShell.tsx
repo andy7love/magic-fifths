@@ -3,7 +3,6 @@ import { useTranslation } from 'react-i18next'
 
 import { AppSidebar } from '@/components/layout/AppSidebar'
 import { Toolbar } from '@/components/layout/Toolbar'
-import { OrientationGate } from '@/components/OrientationGate'
 import { UpdatePrompt } from '@/components/pwa/UpdatePrompt'
 import { SidebarInset, SidebarProvider, useSidebar } from '@/components/ui/sidebar'
 import { Toaster } from '@/components/ui/sonner'
@@ -65,7 +64,6 @@ export function AppShell({ children }: { children: ReactNode }) {
         <SidebarBackdrop />
         <AppSidebar />
         <SidebarOpenAttr />
-        <OrientationGate />
         <UpdatePrompt />
         <Toaster position="bottom-center" />
       </SidebarProvider>

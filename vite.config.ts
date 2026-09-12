@@ -30,7 +30,7 @@ export default defineConfig({
         theme_color: '#8b5e34',
         background_color: '#f5efe3',
         display: 'standalone',
-        orientation: 'landscape',
+        orientation: 'any',
         start_url: '/',
         scope: '/',
         categories: ['music', 'education'],

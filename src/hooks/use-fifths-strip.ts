@@ -47,11 +47,21 @@ interface DragState {
 }
 
 export interface UseFifthsStripOptions {
-  /** Measured width of one mode column, in px. 0 until first layout. */
+  /**
+   * Measured extent of one mode slot along the scroll axis, in px. This is the
+   * column *width* in the horizontal (landscape) layout and the row *height* in
+   * the vertical (portrait) layout. 0 until first layout.
+   */
   columnWidth: number
   /** Column that currently holds grade 1; taps animate notes here. */
   tonicColumn: number
   initialIndex: number
+  /**
+   * Which screen axis the strip travels along. `'x'` (default) is the landscape
+   * board; `'y'` is the flipped portrait board, where the strip scrolls
+   * vertically and the track is translated on Y instead of X.
+   */
+  axis?: 'x' | 'y'
   onSettle?: (index: number) => void
 }
 
@@ -107,6 +117,7 @@ export function useFifthsStrip({
   columnWidth,
   tonicColumn,
   initialIndex,
+  axis = 'x',
   onSettle,
 }: UseFifthsStripOptions): UseFifthsStripResult {
   const [snapIndex, setSnapIndex] = useState(() => clampSnap(initialIndex))
@@ -123,6 +134,10 @@ export function useFifthsStrip({
   const tonicColumnRef = useRef(tonicColumn)
   const wheelAtRef = useRef(0)
   const onSettleRef = useRef(onSettle)
+  const axisRef = useRef(axis)
+  // The track is a compositor layer translated on a single axis. Which CSS
+  // custom property drives it depends on the board orientation.
+  const translateVarRef = useRef(axis === 'y' ? '--strip-y' : '--strip-x')
 
   // Refs are synced in effects rather than during render. Handlers only ever
   // run from user interaction, which is always after effects have flushed.
@@ -130,10 +145,17 @@ export function useFifthsStrip({
     onSettleRef.current = onSettle
   }, [onSettle])
 
+  /** Pointer coordinate along the active scroll axis. */
+  const clientOf = useCallback(
+    (event: { clientX: number; clientY: number }) =>
+      axisRef.current === 'y' ? event.clientY : event.clientX,
+    [],
+  )
+
   /** The only place the strip's position is written. Never goes through React. */
   const applyOffset = useCallback((offset: number) => {
     offsetRef.current = offset
-    trackRef.current?.style.setProperty('--strip-x', `${offset}px`)
+    trackRef.current?.style.setProperty(translateVarRef.current, `${offset}px`)
   }, [])
 
   const cancelAnimation = useCallback(() => {
@@ -221,15 +243,15 @@ export function useFifthsStrip({
 
       dragRef.current = {
         pointerId: event.pointerId,
-        startX: event.clientX,
+        startX: clientOf(event),
         startOffset: offsetRef.current,
-        samples: [{ t: event.timeStamp, x: event.clientX }],
+        samples: [{ t: event.timeStamp, x: clientOf(event) }],
         moved: false,
       }
 
       setSettled(false)
     },
-    [cancelAnimation],
+    [cancelAnimation, clientOf],
   )
 
   const onPointerMove = useCallback(
@@ -237,15 +259,15 @@ export function useFifthsStrip({
       const drag = dragRef.current
       if (!drag || drag.pointerId !== event.pointerId) return
 
-      const delta = event.clientX - drag.startX
+      const delta = clientOf(event) - drag.startX
       if (Math.abs(delta) > TAP_SLOP_PX) drag.moved = true
 
-      drag.samples.push({ t: event.timeStamp, x: event.clientX })
+      drag.samples.push({ t: event.timeStamp, x: clientOf(event) })
       if (drag.samples.length > 12) drag.samples.shift()
 
       applyOffset(withRubberBand(drag.startOffset + delta))
     },
-    [applyOffset, withRubberBand],
+    [applyOffset, withRubberBand, clientOf],
   )
 
   const onPointerUp = useCallback(
@@ -348,14 +370,17 @@ export function useFifthsStrip({
     return () => node.removeEventListener('wheel', onWheel)
   }, [goTo])
 
-  // Keep the strip pinned to its column through resizes and the first layout
-  // pass. Writes to the DOM only, so there is no render cascade.
+  // Keep the strip pinned to its slot through resizes, the first layout pass,
+  // and orientation flips (which swap both the extent and the axis). Writes to
+  // the DOM only, so there is no render cascade.
   useEffect(() => {
+    axisRef.current = axis
+    translateVarRef.current = axis === 'y' ? '--strip-y' : '--strip-x'
     columnWidthRef.current = columnWidth
     if (columnWidth <= 0) return
     cancelAnimation()
     applyOffset(offsetFor(indexRef.current, columnWidth))
-  }, [columnWidth, applyOffset, cancelAnimation])
+  }, [columnWidth, axis, applyOffset, cancelAnimation])
 
   useEffect(() => {
     tonicColumnRef.current = tonicColumn

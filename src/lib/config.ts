@@ -3,7 +3,11 @@
  * meant to be adjusted without touching the engine in `useFifthsStrip`.
  */
 
-/** Below this viewport width the rotate-to-landscape overlay takes over. */
+/**
+ * Legacy min-width from the old rotate-to-landscape overlay. The board now
+ * flips on `(orientation: portrait)` instead; this stays so existing env
+ * overrides and docs do not break.
+ */
 export const MIN_LANDSCAPE_WIDTH = Number(
   import.meta.env.VITE_MIN_LANDSCAPE_WIDTH ?? 468,
 )

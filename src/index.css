@@ -136,9 +136,10 @@
 
   html,
   body {
-    /* Without this, a horizontal flick near the screen edge triggers the
-       browser's back-navigation gesture instead of moving the strip. */
-    overscroll-behavior-x: none;
+    /* Without this, a flick near a screen edge triggers the browser's
+       navigation gesture instead of moving the strip: back-navigation on the
+       horizontal (landscape) board, pull-to-refresh on the vertical one. */
+    overscroll-behavior: none;
     overflow: hidden;
     height: 100%;
   }
@@ -151,4 +152,43 @@
   #root {
     height: 100%;
   }
+}
+
+/* Offcanvas drawer overlays the canvas; never shove the board sideways.
+   The collapsed icon rail and open panel swap places as one unit. */
+[data-slot='sidebar-gap'] {
+  width: 0;
+}
+
+/* Keep cardboard z-index (strip 20, channel 30, labels 40) local to the
+   inset. The strip track uses translate3d + will-change, which promotes a
+   compositor layer that can paint over a plain fixed drawer; translateZ(0)
+   keeps that layer grouped under the inset so z-index wins again. */
+[data-slot='sidebar-inset'] {
+  z-index: 0;
+  isolation: isolate;
+  transform: translateZ(0);
+}
+
+[data-slot='sidebar-container'] {
+  z-index: 50;
+  transform: translateZ(0);
+}
+
+/* Hard clip: Chromium still lets the strip's translate3d layer paint over a
+   fixed drawer even when hit-testing says the drawer is on top. */
+html[data-mf-sidebar='open'] [data-slot='sidebar-inset'] {
+  clip-path: inset(0 0 0 var(--sidebar-width));
+}
+
+/* Sidebar content: vertical scroll only — overflow-auto was showing a useless
+   horizontal scrollbar when labels / selects sat flush to the edge. */
+[data-slot='sidebar-content'] {
+  overflow-x: hidden;
+}
+
+[data-slot='sidebar-inner'],
+[data-slot='sidebar'] {
+  overflow-x: hidden;
+  max-width: 100%;
 }

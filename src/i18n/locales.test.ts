@@ -83,6 +83,7 @@ describe.each(Object.entries(CATALOGS))('%s namespace', (_namespace, catalog) =>
     const shared = [
       'triads.',
       'tetrads.',
+      'chordExtras.',
       'solfege.',
       'app.name',
       'share.title',

@@ -49,4 +49,17 @@ describe('mode helpers', () => {
   it('maps the default tonic to the Ionian column', () => {
     expect(tonicColumnFor(DEFAULT_TONIC_MODE)).toBe(1)
   })
+
+  it('attaches color-tone extras only where the full chord has them', () => {
+    const extras = Object.fromEntries(MODES.map((mode) => [mode.id, mode.extra ?? null]))
+    expect(extras).toEqual({
+      lydian: 'sharp11',
+      ionian: 'nat4',
+      mixolydian: null,
+      dorian: 'nat6',
+      aeolian: 'flat6',
+      phrygian: 'susb9',
+      locrian: null,
+    })
+  })
 })

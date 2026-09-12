@@ -1,9 +1,12 @@
 import { useTranslation } from 'react-i18next'
 
+import { TetradCell } from '@/components/canvas/TetradCell'
+import { useSettings } from '@/context/settings'
 import { MODES } from '@/lib/music/modes'
 
 export function QualityRows() {
   const { t } = useTranslation('music')
+  const { advancedChords } = useSettings()
 
   return (
     <>
@@ -21,18 +24,20 @@ export function QualityRows() {
         </div>
       ))}
 
-      <div className="mf-label mf-quality-row-label" aria-hidden="true">
-        {t('rows.tetrads')}
+      <div
+        className="mf-label mf-quality-row-label"
+        data-row="tetrads"
+        aria-hidden="true"
+      >
+        {advancedChords ? null : t('rows.tetrads')}
       </div>
       {MODES.map((mode) => (
-        <div
+        <TetradCell
           key={`tetrad-${mode.id}`}
+          mode={mode}
+          advanced={advancedChords}
           className="mf-quality-cell"
-          data-row="tetrads"
-          data-mode={mode.id}
-        >
-          <span>{t(`tetrads.${mode.tetrad}` as 'tetrads.maj7')}</span>
-        </div>
+        />
       ))}
     </>
   )

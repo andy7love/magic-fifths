@@ -3,13 +3,24 @@
  * meant to be adjusted without touching the engine in `useFifthsStrip`.
  */
 
-/** Below this viewport width the rotate-to-landscape overlay takes over. */
+/**
+ * Legacy min-width from the old rotate-to-landscape overlay. The board now
+ * flips on `(orientation: portrait)` instead; this stays so existing env
+ * overrides and docs do not break.
+ */
 export const MIN_LANDSCAPE_WIDTH = Number(
   import.meta.env.VITE_MIN_LANDSCAPE_WIDTH ?? 468,
 )
 
 /** Hard cap on the cardboard canvas so columns stay slim like the physical tool. */
 export const CANVAS_MAX_WIDTH = 600
+
+/**
+ * Width of the collapsed toolbar icon column (`Button size="icon"` = 36px plus
+ * the 1px right border). Stage left padding is this plus the same 0.5rem used
+ * on the right, so the gap from buttons → board matches board → screen edge.
+ */
+export const TOOLBAR_RAIL_WIDTH = 37
 
 /**
  * The persistent sidebar rail needs both width and height: a phone in landscape

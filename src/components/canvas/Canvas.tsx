@@ -4,11 +4,14 @@ import { FifthsStrip } from '@/components/canvas/FifthsStrip'
 import { GradesRow } from '@/components/canvas/GradesRow'
 import { KeyReadout } from '@/components/canvas/KeyReadout'
 import { ModesHeader } from '@/components/canvas/ModesHeader'
+import { PortraitBoard } from '@/components/canvas/PortraitBoard'
 import { QualityRows } from '@/components/canvas/QualityRows'
+import { useSettings } from '@/context/settings'
 import { useColumnWidth } from '@/hooks/use-column-width'
 import { useFifthsStrip } from '@/hooks/use-fifths-strip'
+import { usePortraitLayout } from '@/hooks/use-viewport-gate'
 import { getAlignmentDeltas } from '@/lib/alignment'
-import { CANVAS_MAX_WIDTH, SHARE_MODE_PARAM, SHARE_PARAM } from '@/lib/config'
+import { CANVAS_MAX_WIDTH, SHARE_MODE_PARAM, SHARE_PARAM, TOOLBAR_RAIL_WIDTH } from '@/lib/config'
 import {
   DEFAULT_TONIC_MODE,
   isModeId,
@@ -76,7 +79,11 @@ function replaceShareParams(snapIndex: number, tonicModeId: ModeId) {
 }
 
 export function Canvas() {
-  const [columnWidth, measureRef] = useColumnWidth()
+  const { advancedChords } = useSettings()
+  const portrait = usePortraitLayout()
+  // Landscape scrolls horizontally off the mode-column width; portrait flips the
+  // board and scrolls vertically off the mode-row height.
+  const [columnWidth, measureRef] = useColumnWidth(portrait ? 'height' : 'width')
   const initialIndex = useMemo(() => resolveInitialSnap(), [])
   const [tonicModeId, setTonicModeId] = useState(resolveInitialTonicMode)
   const tonicColumn = tonicColumnFor(tonicModeId)
@@ -101,8 +108,8 @@ export function Canvas() {
     onKeyDown,
   } = useFifthsStrip({
     columnWidth,
-    tonicColumn,
     initialIndex,
+    axis: portrait ? 'y' : 'x',
     onSettle,
   })
 
@@ -140,38 +147,68 @@ export function Canvas() {
     }
   }, [snapIndex, tonicModeId, columnWidth, goTo, selectTonicMode])
 
+  const stageStyle = {
+    '--toolbar-rail-w': `${TOOLBAR_RAIL_WIDTH}px`,
+  } as CSSProperties
+
   const style = {
-    '--col-w': columnWidth > 0 ? `${columnWidth}px` : undefined,
+    '--col-w': !portrait && columnWidth > 0 ? `${columnWidth}px` : undefined,
+    '--row-h': portrait && columnWidth > 0 ? `${columnWidth}px` : undefined,
     '--canvas-max-w': `${CANVAS_MAX_WIDTH}px`,
     '--tonic-column': String(tonicColumn),
   } as CSSProperties
 
   return (
-    <div className="mf-stage" data-testid="canvas-stage">
-      <div className="mf-canvas" style={style} data-testid="canvas">
+    <div className="mf-stage" style={stageStyle} data-testid="canvas-stage">
+      <div
+        className={portrait ? 'mf-canvas mf-canvas--portrait' : 'mf-canvas'}
+        style={style}
+        data-testid="canvas"
+        data-orientation={portrait ? 'portrait' : 'landscape'}
+        data-advanced={advancedChords ? 'true' : 'false'}
+      >
         <div className="mf-board" aria-hidden="true" />
-        <ModesHeader
-          measureRef={measureRef}
-          tonicModeId={tonicModeId}
-          onSelectTonicMode={selectTonicMode}
-        />
-        <GradesRow tonicModeId={tonicModeId} />
-        {/* Empty gutter cell: covers strip bleed under the label column so the
-            paper appears to thread through the board, not over the labels. */}
-        <div className="mf-label mf-strip-gutter" aria-hidden="true" />
-        <div className="mf-channel" aria-hidden="true" />
-        <FifthsStrip
-          snapIndex={snapIndex}
-          tonicModeId={tonicModeId}
-          settled={settled}
-          trackRef={trackRef}
-          windowRef={windowRef}
-          onPointerDown={onPointerDown}
-          onPointerMove={onPointerMove}
-          onPointerUp={onPointerUp}
-          onKeyDown={onKeyDown}
-        />
-        <QualityRows />
+        {portrait ? (
+          <PortraitBoard
+            measureRef={measureRef}
+            tonicModeId={tonicModeId}
+            onSelectTonicMode={selectTonicMode}
+            snapIndex={snapIndex}
+            settled={settled}
+            trackRef={trackRef}
+            windowRef={windowRef}
+            onPointerDown={onPointerDown}
+            onPointerMove={onPointerMove}
+            onPointerUp={onPointerUp}
+            onKeyDown={onKeyDown}
+          />
+        ) : (
+          <>
+            <ModesHeader
+              measureRef={measureRef}
+              tonicModeId={tonicModeId}
+              onSelectTonicMode={selectTonicMode}
+            />
+            <GradesRow tonicModeId={tonicModeId} />
+            {/* Empty gutter cell: covers strip bleed under the label column so
+                the paper appears to thread through the board, not over the
+                labels. */}
+            <div className="mf-label mf-strip-gutter" aria-hidden="true" />
+            <div className="mf-channel" aria-hidden="true" />
+            <FifthsStrip
+              snapIndex={snapIndex}
+              tonicModeId={tonicModeId}
+              settled={settled}
+              trackRef={trackRef}
+              windowRef={windowRef}
+              onPointerDown={onPointerDown}
+              onPointerMove={onPointerMove}
+              onPointerUp={onPointerUp}
+              onKeyDown={onKeyDown}
+            />
+            <QualityRows />
+          </>
+        )}
       </div>
       <KeyReadout snapIndex={snapIndex} tonicModeId={tonicModeId} />
     </div>

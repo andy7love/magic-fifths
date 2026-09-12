@@ -1,7 +1,8 @@
-import { Download } from 'lucide-react'
+import { MonitorDown } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 
 import { Button } from '@/components/ui/button'
+import { SidebarMenuButton } from '@/components/ui/sidebar'
 import { useInstallPrompt } from '@/hooks/use-install-prompt'
 
 interface InstallButtonProps {
@@ -18,16 +19,13 @@ export function InstallButton({ variant = 'icon' }: InstallButtonProps) {
 
   if (variant === 'menu') {
     return (
-      <Button
-        type="button"
-        variant="ghost"
-        className="w-full justify-start gap-2"
+      <SidebarMenuButton
         data-testid="install-button-menu"
         onClick={() => void promptInstall()}
       >
-        <Download className="size-4" />
-        {t('pwa.install.menu')}
-      </Button>
+        <MonitorDown />
+        <span>{t('pwa.install.menu')}</span>
+      </SidebarMenuButton>
     )
   }
 
@@ -40,7 +38,7 @@ export function InstallButton({ variant = 'icon' }: InstallButtonProps) {
       aria-label={t('pwa.install.label')}
       onClick={() => void promptInstall()}
     >
-      <Download className="size-4" />
+      <MonitorDown className="size-4" />
     </Button>
   )
 }

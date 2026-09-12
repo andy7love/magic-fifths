@@ -21,9 +21,19 @@
   gap: 0.6rem;
   width: 100%;
   height: 100%;
+  /* Left pad = toolbar rail + the same 0.5rem used on the right, so the gap
+     from the icon stack to the board matches the board-to-screen gap. */
   padding: clamp(0.4rem, 1.5vh, 1.25rem) 0.5rem;
+  padding-left: calc(var(--toolbar-rail-w, 2.25rem) + 0.5rem);
   /* Clips the bleeding strip at the viewport, never at the canvas. */
   overflow-x: clip;
+}
+
+@media (orientation: portrait) {
+  .mf-stage {
+    gap: 0.35rem;
+    padding-block: clamp(0.2rem, 1vh, 0.6rem);
+  }
 }
 
 .mf-canvas {
@@ -214,14 +224,58 @@
   padding-block: 0.35rem;
 }
 
-.mf-quality-cell[data-row='tetrads'] span {
+.mf-quality-cell[data-row='tetrads'] .mf-chord {
   writing-mode: vertical-rl;
+  text-orientation: sideways;
   transform: rotate(180deg);
   white-space: nowrap;
   font-family: var(--font-sans);
-  font-size: clamp(0.88rem, 2.05vh, 1.22rem);
+  font-size: clamp(0.76rem, 1.75vh, 1.05rem);
   font-weight: 600;
   letter-spacing: 0.08em;
+}
+
+.mf-chord-extra {
+  color: color-mix(in oklab, var(--board-ink) 52%, transparent);
+  font-weight: 500;
+}
+
+.mf-natural {
+  display: inline-flex;
+  align-items: center;
+  width: 0.52em;
+  height: 0.95em;
+  vertical-align: -0.15em;
+}
+
+.mf-natural svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/*
+ * Landscape tetrads are vertical-rl + rotate(180deg). Keep the natural's box
+ * tall (matching the SVG viewBox) and only then rotate 90deg — a wide box
+ * would squash the stems and make ♮ look like a stubby ♯.
+ *
+ * Negative inline margin cancels the tall layout advance that would otherwise
+ * leave a gap between ♮ and the neighboring 4 / ).
+ */
+.mf-quality-cell[data-row='tetrads'] .mf-chord-extra {
+  letter-spacing: 0.02em;
+}
+
+.mf-quality-cell[data-row='tetrads'] .mf-natural {
+  width: 0.5em;
+  height: 1.05em;
+  margin-inline: -0.2em;
+  transform: rotate(90deg);
+  vertical-align: middle;
+}
+
+.mf-canvas[data-advanced='true'] .mf-quality-cell[data-row='tetrads'] {
+  min-height: clamp(5.4rem, 22vh, 8.75rem);
 }
 
 /* ------------------------------------------------------- the channel + strip */
@@ -341,4 +395,206 @@
   .mf-strip-track {
     will-change: auto;
   }
+}
+
+/* ============================================================ portrait board
+ *
+ * The flipped cardboard for narrow / portrait screens. The whole tool is
+ * transposed: the seven modes become seven rows, and the paper strip runs
+ * vertically down the right-hand column so the natural thumb gesture is a
+ * vertical scroll from the right of the screen.
+ *
+ * Geometry contract mirrors the landscape one, one axis over: `--row-h` (the
+ * measured height of one mode row) is the single source of truth, published in
+ * px by `useColumnWidth('height')` and consumed by the track and every cell.
+ * The strip window sits on the same grid rows as the mode rows, so cell
+ * `snapIndex + n` lands on mode row `n` structurally, not by offset math.
+ */
+
+.mf-canvas--portrait {
+  --strip-col-w: clamp(3.4rem, 20vw, 4.75rem);
+
+  display: grid;
+  /* name | grades | triads | tetrads | strip. Non-strip columns size to their
+     content; the strip gets a fixed, thumb-friendly width on the right. */
+  grid-template-columns: auto auto auto auto var(--strip-col-w);
+  /* Stretch to fill, with a low floor so short phones still show all seven. */
+  grid-template-rows: auto repeat(7, minmax(2.2rem, 1fr));
+  width: auto;
+  max-width: 100%;
+  /* ~3px less per mode row than a full stage fill, so Locrian clears the
+     readout without abandoning the stretch-to-fit feel. */
+  height: min(calc(100% - 1.35rem), 40rem);
+}
+
+.mf-canvas--portrait .mf-board {
+  /* The board face covers the seven mode rows only; the paper hangs off the
+     top and bottom past it, as with the landscape board's sides. */
+  inset: 0;
+}
+
+/* Column headers ------------------------------------------------------------ */
+
+.mf-phead {
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.2rem 0.3rem;
+  font-size: clamp(0.6rem, 1.5vw, 0.78rem);
+  font-family: var(--font-sans);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: color-mix(in oklab, var(--board-ink) 78%, transparent);
+  background-color: var(--board);
+  border-bottom: 1px solid var(--ink-line);
+}
+
+/* Mode rows ----------------------------------------------------------------- */
+
+.mf-canvas--portrait .mf-mode-column {
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.4rem;
+  min-height: 0;
+  padding: 0.2rem 0.5rem;
+  border: 0;
+  border-bottom: 1px solid var(--ink-line);
+}
+
+.mf-canvas--portrait .mf-mode-column:first-of-type {
+  border-top: 0;
+}
+
+.mf-canvas--portrait .mf-mode-label {
+  writing-mode: horizontal-tb;
+  transform: none;
+  font-size: clamp(0.95rem, 2.4vw, 1.3rem);
+  letter-spacing: 0.01em;
+}
+
+.mf-canvas--portrait .mf-mode-alias {
+  position: static;
+  left: auto;
+  top: auto;
+  transform: none;
+  font-size: clamp(0.5rem, 1.4vw, 0.66rem);
+  opacity: 0.7;
+}
+
+/* Grades / triads / tetrads cells ------------------------------------------ */
+
+.mf-pcell {
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.2rem 0.5rem;
+  border-bottom: 1px solid var(--ink-line);
+  border-left: 1px solid var(--ink-line);
+  line-height: 1;
+  font-family: var(--font-sans);
+}
+
+.mf-pcell span {
+  writing-mode: horizontal-tb;
+  transform: none;
+}
+
+.mf-pcell[data-row='grades'] span {
+  font-size: clamp(0.82rem, 2vw, 1.05rem);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.mf-pcell[data-row='grades'][data-tonic-grade='true'] span {
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+
+.mf-pcell[data-row='triads'] span,
+.mf-pcell[data-row='tetrads'] .mf-chord {
+  font-size: clamp(0.8rem, 1.95vw, 1.05rem);
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+.mf-canvas--portrait[data-advanced='true'] .mf-pcell[data-row='tetrads'] {
+  min-width: 6.25rem;
+  padding-inline: 0.45rem;
+}
+
+/* The strip, threaded vertically down the right column -------------------- */
+
+.mf-canvas--portrait .mf-strip-window {
+  grid-column: 5;
+  grid-row: 2 / span 7;
+}
+
+.mf-canvas--portrait .mf-strip-track {
+  --strip-y: 0px;
+
+  flex-direction: column;
+  width: 100%;
+  height: calc(35 * var(--row-h, 0px));
+  transform: translate3d(0, var(--strip-y), 0);
+  /* Landscape's edge shadows read as top/bottom; on a vertical strip the paper
+     edges are left and right. */
+  box-shadow:
+    1px 0 2px color-mix(in oklab, black 18%, transparent),
+    -1px 0 0 color-mix(in oklab, var(--paper-edge) 80%, transparent) inset;
+}
+
+.mf-canvas--portrait .mf-note-cell {
+  flex-direction: row;
+  gap: 0.35rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: var(--row-h, 0px);
+  min-height: 0;
+  padding-block: 0;
+  padding-inline: 0.2rem;
+  border-right: 0;
+  border-bottom: 1px solid color-mix(in oklab, var(--paper-ink) 32%, transparent);
+}
+
+.mf-canvas--portrait .mf-note-cell:first-child {
+  border-left: 0;
+  border-top: 1px solid color-mix(in oklab, var(--paper-ink) 32%, transparent);
+}
+
+.mf-canvas--portrait .mf-note-solfege,
+.mf-canvas--portrait .mf-note-letter,
+.mf-canvas--portrait .mf-note-accidental {
+  font-size: clamp(0.78rem, 1.9vw, 1.05rem);
+}
+
+.mf-canvas--portrait .mf-note-accidental {
+  min-height: 0;
+  min-width: 0.6em;
+}
+
+/* Channel lips run down the left and right paper edges. */
+.mf-canvas--portrait .mf-channel {
+  grid-column: 5;
+  grid-row: 2 / span 7;
+  box-shadow:
+    3px 0 5px -2px color-mix(in oklab, black 60%, transparent) inset,
+    -3px 0 5px -2px color-mix(in oklab, black 45%, transparent) inset;
+}
+
+/* Tonic highlight is a horizontal band on the chosen mode row. */
+.mf-canvas--portrait .mf-tonic-marker {
+  left: 0;
+  right: 0;
+  top: calc(var(--tonic-column, 1) * var(--row-h, 0px));
+  bottom: auto;
+  width: auto;
+  height: var(--row-h, 0px);
+  border-inline: 0;
+  border-block: 1px solid color-mix(in oklab, var(--board-ink) 50%, transparent);
 }

@@ -6,6 +6,7 @@
   "loading": "Cargando\u2026",
   "sidebar": {
     "openMenu": "Abrir men\u00fa",
+    "closeMenu": "Cerrar men\u00fa",
     "settings": "Ajustes",
     "learn": "Aprender"
   },
@@ -27,6 +28,9 @@
   },
   "theory": {
     "open": "Teor\u00eda de quintas"
+  },
+  "advanced": {
+    "toggle": "Acordes avanzados"
   },
   "share": {
     "open": "Compartir",

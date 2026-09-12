@@ -10,6 +10,9 @@
 export type TriadQuality = 'major' | 'minor' | 'diminished'
 export type TetradQuality = 'maj7' | 'dom7' | 'min7' | 'min7b5'
 
+/** Color-tone suffix shown only in advanced chord mode. */
+export type ChordExtraId = 'nat4' | 'nat6' | 'susb9' | 'sharp11' | 'flat6'
+
 export type ModeId =
   | 'lydian'
   | 'ionian'
@@ -30,15 +33,20 @@ export interface Mode {
   degree: number
   triad: TriadQuality
   tetrad: TetradQuality
+  /**
+   * Extra color tones (11#, 4♮, …) drawn after the tetrad in advanced mode.
+   * Mixolydian and Locrian have none: Locrian's b5 is already the tetrad.
+   */
+  extra?: ChordExtraId
 }
 
 export const MODES: readonly Mode[] = [
-  { id: 'lydian', column: 0, degree: 4, triad: 'major', tetrad: 'maj7' },
-  { id: 'ionian', column: 1, degree: 1, triad: 'major', tetrad: 'maj7' },
+  { id: 'lydian', column: 0, degree: 4, triad: 'major', tetrad: 'maj7', extra: 'sharp11' },
+  { id: 'ionian', column: 1, degree: 1, triad: 'major', tetrad: 'maj7', extra: 'nat4' },
   { id: 'mixolydian', column: 2, degree: 5, triad: 'major', tetrad: 'dom7' },
-  { id: 'dorian', column: 3, degree: 2, triad: 'minor', tetrad: 'min7' },
-  { id: 'aeolian', column: 4, degree: 6, triad: 'minor', tetrad: 'min7' },
-  { id: 'phrygian', column: 5, degree: 3, triad: 'minor', tetrad: 'min7' },
+  { id: 'dorian', column: 3, degree: 2, triad: 'minor', tetrad: 'min7', extra: 'nat6' },
+  { id: 'aeolian', column: 4, degree: 6, triad: 'minor', tetrad: 'min7', extra: 'flat6' },
+  { id: 'phrygian', column: 5, degree: 3, triad: 'minor', tetrad: 'min7', extra: 'susb9' },
   { id: 'locrian', column: 6, degree: 7, triad: 'diminished', tetrad: 'min7b5' },
 ]
 

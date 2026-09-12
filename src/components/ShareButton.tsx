@@ -2,6 +2,7 @@ import { Share2 } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 
 import { Button } from '@/components/ui/button'
+import { SidebarMenuButton } from '@/components/ui/sidebar'
 import { useShareLink } from '@/hooks/use-share-link'
 
 interface ShareButtonProps {
@@ -14,17 +15,14 @@ export function ShareButton({ variant = 'icon' }: ShareButtonProps) {
 
   if (variant === 'menu') {
     return (
-      <Button
-        type="button"
-        variant="ghost"
-        className="w-full justify-start gap-2"
+      <SidebarMenuButton
         data-testid="share-button-menu"
         disabled={busy}
         onClick={() => void share()}
       >
-        <Share2 className="size-4" />
-        {t('share.open')}
-      </Button>
+        <Share2 />
+        <span>{t('share.open')}</span>
+      </SidebarMenuButton>
     )
   }
 

@@ -172,10 +172,11 @@ Files:
   synchronously in the effect body (`react-hooks/set-state-in-effect`). Exposes
   `{ canInstall, promptInstall }`.
 - `src/components/InstallButton.tsx` — mirrors `src/components/ShareButton.tsx`
-  (`variant: 'icon' | 'menu'`, `lucide-react` `Download`, `data-testid="install-button-toolbar"`,
+  (`variant: 'icon' | 'menu'`, `lucide-react` `MonitorDown`, `data-testid="install-button-toolbar"`,
   `aria-label={t('pwa.install.label')}`). Returns `null` when `!canInstall`.
-- `src/components/layout/Toolbar.tsx` — renders `<InstallButton variant="icon" />` next to
-  `<ShareButton />`.
+- `src/components/layout/Toolbar.tsx` — vertical icon rail (collapsed sidebar actions):
+  sidebar trigger → share → how-to → theory → install. Install is last and only mounts
+  when `canInstall` is true.
 - i18n: `pwa.install.{label,menu}` added to `src/i18n/locales/en/common.json` and
   `src/i18n/locales/es/common.json` (the locale-parity test enforces key symmetry).
 

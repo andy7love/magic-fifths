@@ -70,6 +70,10 @@
     "install": {
       "label": "Install app",
       "menu": "Install app"
+    },
+    "open": {
+      "label": "Open app",
+      "menu": "Open app"
     }
   },
   "dialog": {

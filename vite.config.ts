@@ -31,9 +31,23 @@ export default defineConfig({
         background_color: '#f5efe3',
         display: 'standalone',
         orientation: 'any',
+        // Stable identity for getInstalledRelatedApps / future start_url changes.
+        id: '/',
         start_url: '/',
         scope: '/',
         categories: ['music', 'education'],
+        // Self-reference so navigator.getInstalledRelatedApps() can detect this PWA.
+        // prefer_related_applications must stay false or Chrome skips the web install.
+        prefer_related_applications: false,
+        related_applications: [
+          {
+            platform: 'webapp',
+            url: '/manifest.webmanifest',
+          },
+        ],
+        launch_handler: {
+          client_mode: ['focus-existing', 'auto'],
+        },
         icons: [
           {
             src: 'icons/pwa-192.png',

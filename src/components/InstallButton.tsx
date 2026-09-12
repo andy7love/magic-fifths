@@ -1,4 +1,4 @@
-import { MonitorDown } from 'lucide-react'
+import { AppWindow, MonitorDown } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 
 import { Button } from '@/components/ui/button'
@@ -11,20 +11,30 @@ interface InstallButtonProps {
 
 export function InstallButton({ variant = 'icon' }: InstallButtonProps) {
   const { t } = useTranslation('common')
-  const { canInstall, promptInstall } = useInstallPrompt()
+  const { canInstall, canOpen, promptInstall, openInstalledApp } = useInstallPrompt()
 
-  // Hidden unless the browser offered an install prompt (Chromium only) and the
-  // app is not already installed. iOS Safari never reaches this branch.
-  if (!canInstall) return null
+  // Hidden unless Chrome offered BIP (install) or getInstalledRelatedApps /
+  // appinstalled says we are installed but still in a browser tab (open).
+  // iOS Safari never reaches the install branch; open needs Chromium + related_applications.
+  if (!canInstall && !canOpen) return null
+
+  const onClick = () => {
+    if (canInstall) promptInstall()
+    else openInstalledApp()
+  }
+
+  const label = canInstall ? t('pwa.install.label') : t('pwa.open.label')
+  const menu = canInstall ? t('pwa.install.menu') : t('pwa.open.menu')
+  const Icon = canInstall ? MonitorDown : AppWindow
 
   if (variant === 'menu') {
     return (
       <SidebarMenuButton
-        data-testid="install-button-menu"
-        onClick={() => void promptInstall()}
+        data-testid={canInstall ? 'install-button-menu' : 'open-app-button-menu'}
+        onClick={onClick}
       >
-        <MonitorDown />
-        <span>{t('pwa.install.menu')}</span>
+        <Icon />
+        <span>{menu}</span>
       </SidebarMenuButton>
     )
   }
@@ -34,11 +44,11 @@ export function InstallButton({ variant = 'icon' }: InstallButtonProps) {
       type="button"
       variant="ghost"
       size="icon"
-      data-testid="install-button-toolbar"
-      aria-label={t('pwa.install.label')}
-      onClick={() => void promptInstall()}
+      data-testid={canInstall ? 'install-button-toolbar' : 'open-app-button-toolbar'}
+      aria-label={label}
+      onClick={onClick}
     >
-      <MonitorDown className="size-4" />
+      <Icon className="size-4" />
     </Button>
   )
 }

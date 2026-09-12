@@ -51,7 +51,7 @@ export function AppSidebar() {
   const [theoryOpen, setTheoryOpen] = useState(false)
 
   const dark = resolvedTheme === 'dark'
-  const { canInstall } = useInstallPrompt()
+  const { canInstall, canOpen } = useInstallPrompt()
 
   const closeSidebar = () => {
     if (isMobile) setOpenMobile(false)
@@ -139,7 +139,7 @@ export function AppSidebar() {
                     />
                   </div>
                 </SidebarMenuItem>
-                {canInstall ? (
+                {canInstall || canOpen ? (
                   <SidebarMenuItem>
                     <InstallButton variant="menu" />
                   </SidebarMenuItem>

@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { BookOpen, CircleHelp } from 'lucide-react'
+import { BookOpen, CircleHelp, Layers } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 
 import { HowToUseDialog } from '@/components/dialogs/HowToUseDialog'
@@ -8,6 +8,7 @@ import { InstallButton } from '@/components/InstallButton'
 import { ShareButton } from '@/components/ShareButton'
 import { Button } from '@/components/ui/button'
 import { SidebarTrigger, useSidebar } from '@/components/ui/sidebar'
+import { useSettings } from '@/context/settings'
 
 /**
  * Collapsed drawer rail. Hidden while the sidebar is open so the open drawer
@@ -15,6 +16,7 @@ import { SidebarTrigger, useSidebar } from '@/components/ui/sidebar'
  */
 export function Toolbar() {
   const { t } = useTranslation('common')
+  const { advancedChords, setAdvancedChords } = useSettings()
   const { open, openMobile, isMobile } = useSidebar()
   const [howtoOpen, setHowtoOpen] = useState(false)
   const [theoryOpen, setTheoryOpen] = useState(false)
@@ -29,6 +31,17 @@ export function Toolbar() {
           data-testid="toolbar"
         >
           <SidebarTrigger data-testid="sidebar-trigger" aria-label={t('sidebar.openMenu')} />
+          <Button
+            type="button"
+            variant={advancedChords ? 'secondary' : 'ghost'}
+            size="icon"
+            data-testid="advanced-toggle"
+            aria-label={t('advanced.toggle')}
+            aria-pressed={advancedChords}
+            onClick={() => setAdvancedChords(!advancedChords)}
+          >
+            <Layers className="size-4" />
+          </Button>
           <ShareButton variant="icon" />
           <Button
             type="button"

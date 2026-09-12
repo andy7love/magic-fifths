@@ -64,19 +64,6 @@ test.describe('strip-snap', () => {
     await expect(strip).toHaveAttribute('data-snap-index', '28')
   })
 
-  test('tapping a note makes it the tonic', async ({ page }) => {
-    const g = page.locator('[data-testid="note-cell"][data-note="G"][data-in-window="true"]')
-    const box = await g.boundingBox()
-    expect(box).toBeTruthy()
-    if (!box) return
-
-    // Exact-position mouse click avoids Playwright's default click jitter that
-    // can exceed the engine's tap slop and get treated as a tiny drag.
-    await page.mouse.click(box.x + box.width / 2, box.y + box.height / 2)
-    await waitSettled(page)
-    await expect(page.getByTestId('fifths-strip')).toHaveAttribute('data-tonic', 'G')
-  })
-
   test('position survives a reload', async ({ page }) => {
     await setSnap(page, 21)
     await page.reload()

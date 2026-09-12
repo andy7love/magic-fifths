@@ -6,6 +6,8 @@ import type {
 import { useTranslation } from 'react-i18next'
 
 import { FifthsStrip } from '@/components/canvas/FifthsStrip'
+import { TetradCell } from '@/components/canvas/TetradCell'
+import { useSettings } from '@/context/settings'
 import { MODES, gradesForTonic, type ModeId } from '@/lib/music/modes'
 
 const MODE_ALIAS: Partial<Record<ModeId, 'major' | 'minor'>> = {
@@ -53,6 +55,7 @@ export function PortraitBoard({
   onKeyDown,
 }: PortraitBoardProps) {
   const { t } = useTranslation('music')
+  const { advancedChords } = useSettings()
   const grades = gradesForTonic(tonicModeId)
 
   return (
@@ -66,8 +69,8 @@ export function PortraitBoard({
       <div className="mf-phead" aria-hidden="true">
         {t('rows.triads')}
       </div>
-      <div className="mf-phead" aria-hidden="true">
-        {t('rows.tetrads')}
+      <div className="mf-phead" data-row="tetrads" aria-hidden="true">
+        {advancedChords ? null : t('rows.tetrads')}
       </div>
       <div className="mf-phead" aria-hidden="true" />
 
@@ -120,9 +123,11 @@ export function PortraitBoard({
             <div className="mf-pcell" data-row="triads" data-mode={mode.id}>
               <span>{t(`triads.${mode.triad}` as 'triads.major')}</span>
             </div>
-            <div className="mf-pcell" data-row="tetrads" data-mode={mode.id}>
-              <span>{t(`tetrads.${mode.tetrad}` as 'tetrads.maj7')}</span>
-            </div>
+            <TetradCell
+              mode={mode}
+              advanced={advancedChords}
+              className="mf-pcell"
+            />
           </div>
         )
       })}

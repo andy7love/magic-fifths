@@ -16,7 +16,7 @@ import {
   VELOCITY_SAMPLE_MS,
 } from '@/lib/config'
 import { COLUMNS } from '@/lib/music/modes'
-import { MAX_SNAP, clampSnap, offsetFor, snapFor, snapForTonic } from '@/lib/music/snap'
+import { MAX_SNAP, clampSnap, offsetFor, snapFor } from '@/lib/music/snap'
 
 /**
  * The drag/snap engine for the paper strip.
@@ -43,7 +43,6 @@ interface DragState {
   startX: number
   startOffset: number
   samples: Sample[]
-  moved: boolean
 }
 
 export interface UseFifthsStripOptions {
@@ -53,8 +52,6 @@ export interface UseFifthsStripOptions {
    * the vertical (portrait) layout. 0 until first layout.
    */
   columnWidth: number
-  /** Column that currently holds grade 1; taps animate notes here. */
-  tonicColumn: number
   initialIndex: number
   /**
    * Which screen axis the strip travels along. `'x'` (default) is the landscape
@@ -78,7 +75,6 @@ export interface UseFifthsStripResult {
   onKeyDown: (event: ReactKeyboardEvent<HTMLElement>) => void
 }
 
-const TAP_SLOP_PX = 12
 const WHEEL_THROTTLE_MS = 140
 
 /**
@@ -115,7 +111,6 @@ function easeOutQuart(t: number): number {
 
 export function useFifthsStrip({
   columnWidth,
-  tonicColumn,
   initialIndex,
   axis = 'x',
   onSettle,
@@ -131,7 +126,6 @@ export function useFifthsStrip({
   const frameRef = useRef<number | null>(null)
   const dragRef = useRef<DragState | null>(null)
   const columnWidthRef = useRef(columnWidth)
-  const tonicColumnRef = useRef(tonicColumn)
   const wheelAtRef = useRef(0)
   const onSettleRef = useRef(onSettle)
   const axisRef = useRef(axis)
@@ -246,7 +240,6 @@ export function useFifthsStrip({
         startX: clientOf(event),
         startOffset: offsetRef.current,
         samples: [{ t: event.timeStamp, x: clientOf(event) }],
-        moved: false,
       }
 
       setSettled(false)
@@ -260,7 +253,6 @@ export function useFifthsStrip({
       if (!drag || drag.pointerId !== event.pointerId) return
 
       const delta = clientOf(event) - drag.startX
-      if (Math.abs(delta) > TAP_SLOP_PX) drag.moved = true
 
       drag.samples.push({ t: event.timeStamp, x: clientOf(event) })
       if (drag.samples.length > 12) drag.samples.shift()
@@ -280,21 +272,7 @@ export function useFifthsStrip({
         event.currentTarget.releasePointerCapture(event.pointerId)
       }
 
-      // A tap that never moved means "bring this note to the tonic column".
-      // After setPointerCapture, event.target is the strip window itself, so
-      // we hit-test under the pointer instead of walking from the target.
-      if (!drag.moved) {
-        const under = document.elementFromPoint(event.clientX, event.clientY)
-        const cell = under instanceof Element ? under.closest('[data-chain-index]') : null
-        const chainIndex = Number(cell?.getAttribute('data-chain-index'))
-        if (Number.isInteger(chainIndex)) {
-          animateTo(snapForTonic(chainIndex, tonicColumnRef.current))
-        } else {
-          animateTo(indexRef.current)
-        }
-        return
-      }
-
+      // Swipe / flick only — a click with no travel settles back where it was.
       const velocity = computeVelocity(drag.samples)
       const colW = columnWidthRef.current
       const projected = offsetRef.current + velocity * RELEASE_PROJECTION_MS
@@ -381,10 +359,6 @@ export function useFifthsStrip({
     cancelAnimation()
     applyOffset(offsetFor(indexRef.current, columnWidth))
   }, [columnWidth, axis, applyOffset, cancelAnimation])
-
-  useEffect(() => {
-    tonicColumnRef.current = tonicColumn
-  }, [tonicColumn])
 
   useEffect(() => cancelAnimation, [cancelAnimation])
 

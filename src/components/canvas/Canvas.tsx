@@ -6,6 +6,7 @@ import { KeyReadout } from '@/components/canvas/KeyReadout'
 import { ModesHeader } from '@/components/canvas/ModesHeader'
 import { PortraitBoard } from '@/components/canvas/PortraitBoard'
 import { QualityRows } from '@/components/canvas/QualityRows'
+import { useSettings } from '@/context/settings'
 import { useColumnWidth } from '@/hooks/use-column-width'
 import { useFifthsStrip } from '@/hooks/use-fifths-strip'
 import { usePortraitLayout } from '@/hooks/use-viewport-gate'
@@ -78,6 +79,7 @@ function replaceShareParams(snapIndex: number, tonicModeId: ModeId) {
 }
 
 export function Canvas() {
+  const { advancedChords } = useSettings()
   const portrait = usePortraitLayout()
   // Landscape scrolls horizontally off the mode-column width; portrait flips the
   // board and scrolls vertically off the mode-row height.
@@ -106,7 +108,6 @@ export function Canvas() {
     onKeyDown,
   } = useFifthsStrip({
     columnWidth,
-    tonicColumn,
     initialIndex,
     axis: portrait ? 'y' : 'x',
     onSettle,
@@ -164,6 +165,7 @@ export function Canvas() {
         style={style}
         data-testid="canvas"
         data-orientation={portrait ? 'portrait' : 'landscape'}
+        data-advanced={advancedChords ? 'true' : 'false'}
       >
         <div className="mf-board" aria-hidden="true" />
         {portrait ? (

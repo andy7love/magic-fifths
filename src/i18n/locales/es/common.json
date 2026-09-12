@@ -29,6 +29,9 @@
   "theory": {
     "open": "Teor\u00eda de quintas"
   },
+  "advanced": {
+    "toggle": "Acordes avanzados"
+  },
   "share": {
     "open": "Compartir",
     "title": "Magic Fifths",

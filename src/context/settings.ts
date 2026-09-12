@@ -14,6 +14,9 @@ export interface SettingsValue {
   setLanguage: (language: LanguageCode) => void
   scaleId: string
   setScaleId: (scaleId: string) => void
+  /** Full chord spellings (color tones) instead of bare tetrads. */
+  advancedChords: boolean
+  setAdvancedChords: (advanced: boolean) => void
 }
 
 export const SettingsContext = createContext<SettingsValue | null>(null)

@@ -29,6 +29,9 @@
   "theory": {
     "open": "Fifths Theory"
   },
+  "advanced": {
+    "toggle": "Advanced chords"
+  },
   "share": {
     "open": "Share",
     "title": "Magic Fifths",

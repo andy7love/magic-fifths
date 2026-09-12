@@ -29,6 +29,13 @@
     "min7": "m7",
     "min7b5": "m7(b5)"
   },
+  "chordExtras": {
+    "nat4": "(4\u266e)",
+    "nat6": "(6\u266e)",
+    "susb9": "(sus b9)",
+    "sharp11": "(11#)",
+    "flat6": "(6b)"
+  },
   "solfege": {
     "fa": "Fa",
     "do": "Do",

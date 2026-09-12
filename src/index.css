@@ -180,3 +180,15 @@
 html[data-mf-sidebar='open'] [data-slot='sidebar-inset'] {
   clip-path: inset(0 0 0 var(--sidebar-width));
 }
+
+/* Sidebar content: vertical scroll only — overflow-auto was showing a useless
+   horizontal scrollbar when labels / selects sat flush to the edge. */
+[data-slot='sidebar-content'] {
+  overflow-x: hidden;
+}
+
+[data-slot='sidebar-inner'],
+[data-slot='sidebar'] {
+  overflow-x: hidden;
+  max-width: 100%;
+}

@@ -10,9 +10,19 @@ test.describe('sidebar', () => {
     await expect(page.getByTestId('toolbar')).toBeVisible()
     await page.getByTestId('sidebar-trigger').click()
     await expect(page.getByTestId('toolbar')).toHaveCount(0)
+
+    // Tools mirror the collapsed rail, then theme sits after theory.
+    await expect(page.getByTestId('advanced-toggle-menu')).toBeVisible()
+    await expect(page.getByTestId('share-button-menu')).toBeVisible()
+    await expect(page.getByTestId('howto-open')).toBeVisible()
+    await expect(page.getByTestId('theory-open')).toBeVisible()
+    await expect(page.getByTestId('theme-toggle')).toBeVisible()
+
     await expect(page.getByTestId('scale-select')).toBeVisible()
     await expect(page.getByTestId('language-select')).toBeVisible()
-    await expect(page.getByTestId('theme-toggle')).toBeVisible()
+
+    await page.getByTestId('advanced-toggle-menu').click()
+    await expect(page.getByTestId('canvas')).toHaveAttribute('data-advanced', 'true')
 
     await page.getByTestId('howto-open').scrollIntoViewIfNeeded()
     await page.getByTestId('howto-open').click()

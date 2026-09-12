@@ -7,7 +7,9 @@ test.describe('sidebar', () => {
     await page.goto('/?key=C')
     await waitSettled(page)
 
+    await expect(page.getByTestId('toolbar')).toBeVisible()
     await page.getByTestId('sidebar-trigger').click()
+    await expect(page.getByTestId('toolbar')).toHaveCount(0)
     await expect(page.getByTestId('scale-select')).toBeVisible()
     await expect(page.getByTestId('language-select')).toBeVisible()
     await expect(page.getByTestId('theme-toggle')).toBeVisible()
@@ -28,5 +30,11 @@ test.describe('sidebar', () => {
     await expect(page.getByTestId('theory-dialog')).toBeVisible()
     await page.keyboard.press('Escape')
     await expect(page.getByTestId('theory-dialog')).toHaveCount(0)
+
+    const close = page.getByTestId('sidebar-close')
+    if (await close.isVisible()) {
+      await close.click()
+    }
+    await expect(page.getByTestId('toolbar')).toBeVisible()
   })
 })

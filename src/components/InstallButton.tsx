@@ -1,4 +1,4 @@
-import { Download } from 'lucide-react'
+import { MonitorDown } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 
 import { Button } from '@/components/ui/button'
@@ -25,7 +25,7 @@ export function InstallButton({ variant = 'icon' }: InstallButtonProps) {
         data-testid="install-button-menu"
         onClick={() => void promptInstall()}
       >
-        <Download className="size-4" />
+        <MonitorDown className="size-4" />
         {t('pwa.install.menu')}
       </Button>
     )
@@ -40,7 +40,7 @@ export function InstallButton({ variant = 'icon' }: InstallButtonProps) {
       aria-label={t('pwa.install.label')}
       onClick={() => void promptInstall()}
     >
-      <Download className="size-4" />
+      <MonitorDown className="size-4" />
     </Button>
   )
 }

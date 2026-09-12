@@ -6,6 +6,7 @@
   "loading": "Loading\u2026",
   "sidebar": {
     "openMenu": "Open menu",
+    "closeMenu": "Close menu",
     "settings": "Settings",
     "learn": "Learn"
   },

@@ -21,7 +21,10 @@
   gap: 0.6rem;
   width: 100%;
   height: 100%;
+  /* Left pad = toolbar rail + the same 0.5rem used on the right, so the gap
+     from the icon stack to the board matches the board-to-screen gap. */
   padding: clamp(0.4rem, 1.5vh, 1.25rem) 0.5rem;
+  padding-left: calc(var(--toolbar-rail-w, 2.25rem) + 0.5rem);
   /* Clips the bleeding strip at the viewport, never at the canvas. */
   overflow-x: clip;
 }

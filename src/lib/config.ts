@@ -12,6 +12,13 @@ export const MIN_LANDSCAPE_WIDTH = Number(
 export const CANVAS_MAX_WIDTH = 600
 
 /**
+ * Width of the collapsed toolbar icon column (`Button size="icon"` = 36px plus
+ * the 1px right border). Stage left padding is this plus the same 0.5rem used
+ * on the right, so the gap from buttons → board matches board → screen edge.
+ */
+export const TOOLBAR_RAIL_WIDTH = 37
+
+/**
  * The persistent sidebar rail needs both width and height: a phone in landscape
  * (844x390) is wide enough but far too short, and there the canvas should own
  * the horizontal space instead.

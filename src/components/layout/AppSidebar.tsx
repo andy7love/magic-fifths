@@ -1,10 +1,11 @@
 import { useState } from 'react'
-import { BookOpen, CircleHelp, Languages, Moon, Sun } from 'lucide-react'
+import { BookOpen, CircleHelp, Languages, Moon, Sun, X } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 
 import { HowToUseDialog } from '@/components/dialogs/HowToUseDialog'
 import { FifthsTheoryDialog } from '@/components/dialogs/FifthsTheoryDialog'
 import { ShareButton } from '@/components/ShareButton'
+import { Button } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'
 import {
   Select,
@@ -24,6 +25,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarSeparator,
+  useSidebar,
 } from '@/components/ui/sidebar'
 import { Switch } from '@/components/ui/switch'
 import { useSettings, type ThemePreference } from '@/context/settings'
@@ -32,6 +34,7 @@ import { SCALES } from '@/lib/music/scales'
 
 export function AppSidebar() {
   const { t } = useTranslation(['common', 'music'])
+  const { setOpen, setOpenMobile, isMobile } = useSidebar()
   const { theme, setTheme, language, setLanguage, scaleId, setScaleId, resolvedTheme } =
     useSettings()
   const [howtoOpen, setHowtoOpen] = useState(false)
@@ -39,12 +42,32 @@ export function AppSidebar() {
 
   const dark = resolvedTheme === 'dark'
 
+  const closeSidebar = () => {
+    if (isMobile) setOpenMobile(false)
+    else setOpen(false)
+  }
+
   return (
     <>
       <Sidebar collapsible="offcanvas" data-testid="app-sidebar">
         <SidebarHeader className="gap-1 px-3 py-4">
-          <p className="font-hand text-2xl leading-none">{t('common:app.name')}</p>
-          <p className="text-xs text-muted-foreground">{t('common:app.tagline')}</p>
+          <div className="flex items-start justify-between gap-2">
+            <div className="min-w-0 space-y-1">
+              <p className="font-hand text-2xl leading-none">{t('common:app.name')}</p>
+              <p className="text-xs text-muted-foreground">{t('common:app.tagline')}</p>
+            </div>
+            <Button
+              type="button"
+              variant="ghost"
+              size="icon"
+              className="size-7 shrink-0"
+              data-testid="sidebar-close"
+              aria-label={t('common:sidebar.closeMenu')}
+              onClick={closeSidebar}
+            >
+              <X className="size-4" />
+            </Button>
+          </div>
         </SidebarHeader>
 
         <SidebarContent>

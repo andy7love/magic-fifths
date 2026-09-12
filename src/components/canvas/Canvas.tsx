@@ -8,7 +8,7 @@ import { QualityRows } from '@/components/canvas/QualityRows'
 import { useColumnWidth } from '@/hooks/use-column-width'
 import { useFifthsStrip } from '@/hooks/use-fifths-strip'
 import { getAlignmentDeltas } from '@/lib/alignment'
-import { CANVAS_MAX_WIDTH, SHARE_MODE_PARAM, SHARE_PARAM } from '@/lib/config'
+import { CANVAS_MAX_WIDTH, SHARE_MODE_PARAM, SHARE_PARAM, TOOLBAR_RAIL_WIDTH } from '@/lib/config'
 import {
   DEFAULT_TONIC_MODE,
   isModeId,
@@ -140,6 +140,10 @@ export function Canvas() {
     }
   }, [snapIndex, tonicModeId, columnWidth, goTo, selectTonicMode])
 
+  const stageStyle = {
+    '--toolbar-rail-w': `${TOOLBAR_RAIL_WIDTH}px`,
+  } as CSSProperties
+
   const style = {
     '--col-w': columnWidth > 0 ? `${columnWidth}px` : undefined,
     '--canvas-max-w': `${CANVAS_MAX_WIDTH}px`,
@@ -147,7 +151,7 @@ export function Canvas() {
   } as CSSProperties
 
   return (
-    <div className="mf-stage" data-testid="canvas-stage">
+    <div className="mf-stage" style={stageStyle} data-testid="canvas-stage">
       <div className="mf-canvas" style={style} data-testid="canvas">
         <div className="mf-board" aria-hidden="true" />
         <ModesHeader

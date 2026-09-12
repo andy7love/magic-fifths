@@ -243,7 +243,7 @@
 .mf-natural {
   display: inline-flex;
   align-items: center;
-  width: 0.55em;
+  width: 0.52em;
   height: 0.95em;
   vertical-align: -0.15em;
 }
@@ -255,19 +255,23 @@
 }
 
 /*
- * Landscape tetrads are vertical-rl + rotate(180deg). The drawn ♮ needs its own
- * 90deg turn so the stems run with the letters, and a larger em box so it does
- * not look undersized next to the already-shrunk landscape chord face.
+ * Landscape tetrads are vertical-rl + rotate(180deg). Keep the natural's box
+ * tall (matching the SVG viewBox) and only then rotate 90deg — a wide box
+ * would squash the stems and make ♮ look like a stubby ♯.
+ *
+ * Negative inline margin cancels the tall layout advance that would otherwise
+ * leave a gap between ♮ and the neighboring 4 / ).
  */
-.mf-quality-cell[data-row='tetrads'] .mf-natural {
-  width: 1.55em;
-  height: 0.9em;
-  transform: rotate(90deg);
-  vertical-align: middle;
+.mf-quality-cell[data-row='tetrads'] .mf-chord-extra {
+  letter-spacing: 0.02em;
 }
 
-.mf-quality-cell[data-row='tetrads'] .mf-natural svg path {
-  stroke-width: 2;
+.mf-quality-cell[data-row='tetrads'] .mf-natural {
+  width: 0.5em;
+  height: 1.05em;
+  margin-inline: -0.2em;
+  transform: rotate(90deg);
+  vertical-align: middle;
 }
 
 .mf-canvas[data-advanced='true'] .mf-quality-cell[data-row='tetrads'] {

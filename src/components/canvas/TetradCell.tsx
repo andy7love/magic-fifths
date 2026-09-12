@@ -1,27 +1,10 @@
 import { Fragment } from 'react'
 import { useTranslation } from 'react-i18next'
 
+import { NaturalSign } from '@/components/canvas/NaturalSign'
 import type { Mode } from '@/lib/music/modes'
 
 const NATURAL = '\u266e'
-
-/** Drawn, not a font glyph: Inter's ♮ stays upright and reads as "h"/"b" on edge. */
-function NaturalSign() {
-  return (
-    <span className="mf-natural">
-      <span className="sr-only">{NATURAL}</span>
-      <svg viewBox="0 0 14 24" aria-hidden="true">
-        <path
-          d="M3.2.6 V23.4 M10.8.6 V23.4 M3.2 8.6 L10.8 5.4 M3.2 18.8 L10.8 15.6"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="1.7"
-          strokeLinecap="square"
-        />
-      </svg>
-    </span>
-  )
-}
 
 function withNaturals(text: string) {
   return text.split(NATURAL).map((part, index, parts) => (

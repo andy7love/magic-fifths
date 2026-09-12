@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { BookOpen, CircleHelp, Layers } from 'lucide-react'
+import { BookOpen, CircleHelp, Music2 } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 
 import { HowToUseDialog } from '@/components/dialogs/HowToUseDialog'
@@ -40,7 +40,7 @@ export function Toolbar() {
             aria-pressed={advancedChords}
             onClick={() => setAdvancedChords(!advancedChords)}
           >
-            <Layers className="size-4" />
+            <Music2 className="size-4" />
           </Button>
           <ShareButton variant="icon" />
           <Button

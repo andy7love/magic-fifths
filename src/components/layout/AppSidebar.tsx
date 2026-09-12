@@ -85,7 +85,6 @@ export function AppSidebar() {
           {/* Same actions as the collapsed toolbar rail, in the same order, so
               opening the drawer teaches which icon is which. */}
           <SidebarGroup>
-            <SidebarGroupLabel>{t('common:sidebar.tools')}</SidebarGroupLabel>
             <SidebarGroupContent>
               <SidebarMenu>
                 <SidebarMenuItem>

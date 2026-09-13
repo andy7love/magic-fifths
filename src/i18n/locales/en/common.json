@@ -1,7 +1,8 @@
 {
   "app": {
     "name": "Magic Fifths",
-    "tagline": "The seven modes of the major scale, on one sliding strip."
+    "tagline": "The seven modes of the major scale, on one sliding strip.",
+    "version": "Magic Fifths v.{{version}}"
   },
   "loading": "Loading\u2026",
   "sidebar": {
@@ -70,6 +71,10 @@
     "install": {
       "label": "Install app",
       "menu": "Install app"
+    },
+    "open": {
+      "label": "Open app",
+      "menu": "Open app"
     }
   },
   "dialog": {

@@ -86,6 +86,7 @@ describe.each(Object.entries(CATALOGS))('%s namespace', (_namespace, catalog) =>
       'chordExtras.',
       'solfege.',
       'app.name',
+      'app.version',
       'share.title',
       'readout.valueMode',
       'strip.valueMode',

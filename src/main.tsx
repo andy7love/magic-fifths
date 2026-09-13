@@ -4,8 +4,11 @@ import { createRoot } from 'react-dom/client'
 import { App } from '@/App'
 import { SettingsProvider } from '@/context/SettingsProvider'
 import { initI18n } from '@/i18n'
+import { startInstallPromptCapture } from '@/lib/install-prompt'
 import './index.css'
 
+// Before React mounts: BIP often fires on load and is easy to miss from useEffect.
+startInstallPromptCapture()
 void initI18n()
 
 const container = document.getElementById('root')

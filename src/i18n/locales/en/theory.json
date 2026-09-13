@@ -1,34 +1,21 @@
 {
   "title": "Fifths Theory",
-  "intro": "Why a single straight strip can show you seven modes at once.",
   "sections": [
     {
-      "heading": "Seven fifths make a scale",
-      "body": "Start on F and keep going up a perfect fifth: F, C, G, D, A, E, B. After seven notes you have used every letter once, and those seven notes are exactly the notes of C major. That is the whole trick. Because a major scale is a stack of fifths in disguise, laying the fifths out in a straight line lets one strip carry a complete scale."
-    },
-    {
-      "heading": "One scale, seven homes",
-      "body": "A mode is not a different set of notes, it is a different note treated as home. The same seven notes give seven modes depending on where you start. The columns are ordered by fifths rather than by scale degree, which is why all seven line up at once instead of one at a time."
+      "heading": "The Perfect Fifth Interval",
+      "body": "The perfect fifth is a consonant interval that helps us organize and clearly see many structures that exist in music. Based on the harmonic series that arises from the natural vibration of a string, we choose it because, taking it as a unit of measure and applying it consecutively, it is an interval that lets us traverse the 12 pitch classes used in Western music (the full chromatic set of sounds)."
     },
     {
       "heading": "The tonic is grade 1",
-      "body": "Whichever mode column you mark as grade 1 is the tonic — the home of the scale you are reading. By default that is Ionian, which is just the major scale under its older name. Tap another mode name and the degree numbers rotate so that column becomes 1; Lydian, Mixolydian and the rest keep their fifths order, only the counting changes."
+      "body": "Whichever mode column you mark as grade 1 is the tonic — the home of the scale you are reading. By default that is Ionian, which is just the major scale under its older name. Tap another mode name and the degree numbers rotate so that column becomes 1."
     },
     {
       "heading": "Ionian is Major, Aeolian is Minor",
       "body": "Ionian and Aeolian are the everyday Major and Minor scales. The board labels them that way so you can find them without memorising Greek names first. Choosing Aeolian as grade 1 is how you read a natural minor key on the same strip."
     },
     {
-      "heading": "The chord qualities never move",
-      "body": "Three major, three minor, one diminished, in that order, always. The qualities are printed on the board rather than on the strip because they depend on position within the parent major scale, not on which mode you treat as home. Change the window and every chord changes name, but the pattern of majors and minors stays where it is."
-    },
-    {
-      "heading": "Sliding changes the key signature",
-      "body": "Each column to the right adds one sharp, each column to the left adds one flat. That is the circle of fifths doing its usual job: neighbouring keys differ by exactly one accidental, which is also why they sound closely related."
-    },
-    {
-      "heading": "Why double accidentals are there",
-      "body": "The far ends reach spellings like C double-flat and C double-sharp. They look strange, but they are real: once you are in a key with six or seven sharps, the remaining notes need double sharps to keep one letter per scale degree. The physical cardboard includes them, so this does too."
+      "heading": "Credits",
+      "body": "Original idea: Joaquín Baranzano and Andrés Amor\n\nBibliography and theoretical foundations based on:\nMiguel Marozzi — Lectoescritura courses, Escuela Universitaria de Música, UDELAR. Uruguay.\nPaul Hindemith — Craft of Musical Composition\n                    Paul Hindemith — Ludus Tonalis\nJoaquín Zamacois — La Teoría de la Música\nF. A. Gevaert — Tratado de Armonía (Bruxelles)\n\nDevelopment: Andrés Amor\nDesign: Ignacio Corbo"
     }
   ]
 }

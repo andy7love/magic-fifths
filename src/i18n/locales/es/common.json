@@ -1,7 +1,8 @@
 {
   "app": {
     "name": "Magic Fifths",
-    "tagline": "Los siete modos de la escala mayor, en una sola tira deslizante."
+    "tagline": "Los siete modos de la escala mayor, en una sola tira deslizante.",
+    "version": "Magic Fifths v.{{version}}"
   },
   "loading": "Cargando\u2026",
   "sidebar": {
@@ -70,6 +71,10 @@
     "install": {
       "label": "Instalar app",
       "menu": "Instalar app"
+    },
+    "open": {
+      "label": "Abrir app",
+      "menu": "Abrir app"
     }
   },
   "dialog": {

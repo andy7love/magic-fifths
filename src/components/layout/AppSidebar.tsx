@@ -18,6 +18,7 @@ import {
 import {
   Sidebar,
   SidebarContent,
+  SidebarFooter,
   SidebarGroup,
   SidebarGroupContent,
   SidebarGroupLabel,
@@ -32,6 +33,7 @@ import { Switch } from '@/components/ui/switch'
 import { useSettings, type ThemePreference } from '@/context/settings'
 import { useInstallPrompt } from '@/hooks/use-install-prompt'
 import { SUPPORTED_LANGUAGES, type LanguageCode } from '@/i18n'
+import { APP_VERSION } from '@/lib/config'
 import { SCALES } from '@/lib/music/scales'
 
 export function AppSidebar() {
@@ -51,7 +53,7 @@ export function AppSidebar() {
   const [theoryOpen, setTheoryOpen] = useState(false)
 
   const dark = resolvedTheme === 'dark'
-  const { canInstall } = useInstallPrompt()
+  const { canInstall, canOpen } = useInstallPrompt()
 
   const closeSidebar = () => {
     if (isMobile) setOpenMobile(false)
@@ -88,15 +90,21 @@ export function AppSidebar() {
             <SidebarGroupContent>
               <SidebarMenu>
                 <SidebarMenuItem>
-                  <SidebarMenuButton
-                    data-testid="advanced-toggle-menu"
-                    isActive={advancedChords}
-                    aria-pressed={advancedChords}
-                    onClick={() => setAdvancedChords(!advancedChords)}
-                  >
-                    <Music2 />
-                    <span>{t('common:advanced.toggle')}</span>
-                  </SidebarMenuButton>
+                  <div className="flex h-8 w-full min-w-0 items-center gap-2 overflow-hidden rounded-md p-2 text-sm">
+                    <Music2 className="size-4 shrink-0" />
+                    <Label
+                      htmlFor="advanced-toggle-menu"
+                      className="min-w-0 flex-1 truncate font-normal"
+                    >
+                      {t('common:advanced.toggle')}
+                    </Label>
+                    <Switch
+                      id="advanced-toggle-menu"
+                      data-testid="advanced-toggle-menu"
+                      checked={advancedChords}
+                      onCheckedChange={setAdvancedChords}
+                    />
+                  </div>
                 </SidebarMenuItem>
                 <SidebarMenuItem>
                   <ShareButton variant="menu" />
@@ -139,7 +147,7 @@ export function AppSidebar() {
                     />
                   </div>
                 </SidebarMenuItem>
-                {canInstall ? (
+                {canInstall || canOpen ? (
                   <SidebarMenuItem>
                     <InstallButton variant="menu" />
                   </SidebarMenuItem>
@@ -209,6 +217,15 @@ export function AppSidebar() {
             </SidebarGroupContent>
           </SidebarGroup>
         </SidebarContent>
+
+        <SidebarFooter className="px-3 py-3">
+          <p
+            className="text-xs text-muted-foreground"
+            data-testid="app-version"
+          >
+            {t('common:app.version', { version: APP_VERSION })}
+          </p>
+        </SidebarFooter>
       </Sidebar>
 
       <HowToUseDialog open={howtoOpen} onOpenChange={setHowtoOpen} />

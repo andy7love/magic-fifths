@@ -3,6 +3,9 @@
  * meant to be adjusted without touching the engine in `useFifthsStrip`.
  */
 
+/** App version from package.json, injected at build time by Vite. */
+export const APP_VERSION = __APP_VERSION__
+
 /**
  * Legacy min-width from the old rotate-to-landscape overlay. The board now
  * flips on `(orientation: portrait)` instead; this stays so existing env

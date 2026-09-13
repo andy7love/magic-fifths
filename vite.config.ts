@@ -1,13 +1,22 @@
+import { readFileSync } from 'node:fs'
 import path from 'node:path'
 import tailwindcss from '@tailwindcss/vite'
 import react from '@vitejs/plugin-react'
 import { defineConfig } from 'vite'
 import { VitePWA } from 'vite-plugin-pwa'
 
+const { version: appVersion } = JSON.parse(
+  readFileSync(new URL('./package.json', import.meta.url), 'utf-8'),
+) as { version: string }
+
 // The dev port is pinned (and strict) so that automated agents and the Playwright
 // config can always rely on http://localhost:5173 without discovery.
 export default defineConfig({
   base: '/',
+  define: {
+    // Single source of truth: package.json "version". Bumped there, shown in the UI.
+    __APP_VERSION__: JSON.stringify(appVersion),
+  },
   plugins: [
     react(),
     tailwindcss(),

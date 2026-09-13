@@ -18,6 +18,7 @@ import {
 import {
   Sidebar,
   SidebarContent,
+  SidebarFooter,
   SidebarGroup,
   SidebarGroupContent,
   SidebarGroupLabel,
@@ -32,6 +33,7 @@ import { Switch } from '@/components/ui/switch'
 import { useSettings, type ThemePreference } from '@/context/settings'
 import { useInstallPrompt } from '@/hooks/use-install-prompt'
 import { SUPPORTED_LANGUAGES, type LanguageCode } from '@/i18n'
+import { APP_VERSION } from '@/lib/config'
 import { SCALES } from '@/lib/music/scales'
 
 export function AppSidebar() {
@@ -209,6 +211,15 @@ export function AppSidebar() {
             </SidebarGroupContent>
           </SidebarGroup>
         </SidebarContent>
+
+        <SidebarFooter className="px-3 py-3">
+          <p
+            className="text-xs text-muted-foreground"
+            data-testid="app-version"
+          >
+            {t('common:app.version', { version: APP_VERSION })}
+          </p>
+        </SidebarFooter>
       </Sidebar>
 
       <HowToUseDialog open={howtoOpen} onOpenChange={setHowtoOpen} />

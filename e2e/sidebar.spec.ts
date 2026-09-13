@@ -1,6 +1,11 @@
 import { expect, test } from '@playwright/test'
+import { createRequire } from 'node:module'
 
 import { waitSettled } from './helpers/strip'
+
+const { version: appVersion } = createRequire(import.meta.url)(
+  '../package.json',
+) as { version: string }
 
 test.describe('sidebar', () => {
   test('opens the drawer and reaches every menu item', async ({ page }) => {
@@ -20,6 +25,9 @@ test.describe('sidebar', () => {
 
     await expect(page.getByTestId('scale-select')).toBeVisible()
     await expect(page.getByTestId('language-select')).toBeVisible()
+    await expect(page.getByTestId('app-version')).toHaveText(
+      `Magic Fifths v.${appVersion}`,
+    )
 
     await page.getByTestId('advanced-toggle-menu').click()
     await expect(page.getByTestId('canvas')).toHaveAttribute('data-advanced', 'true')

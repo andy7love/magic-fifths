@@ -1,7 +1,7 @@
 {
   "name": "magic-fifths",
   "private": true,
-  "version": "1.0.0",
+  "version": "0.0.2",
   "type": "module",
   "description": "An offline-capable PWA that reproduces a cardboard circle-of-fifths modes tool.",
   "packageManager": "pnpm@10.29.3",

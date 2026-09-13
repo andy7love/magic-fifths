@@ -1,6 +1,5 @@
 {
   "title": "C\u00f3mo se usa",
-  "intro": "El cart\u00f3n marr\u00f3n no se mueve nunca. La tira blanca se desliza, y todo lo que lees depende de d\u00f3nde se detiene.",
   "using": {
     "title": "Usando la aplicaci\u00f3n",
     "steps": [
@@ -15,10 +14,20 @@
   },
   "ways": {
     "title": "Formas de usarlo",
-    "items": [
-      "Elige el campo diat\u00f3nico (armadura de clave), y visualiza r\u00e1pidamente qu\u00e9 acordes puedes tocar manteni\u00e9ndote en ese campo y qu\u00e9 funci\u00f3n cumplen.",
-      "Mueve levemente el campo, hacia la izquierda en 4as o hacia la derecha en 5as, para visualizar r\u00e1pidamente modulaciones cercanas.",
-      "Prueba mover el campo para mantenerte en un mismo modo aunque cambies de nota."
+    "sections": [
+      {
+        "heading": "\u00bfQu\u00e9 escala est\u00e1s buscando construir?",
+        "body": "Eleg\u00ed una t\u00f3nica, y ll\u00e9vala al modo que est\u00e9s buscando. Los sonidos que queden a la vista ser\u00e1n los que conforman tu campo.",
+        "example": "Ej: quisieras tocar en Re Lidio; simplemente llev\u00e1 a la nota Re hasta el casillero Lidio, te quedaron 3 sonidos alterados, ellos son fa#, do# y sol#."
+      },
+      {
+        "heading": "Modulaciones",
+        "body": "Mueve levemente el campo, hacia la izquierda en 4as o hacia la derecha en 5as, para visualizar r\u00e1pidamente modulaciones cercanas."
+      },
+      {
+        "heading": "Mantenerme en un modo",
+        "body": "Prueba mover el campo para mantenerte en un mismo modo aunque cambies de nota."
+      }
     ]
   }
 }

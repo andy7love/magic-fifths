@@ -1,6 +1,5 @@
 {
   "title": "How to Use It",
-  "intro": "The brown board never moves. The white strip slides, and everything you read follows from where it stops.",
   "using": {
     "title": "Using the App",
     "steps": [
@@ -15,10 +14,20 @@
   },
   "ways": {
     "title": "Ways to use it",
-    "items": [
-      "Choose the diatonic field (key signature), and quickly see which chords you can play while staying in that field and what function they fulfill.",
-      "Nudge the field slightly — left by fourths or right by fifths — to quickly visualize nearby modulations.",
-      "Try moving the field so you stay in the same mode even as you change the note."
+    "sections": [
+      {
+        "heading": "What scale are you looking to build?",
+        "body": "Pick a tonic and bring it to the mode you are looking for. The notes left in view are the ones that make up your field.",
+        "example": "E.g.: if you want to play in D Lydian, just bring the note D to the Lydian cell; you are left with 3 altered sounds: F#, C#, and G#."
+      },
+      {
+        "heading": "Modulations",
+        "body": "Nudge the field slightly — left by fourths or right by fifths — to quickly visualize nearby modulations."
+      },
+      {
+        "heading": "Staying in a mode",
+        "body": "Try moving the field so you stay in the same mode even as you change the note."
+      }
     ]
   }
 }

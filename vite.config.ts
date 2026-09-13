@@ -33,7 +33,7 @@ export default defineConfig({
       },
       manifest: {
         name: 'Magic Fifths',
-        short_name: 'Fifths',
+        short_name: 'Magic Fifths',
         description:
           'A circle-of-fifths tool for exploring the seven modes of the major scale.',
         theme_color: '#8b5e34',

@@ -4,7 +4,7 @@
   "using": {
     "title": "Using the App",
     "steps": [
-      "Drag the white strip sideways. It snaps so that each note lands exactly under one mode column.",
+      "Drag the white strip sideways. It snaps so that each note lands exactly under one mode column. Left moves by fourths; right moves by fifths.",
       "The note under the grade marked 1 is the tonic. By default that is Ionian (Major). Tap a mode name to make that column grade 1 instead.",
       "Ionian is the common Major scale; Aeolian is the common Minor. Both are labelled on the board.",
       "Read down any column to get the chord built on that note: its triad, then its seventh chord.",

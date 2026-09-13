@@ -3,7 +3,6 @@ import { useTranslation } from 'react-i18next'
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog'
@@ -28,14 +27,15 @@ export function FifthsTheoryDialog({ open, onOpenChange }: FifthsTheoryDialogPro
       <DialogContent className="max-w-lg" data-testid="theory-dialog">
         <DialogHeader>
           <DialogTitle>{t('title')}</DialogTitle>
-          <DialogDescription>{t('intro')}</DialogDescription>
         </DialogHeader>
         <ScrollArea className="max-h-[60vh] pr-3">
           <div className="space-y-5 text-sm">
             {sections.map((section) => (
               <section key={section.heading}>
                 <h3 className="mb-1 font-medium">{section.heading}</h3>
-                <p className="text-muted-foreground leading-relaxed">{section.body}</p>
+                <p className="whitespace-pre-line text-muted-foreground leading-relaxed">
+                  {section.body}
+                </p>
               </section>
             ))}
           </div>

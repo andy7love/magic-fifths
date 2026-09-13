@@ -28,18 +28,18 @@ export function HowToUseDialog({ open, onOpenChange }: HowToUseDialogProps) {
         </DialogHeader>
         <ScrollArea className="max-h-[60vh] pr-3">
           <section className="space-y-3">
-            <h3 className="font-medium">{t('using.title')}</h3>
-            <ol className="list-decimal space-y-3 pl-5 text-sm">
-              {usingSteps.map((step) => (
-                <li key={step}>{step}</li>
-              ))}
-            </ol>
-          </section>
-          <section className="mt-6 space-y-3">
             <h3 className="font-medium">{t('ways.title')}</h3>
             <ol className="list-decimal space-y-3 pl-5 text-sm">
               {ways.map((item) => (
                 <li key={item}>{item}</li>
+              ))}
+            </ol>
+          </section>
+          <section className="mt-6 space-y-3">
+            <h3 className="font-medium">{t('using.title')}</h3>
+            <ol className="list-decimal space-y-3 pl-5 text-sm">
+              {usingSteps.map((step) => (
+                <li key={step}>{step}</li>
               ))}
             </ol>
           </section>

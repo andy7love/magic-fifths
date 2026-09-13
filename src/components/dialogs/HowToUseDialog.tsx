@@ -16,7 +16,8 @@ interface HowToUseDialogProps {
 
 export function HowToUseDialog({ open, onOpenChange }: HowToUseDialogProps) {
   const { t } = useTranslation('howto')
-  const steps = t('steps', { returnObjects: true }) as string[]
+  const usingSteps = t('using.steps', { returnObjects: true }) as string[]
+  const ways = t('ways.items', { returnObjects: true }) as string[]
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -26,17 +27,22 @@ export function HowToUseDialog({ open, onOpenChange }: HowToUseDialogProps) {
           <DialogDescription>{t('intro')}</DialogDescription>
         </DialogHeader>
         <ScrollArea className="max-h-[60vh] pr-3">
-          <ol className="list-decimal space-y-3 pl-5 text-sm">
-            {steps.map((step) => (
-              <li key={step}>{step}</li>
-            ))}
-          </ol>
-          <div className="mt-6 space-y-2 text-sm">
-            <h3 className="font-medium">{t('keyboard.title')}</h3>
-            <p>{t('keyboard.arrows')}</p>
-            <p>{t('keyboard.pages')}</p>
-            <p>{t('keyboard.homeEnd')}</p>
-          </div>
+          <section className="space-y-3">
+            <h3 className="font-medium">{t('using.title')}</h3>
+            <ol className="list-decimal space-y-3 pl-5 text-sm">
+              {usingSteps.map((step) => (
+                <li key={step}>{step}</li>
+              ))}
+            </ol>
+          </section>
+          <section className="mt-6 space-y-3">
+            <h3 className="font-medium">{t('ways.title')}</h3>
+            <ol className="list-decimal space-y-3 pl-5 text-sm">
+              {ways.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
+            </ol>
+          </section>
         </ScrollArea>
       </DialogContent>
     </Dialog>

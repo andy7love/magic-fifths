@@ -1,19 +1,24 @@
 {
   "title": "C\u00f3mo se usa",
   "intro": "El cart\u00f3n marr\u00f3n no se mueve nunca. La tira blanca se desliza, y todo lo que lees depende de d\u00f3nde se detiene.",
-  "steps": [
-    "Arrastra la tira blanca de lado. Se ajusta sola para que cada nota quede exactamente bajo una columna de modo.",
-    "La nota bajo el grado marcado 1 es la t\u00f3nica. Por defecto es J\u00f3nico (Mayor). Toca el nombre de un modo para que esa columna pase a ser el grado 1.",
-    "J\u00f3nico es la escala Mayor habitual; E\u00f3lico es la Menor habitual. Ambos est\u00e1n etiquetados en el cart\u00f3n.",
-    "Lee hacia abajo en cualquier columna para ver el acorde construido sobre esa nota: su tr\u00edada y luego su acorde de s\u00e9ptima.",
-    "Toca cualquier nota de la tira para llevarla directamente a la columna t\u00f3nica (donde est\u00e9 el grado 1).",
-    "Desliza una columna a la derecha para a\u00f1adir un sostenido a la tonalidad, una a la izquierda para a\u00f1adir un bemol.",
-    "Usa Compartir para copiar un enlace que vuelve a abrir exactamente la posici\u00f3n y el modo t\u00f3nico que est\u00e1s viendo."
-  ],
-  "keyboard": {
-    "title": "Teclado",
-    "arrows": "Las flechas izquierda y derecha mueven una columna.",
-    "pages": "Page Up y Page Down saltan un bloque completo de siete.",
-    "homeEnd": "Inicio y Fin van a los extremos de la tira."
+  "using": {
+    "title": "Usando la aplicaci\u00f3n",
+    "steps": [
+      "Arrastra la tira blanca de lado. Se ajusta sola para que cada nota quede exactamente bajo una columna de modo.",
+      "La nota bajo el grado marcado 1 es la t\u00f3nica. Por defecto es J\u00f3nico (Mayor). Toca el nombre de un modo para que esa columna pase a ser el grado 1.",
+      "J\u00f3nico es la escala Mayor habitual; E\u00f3lico es la Menor habitual. Ambos est\u00e1n etiquetados en el cart\u00f3n.",
+      "Lee hacia abajo en cualquier columna para ver el acorde construido sobre esa nota: su tr\u00edada y luego su acorde de s\u00e9ptima.",
+      "Desliza una columna a la derecha para a\u00f1adir un sostenido a la tonalidad, una a la izquierda para a\u00f1adir un bemol.",
+      "Usa Compartir para copiar un enlace que vuelve a abrir exactamente la posici\u00f3n y el modo t\u00f3nico que est\u00e1s viendo.",
+      "Con el teclado: las flechas izquierda y derecha mueven una columna; Page Up y Page Down saltan un bloque completo de siete; Inicio y Fin van a los extremos de la tira."
+    ]
+  },
+  "ways": {
+    "title": "Formas de usarlo",
+    "items": [
+      "Elige el campo diat\u00f3nico (armadura de clave), y visualiza r\u00e1pidamente qu\u00e9 acordes puedes tocar manteni\u00e9ndote en ese campo y qu\u00e9 funci\u00f3n cumplen.",
+      "Mueve levemente el campo, hacia la izquierda en 4as o hacia la derecha en 5as, para visualizar r\u00e1pidamente modulaciones cercanas.",
+      "Prueba mover el campo para mantenerte en un mismo modo aunque cambies de nota."
+    ]
   }
 }

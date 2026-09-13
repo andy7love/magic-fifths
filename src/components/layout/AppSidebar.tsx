@@ -90,15 +90,21 @@ export function AppSidebar() {
             <SidebarGroupContent>
               <SidebarMenu>
                 <SidebarMenuItem>
-                  <SidebarMenuButton
-                    data-testid="advanced-toggle-menu"
-                    isActive={advancedChords}
-                    aria-pressed={advancedChords}
-                    onClick={() => setAdvancedChords(!advancedChords)}
-                  >
-                    <Music2 />
-                    <span>{t('common:advanced.toggle')}</span>
-                  </SidebarMenuButton>
+                  <div className="flex h-8 w-full min-w-0 items-center gap-2 overflow-hidden rounded-md p-2 text-sm">
+                    <Music2 className="size-4 shrink-0" />
+                    <Label
+                      htmlFor="advanced-toggle-menu"
+                      className="min-w-0 flex-1 truncate font-normal"
+                    >
+                      {t('common:advanced.toggle')}
+                    </Label>
+                    <Switch
+                      id="advanced-toggle-menu"
+                      data-testid="advanced-toggle-menu"
+                      checked={advancedChords}
+                      onCheckedChange={setAdvancedChords}
+                    />
+                  </div>
                 </SidebarMenuItem>
                 <SidebarMenuItem>
                   <ShareButton variant="menu" />

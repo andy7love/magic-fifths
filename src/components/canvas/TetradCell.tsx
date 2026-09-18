@@ -45,10 +45,7 @@ export function TetradCell({ mode, advanced, className }: TetradCellProps) {
       <span className="mf-chord">
         <span className="mf-chord-base">{base}</span>
         {extra ? (
-          <>
-            {' '}
-            <span className="mf-chord-extra">{withNaturals(extra)}</span>
-          </>
+          <span className="mf-chord-extra">{withNaturals(extra)}</span>
         ) : null}
       </span>
     </div>

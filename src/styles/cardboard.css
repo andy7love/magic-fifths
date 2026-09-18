@@ -45,8 +45,8 @@
   position: relative;
   display: grid;
   grid-template-columns: var(--label-w) repeat(7, 1fr);
-  /* modes | grades | strip | triads | tetrads */
-  grid-template-rows: auto auto auto auto auto;
+  /* modes | [grades] | strip | [triads] | [tetrads] — row count follows visibility */
+  grid-template-rows: var(--mf-landscape-rows, auto auto auto auto auto);
   width: min(100%, var(--canvas-max-w, 600px));
   /* Overflow stays visible so the paper can stick out past the board. */
   overflow: visible;
@@ -240,6 +240,10 @@
   font-weight: 500;
 }
 
+.mf-quality-cell[data-row='tetrads'] .mf-chord-base + .mf-chord-extra::before {
+  content: ' ';
+}
+
 .mf-natural {
   display: inline-flex;
   align-items: center;
@@ -284,7 +288,7 @@
   position: relative;
   z-index: 20;
   grid-column: 2 / span 7;
-  grid-row: 3;
+  grid-row: var(--mf-strip-row, 3);
   /* The window's left edge IS the first mode column's left edge, because it is
      placed on the same grid tracks. That is what makes alignment exact rather
      than tuned. */
@@ -369,11 +373,15 @@
   position: relative;
   z-index: 30;
   grid-column: 2 / -1;
-  grid-row: 3;
+  grid-row: var(--mf-strip-row, 3);
   pointer-events: none;
   box-shadow:
     0 3px 5px -2px color-mix(in oklab, black 60%, transparent) inset,
     0 -3px 5px -2px color-mix(in oklab, black 45%, transparent) inset;
+}
+
+.mf-strip-gutter {
+  grid-row: var(--mf-strip-row, 3);
 }
 
 /* The tonic column gets a quiet highlight; it is the answer the tool exists to
@@ -415,9 +423,11 @@
   --strip-col-w: clamp(3.4rem, 20vw, 4.75rem);
 
   display: grid;
-  /* name | grades | triads | tetrads | strip. Non-strip columns size to their
-     content; the strip gets a fixed, thumb-friendly width on the right. */
-  grid-template-columns: auto auto auto auto var(--strip-col-w);
+  /* name | [grades] | [triads] | [tetrads] | strip — columns follow visibility */
+  grid-template-columns: var(
+    --mf-portrait-cols,
+    auto auto auto auto var(--strip-col-w)
+  );
   /* Stretch to fill, with a low floor so short phones still show all seven. */
   grid-template-rows: auto repeat(7, minmax(2.2rem, 1fr));
   width: auto;
@@ -454,10 +464,10 @@
 /* Mode rows ----------------------------------------------------------------- */
 
 .mf-canvas--portrait .mf-mode-column {
-  flex-direction: row;
-  align-items: center;
-  justify-content: flex-start;
-  gap: 0.4rem;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 0.1rem;
   min-height: 0;
   padding: 0.2rem 0.5rem;
   border: 0;
@@ -521,15 +531,34 @@
   letter-spacing: 0.01em;
 }
 
+/* Portrait advanced extras wrap under the tetrad so the column stays narrow. */
+.mf-canvas--portrait .mf-pcell[data-row='tetrads'] .mf-chord {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.12rem;
+  white-space: normal;
+  text-align: center;
+  line-height: 1.05;
+}
+
+.mf-canvas--portrait .mf-pcell[data-row='tetrads'] .mf-chord-base + .mf-chord-extra::before {
+  content: none;
+}
+
+.mf-canvas--portrait .mf-pcell[data-row='tetrads'] .mf-chord-extra {
+  font-size: 0.78em;
+}
+
 .mf-canvas--portrait[data-advanced='true'] .mf-pcell[data-row='tetrads'] {
-  min-width: 6.25rem;
-  padding-inline: 0.45rem;
+  min-width: 0;
+  padding-inline: 0.35rem;
 }
 
 /* The strip, threaded vertically down the right column -------------------- */
 
 .mf-canvas--portrait .mf-strip-window {
-  grid-column: 5;
+  grid-column: var(--mf-strip-col, 5);
   grid-row: 2 / span 7;
 }
 
@@ -580,7 +609,7 @@
 
 /* Channel lips run down the left and right paper edges. */
 .mf-canvas--portrait .mf-channel {
-  grid-column: 5;
+  grid-column: var(--mf-strip-col, 5);
   grid-row: 2 / span 7;
   box-shadow:
     3px 0 5px -2px color-mix(in oklab, black 60%, transparent) inset,

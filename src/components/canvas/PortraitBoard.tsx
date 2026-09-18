@@ -55,7 +55,7 @@ export function PortraitBoard({
   onKeyDown,
 }: PortraitBoardProps) {
   const { t } = useTranslation('music')
-  const { advancedChords } = useSettings()
+  const { advancedChords, showTriads, showTetrads, showGrades } = useSettings()
   const grades = gradesForTonic(tonicModeId)
 
   return (
@@ -63,15 +63,21 @@ export function PortraitBoard({
       <div className="mf-phead" aria-hidden="true">
         {t('rows.modes')}
       </div>
-      <div className="mf-phead" aria-hidden="true">
-        {t('rows.grades')}
-      </div>
-      <div className="mf-phead" aria-hidden="true">
-        {t('rows.triads')}
-      </div>
-      <div className="mf-phead" data-row="tetrads" aria-hidden="true">
-        {advancedChords ? null : t('rows.tetrads')}
-      </div>
+      {showGrades ? (
+        <div className="mf-phead" aria-hidden="true">
+          {t('rows.grades')}
+        </div>
+      ) : null}
+      {showTriads ? (
+        <div className="mf-phead" aria-hidden="true">
+          {t('rows.triads')}
+        </div>
+      ) : null}
+      {showTetrads ? (
+        <div className="mf-phead" data-row="tetrads" aria-hidden="true">
+          {advancedChords ? null : t('rows.tetrads')}
+        </div>
+      ) : null}
       <div className="mf-phead" aria-hidden="true" />
 
       {MODES.map((mode, index) => {
@@ -111,23 +117,29 @@ export function PortraitBoard({
                 </span>
               ) : null}
             </button>
-            <div
-              className="mf-pcell"
-              data-row="grades"
-              data-testid="grade-cell"
-              data-grade={grade}
-              data-tonic-grade={grade === 1 ? 'true' : 'false'}
-            >
-              <span>{grade}</span>
-            </div>
-            <div className="mf-pcell" data-row="triads" data-mode={mode.id}>
-              <span>{t(`triads.${mode.triad}` as 'triads.major')}</span>
-            </div>
-            <TetradCell
-              mode={mode}
-              advanced={advancedChords}
-              className="mf-pcell"
-            />
+            {showGrades ? (
+              <div
+                className="mf-pcell"
+                data-row="grades"
+                data-testid="grade-cell"
+                data-grade={grade}
+                data-tonic-grade={grade === 1 ? 'true' : 'false'}
+              >
+                <span>{grade}</span>
+              </div>
+            ) : null}
+            {showTriads ? (
+              <div className="mf-pcell" data-row="triads" data-mode={mode.id}>
+                <span>{t(`triads.${mode.triad}` as 'triads.major')}</span>
+              </div>
+            ) : null}
+            {showTetrads ? (
+              <TetradCell
+                mode={mode}
+                advanced={advancedChords}
+                className="mf-pcell"
+              />
+            ) : null}
           </div>
         )
       })}

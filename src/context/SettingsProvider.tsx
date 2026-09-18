@@ -42,6 +42,27 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
     serialize: (value) => (value ? 'true' : 'false'),
   })
 
+  const [showTriads, setShowTriads] = usePersistedState<boolean>({
+    key: STORAGE_KEYS.showTriads,
+    fallback: true,
+    parse: (raw) => (raw === 'true' ? true : raw === 'false' ? false : null),
+    serialize: (value) => (value ? 'true' : 'false'),
+  })
+
+  const [showTetrads, setShowTetrads] = usePersistedState<boolean>({
+    key: STORAGE_KEYS.showTetrads,
+    fallback: true,
+    parse: (raw) => (raw === 'true' ? true : raw === 'false' ? false : null),
+    serialize: (value) => (value ? 'true' : 'false'),
+  })
+
+  const [showGrades, setShowGrades] = usePersistedState<boolean>({
+    key: STORAGE_KEYS.showGrades,
+    fallback: true,
+    parse: (raw) => (raw === 'true' ? true : raw === 'false' ? false : null),
+    serialize: (value) => (value ? 'true' : 'false'),
+  })
+
   const prefersDark = useMediaQuery('(prefers-color-scheme: dark)')
   const resolvedTheme: ResolvedTheme =
     theme === 'system' ? (prefersDark ? 'dark' : 'light') : theme
@@ -81,6 +102,12 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
       setScaleId,
       advancedChords,
       setAdvancedChords,
+      showTriads,
+      setShowTriads,
+      showTetrads,
+      setShowTetrads,
+      showGrades,
+      setShowGrades,
     }),
     [
       theme,
@@ -92,6 +119,12 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
       setScaleId,
       advancedChords,
       setAdvancedChords,
+      showTriads,
+      setShowTriads,
+      showTetrads,
+      setShowTetrads,
+      showGrades,
+      setShowGrades,
     ],
   )
 

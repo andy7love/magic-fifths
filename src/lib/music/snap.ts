@@ -18,9 +18,27 @@ export const MAX_SNAP = CHAIN_LENGTH - COLUMNS
 /** The natural block, i.e. `F C G D A E B`, i.e. C major with Ionian as home. */
 export const DEFAULT_SNAP = 14
 
+/**
+ * Twelve perfect fifths land on the enharmonic spelling of the same pitch class.
+ * The strip's "center" is `DEFAULT_SNAP` (the natural / flat-side resting
+ * position); from either side we always jump toward the other side of center.
+ */
+export const ENHARMONIC_SHIFT = 12
+
 export function clampSnap(index: number): number {
   if (!Number.isFinite(index)) return DEFAULT_SNAP
   return Math.min(MAX_SNAP, Math.max(0, Math.round(index)))
+}
+
+/**
+ * Snap index of the enharmonic field, or `null` when already at the strip
+ * center (where the control should be disabled).
+ */
+export function enharmonicSnap(snapIndex: number): number | null {
+  const index = clampSnap(snapIndex)
+  if (index === DEFAULT_SNAP) return null
+  const delta = index < DEFAULT_SNAP ? ENHARMONIC_SHIFT : -ENHARMONIC_SHIFT
+  return clampSnap(index + delta)
 }
 
 export function isSnapIndex(value: unknown): value is number {

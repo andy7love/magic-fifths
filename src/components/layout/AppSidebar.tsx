@@ -5,6 +5,11 @@ import { useTranslation } from 'react-i18next'
 import { HowToUseDialog } from '@/components/dialogs/HowToUseDialog'
 import { FifthsTheoryDialog } from '@/components/dialogs/FifthsTheoryDialog'
 import { InstallButton } from '@/components/InstallButton'
+import {
+  DegreeIcon,
+  EnharmonicIcon,
+  NoteCountIcon,
+} from '@/components/layout/ChromeIcons'
 import { ShareButton } from '@/components/ShareButton'
 import { Button } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'
@@ -32,6 +37,7 @@ import {
 import { Switch } from '@/components/ui/switch'
 import { useSettings, type ThemePreference } from '@/context/settings'
 import { useInstallPrompt } from '@/hooks/use-install-prompt'
+import { useStripActions } from '@/hooks/use-strip-actions'
 import { SUPPORTED_LANGUAGES, type LanguageCode } from '@/i18n'
 import { APP_VERSION } from '@/lib/config'
 import { SCALES } from '@/lib/music/scales'
@@ -48,7 +54,14 @@ export function AppSidebar() {
     resolvedTheme,
     advancedChords,
     setAdvancedChords,
+    showTriads,
+    setShowTriads,
+    showTetrads,
+    setShowTetrads,
+    showGrades,
+    setShowGrades,
   } = useSettings()
+  const { canSeekEnharmonic, seekEnharmonic } = useStripActions()
   const [howtoOpen, setHowtoOpen] = useState(false)
   const [theoryOpen, setTheoryOpen] = useState(false)
 
@@ -89,6 +102,70 @@ export function AppSidebar() {
           <SidebarGroup>
             <SidebarGroupContent>
               <SidebarMenu>
+                <SidebarMenuItem>
+                  <div className="flex h-8 w-full min-w-0 items-center gap-2 overflow-hidden rounded-md p-2 text-sm">
+                    <NoteCountIcon count={3} />
+                    <Label
+                      htmlFor="triads-toggle-menu"
+                      className="min-w-0 flex-1 truncate font-normal"
+                    >
+                      {t('common:display.triads')}
+                    </Label>
+                    <Switch
+                      id="triads-toggle-menu"
+                      data-testid="triads-toggle-menu"
+                      checked={showTriads}
+                      onCheckedChange={setShowTriads}
+                    />
+                  </div>
+                </SidebarMenuItem>
+                <SidebarMenuItem>
+                  <div className="flex h-8 w-full min-w-0 items-center gap-2 overflow-hidden rounded-md p-2 text-sm">
+                    <NoteCountIcon count={4} />
+                    <Label
+                      htmlFor="tetrads-toggle-menu"
+                      className="min-w-0 flex-1 truncate font-normal"
+                    >
+                      {t('common:display.tetrads')}
+                    </Label>
+                    <Switch
+                      id="tetrads-toggle-menu"
+                      data-testid="tetrads-toggle-menu"
+                      checked={showTetrads}
+                      onCheckedChange={setShowTetrads}
+                    />
+                  </div>
+                </SidebarMenuItem>
+                <SidebarMenuItem>
+                  <div className="flex h-8 w-full min-w-0 items-center gap-2 overflow-hidden rounded-md p-2 text-sm">
+                    <DegreeIcon />
+                    <Label
+                      htmlFor="grades-toggle-menu"
+                      className="min-w-0 flex-1 truncate font-normal"
+                    >
+                      {t('common:display.grades')}
+                    </Label>
+                    <Switch
+                      id="grades-toggle-menu"
+                      data-testid="grades-toggle-menu"
+                      checked={showGrades}
+                      onCheckedChange={setShowGrades}
+                    />
+                  </div>
+                </SidebarMenuItem>
+                <SidebarMenuItem>
+                  <SidebarMenuButton
+                    data-testid="enharmonic-seek-menu"
+                    disabled={!canSeekEnharmonic}
+                    aria-disabled={!canSeekEnharmonic}
+                    onClick={() => {
+                      if (seekEnharmonic()) closeSidebar()
+                    }}
+                  >
+                    <EnharmonicIcon />
+                    <span>{t('common:enharmonic.menu')}</span>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
                 <SidebarMenuItem>
                   <div className="flex h-8 w-full min-w-0 items-center gap-2 overflow-hidden rounded-md p-2 text-sm">
                     <Music2 className="size-4 shrink-0" />

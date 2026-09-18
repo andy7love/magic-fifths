@@ -16,7 +16,11 @@ test.describe('sidebar', () => {
     await page.getByTestId('sidebar-trigger').click()
     await expect(page.getByTestId('toolbar')).toHaveCount(0)
 
-    // Tools mirror the collapsed rail, then theme sits after theory.
+    // Display toggles first, then enharmonic seek, then the rest of the rail.
+    await expect(page.getByTestId('triads-toggle-menu')).toBeVisible()
+    await expect(page.getByTestId('tetrads-toggle-menu')).toBeVisible()
+    await expect(page.getByTestId('grades-toggle-menu')).toBeVisible()
+    await expect(page.getByTestId('enharmonic-seek-menu')).toBeVisible()
     await expect(page.getByTestId('advanced-toggle-menu')).toBeVisible()
     await expect(page.getByTestId('share-button-menu')).toBeVisible()
     await expect(page.getByTestId('howto-open')).toBeVisible()

@@ -33,6 +33,15 @@
   "advanced": {
     "toggle": "Acordes avanzados"
   },
+  "display": {
+    "triads": "Tríadas",
+    "tetrads": "Tétradas",
+    "grades": "Grados"
+  },
+  "enharmonic": {
+    "label": "Campo enarmónico",
+    "menu": "Campo enarmónico"
+  },
   "share": {
     "open": "Compartir",
     "title": "Magic Fifths",
@@ -73,7 +82,7 @@
       "menu": "Instalar app",
       "ios": {
         "title": "Instalar en iPhone o iPad",
-        "body": "iOS no permite que las apps abran un popup de instalaci\u00f3n. A\u00f1ade Magic Fifths a la pantalla de inicio as\u00ed:",
+        "body": "A\u00f1ade Magic Fifths a la pantalla de inicio:",
         "steps": [
           "Toca el bot\u00f3n Compartir en Safari (o Chrome en iOS 16.4+).",
           "Despl\u00e1zate y elige A\u00f1adir a pantalla de inicio.",

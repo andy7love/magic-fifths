@@ -33,6 +33,15 @@
   "advanced": {
     "toggle": "Advanced chords"
   },
+  "display": {
+    "triads": "Triads",
+    "tetrads": "Tetrads",
+    "grades": "Degrees"
+  },
+  "enharmonic": {
+    "label": "Enharmonic field",
+    "menu": "Enharmonic field"
+  },
   "share": {
     "open": "Share",
     "title": "Magic Fifths",
@@ -73,7 +82,7 @@
       "menu": "Install app",
       "ios": {
         "title": "Install on iPhone or iPad",
-        "body": "iOS does not allow apps to open an install popup. Add Magic Fifths to your Home Screen instead:",
+        "body": "Add Magic Fifths to your Home Screen:",
         "steps": [
           "Tap the Share button in Safari (or Chrome on iOS 16.4+).",
           "Scroll down and select Add to Home Screen.",

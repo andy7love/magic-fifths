@@ -5,10 +5,16 @@ import { useTranslation } from 'react-i18next'
 import { HowToUseDialog } from '@/components/dialogs/HowToUseDialog'
 import { FifthsTheoryDialog } from '@/components/dialogs/FifthsTheoryDialog'
 import { InstallButton } from '@/components/InstallButton'
+import {
+  DegreeIcon,
+  EnharmonicIcon,
+  NoteCountIcon,
+} from '@/components/layout/ChromeIcons'
 import { ShareButton } from '@/components/ShareButton'
 import { Button } from '@/components/ui/button'
 import { SidebarTrigger, useSidebar } from '@/components/ui/sidebar'
 import { useSettings } from '@/context/settings'
+import { useStripActions } from '@/hooks/use-strip-actions'
 
 /**
  * Collapsed drawer rail. Hidden while the sidebar is open so the open drawer
@@ -16,7 +22,17 @@ import { useSettings } from '@/context/settings'
  */
 export function Toolbar() {
   const { t } = useTranslation('common')
-  const { advancedChords, setAdvancedChords } = useSettings()
+  const {
+    advancedChords,
+    setAdvancedChords,
+    showTriads,
+    setShowTriads,
+    showTetrads,
+    setShowTetrads,
+    showGrades,
+    setShowGrades,
+  } = useSettings()
+  const { canSeekEnharmonic, seekEnharmonic } = useStripActions()
   const { open, openMobile, isMobile } = useSidebar()
   const [howtoOpen, setHowtoOpen] = useState(false)
   const [theoryOpen, setTheoryOpen] = useState(false)
@@ -31,6 +47,52 @@ export function Toolbar() {
           data-testid="toolbar"
         >
           <SidebarTrigger data-testid="sidebar-trigger" aria-label={t('sidebar.openMenu')} />
+          <Button
+            type="button"
+            variant={showTriads ? 'secondary' : 'ghost'}
+            size="icon"
+            data-testid="triads-toggle"
+            aria-label={t('display.triads')}
+            aria-pressed={showTriads}
+            onClick={() => setShowTriads(!showTriads)}
+          >
+            <NoteCountIcon count={3} />
+          </Button>
+          <Button
+            type="button"
+            variant={showTetrads ? 'secondary' : 'ghost'}
+            size="icon"
+            data-testid="tetrads-toggle"
+            aria-label={t('display.tetrads')}
+            aria-pressed={showTetrads}
+            onClick={() => setShowTetrads(!showTetrads)}
+          >
+            <NoteCountIcon count={4} />
+          </Button>
+          <Button
+            type="button"
+            variant={showGrades ? 'secondary' : 'ghost'}
+            size="icon"
+            data-testid="grades-toggle"
+            aria-label={t('display.grades')}
+            aria-pressed={showGrades}
+            onClick={() => setShowGrades(!showGrades)}
+          >
+            <DegreeIcon />
+          </Button>
+          <Button
+            type="button"
+            variant="ghost"
+            size="icon"
+            data-testid="enharmonic-seek"
+            aria-label={t('enharmonic.label')}
+            disabled={!canSeekEnharmonic}
+            onClick={() => {
+              seekEnharmonic()
+            }}
+          >
+            <EnharmonicIcon />
+          </Button>
           <Button
             type="button"
             variant={advancedChords ? 'secondary' : 'ghost'}

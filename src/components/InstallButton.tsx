@@ -1,6 +1,8 @@
+import { useState } from 'react'
 import { AppWindow, MonitorDown } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 
+import { IosInstallDialog } from '@/components/dialogs/IosInstallDialog'
 import { Button } from '@/components/ui/button'
 import { SidebarMenuButton } from '@/components/ui/sidebar'
 import { useInstallPrompt } from '@/hooks/use-install-prompt'
@@ -11,44 +13,62 @@ interface InstallButtonProps {
 
 export function InstallButton({ variant = 'icon' }: InstallButtonProps) {
   const { t } = useTranslation('common')
-  const { canInstall, canOpen, promptInstall, openInstalledApp } = useInstallPrompt()
+  const {
+    canInstall,
+    canOpen,
+    needsIosInstallHelp,
+    promptInstall,
+    openInstalledApp,
+  } = useInstallPrompt()
+  const [iosGuideOpen, setIosGuideOpen] = useState(false)
 
-  // Hidden unless Chrome offered BIP (install) or getInstalledRelatedApps /
-  // appinstalled says we are installed but still in a browser tab (open).
-  // iOS Safari never reaches the install branch; open needs Chromium + related_applications.
-  if (!canInstall && !canOpen) return null
+  // Chrome BIP install, Chromium "open installed app", or iOS Home Screen guide.
+  if (!canInstall && !canOpen && !needsIosInstallHelp) return null
+
+  const isInstallAction = canInstall || needsIosInstallHelp
 
   const onClick = () => {
-    if (canInstall) promptInstall()
-    else openInstalledApp()
+    if (canInstall) {
+      promptInstall()
+      return
+    }
+    if (needsIosInstallHelp) {
+      setIosGuideOpen(true)
+      return
+    }
+    openInstalledApp()
   }
 
-  const label = canInstall ? t('pwa.install.label') : t('pwa.open.label')
-  const menu = canInstall ? t('pwa.install.menu') : t('pwa.open.menu')
-  const Icon = canInstall ? MonitorDown : AppWindow
-
-  if (variant === 'menu') {
-    return (
-      <SidebarMenuButton
-        data-testid={canInstall ? 'install-button-menu' : 'open-app-button-menu'}
-        onClick={onClick}
-      >
-        <Icon />
-        <span>{menu}</span>
-      </SidebarMenuButton>
-    )
-  }
+  const label = isInstallAction ? t('pwa.install.label') : t('pwa.open.label')
+  const menu = isInstallAction ? t('pwa.install.menu') : t('pwa.open.menu')
+  const Icon = isInstallAction ? MonitorDown : AppWindow
+  const testIdPrefix = isInstallAction ? 'install-button' : 'open-app-button'
 
   return (
-    <Button
-      type="button"
-      variant="ghost"
-      size="icon"
-      data-testid={canInstall ? 'install-button-toolbar' : 'open-app-button-toolbar'}
-      aria-label={label}
-      onClick={onClick}
-    >
-      <Icon className="size-4" />
-    </Button>
+    <>
+      {variant === 'menu' ? (
+        <SidebarMenuButton
+          data-testid={`${testIdPrefix}-menu`}
+          onClick={onClick}
+        >
+          <Icon />
+          <span>{menu}</span>
+        </SidebarMenuButton>
+      ) : (
+        <Button
+          type="button"
+          variant="ghost"
+          size="icon"
+          data-testid={`${testIdPrefix}-toolbar`}
+          aria-label={label}
+          onClick={onClick}
+        >
+          <Icon className="size-4" />
+        </Button>
+      )}
+      {needsIosInstallHelp ? (
+        <IosInstallDialog open={iosGuideOpen} onOpenChange={setIosGuideOpen} />
+      ) : null}
+    </>
   )
 }

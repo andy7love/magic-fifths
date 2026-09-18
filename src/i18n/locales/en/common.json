@@ -70,7 +70,17 @@
     "offlineReady": "Ready to work offline",
     "install": {
       "label": "Install app",
-      "menu": "Install app"
+      "menu": "Install app",
+      "ios": {
+        "title": "Install on iPhone or iPad",
+        "body": "iOS does not allow apps to open an install popup. Add Magic Fifths to your Home Screen instead:",
+        "steps": [
+          "Tap the Share button in Safari (or Chrome on iOS 16.4+).",
+          "Scroll down and select Add to Home Screen.",
+          "Tap Add in the top right corner."
+        ],
+        "gotIt": "Got it"
+      }
     },
     "open": {
       "label": "Open app",

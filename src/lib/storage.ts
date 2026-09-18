@@ -16,6 +16,9 @@ export const STORAGE_KEYS = {
   snapIndex: 'snapIndex',
   tonicMode: 'tonicMode',
   advancedChords: 'advancedChords',
+  showTriads: 'showTriads',
+  showTetrads: 'showTetrads',
+  showGrades: 'showGrades',
 } as const
 
 export type StorageKey = (typeof STORAGE_KEYS)[keyof typeof STORAGE_KEYS]

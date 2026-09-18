@@ -7,6 +7,7 @@ import { UpdatePrompt } from '@/components/pwa/UpdatePrompt'
 import { SidebarInset, SidebarProvider, useSidebar } from '@/components/ui/sidebar'
 import { Toaster } from '@/components/ui/sonner'
 import { TooltipProvider } from '@/components/ui/tooltip'
+import { useSidebarEdgeSwipe } from '@/hooks/use-sidebar-edge-swipe'
 
 /**
  * Desktop offcanvas has no sheet overlay of its own. This backdrop closes the
@@ -51,6 +52,11 @@ function SidebarOpenAttr() {
   return null
 }
 
+function SidebarEdgeSwipe() {
+  useSidebarEdgeSwipe()
+  return null
+}
+
 export function AppShell({ children }: { children: ReactNode }) {
   return (
     <TooltipProvider>
@@ -64,6 +70,7 @@ export function AppShell({ children }: { children: ReactNode }) {
         <SidebarBackdrop />
         <AppSidebar />
         <SidebarOpenAttr />
+        <SidebarEdgeSwipe />
         <UpdatePrompt />
         <Toaster position="bottom-center" />
       </SidebarProvider>

@@ -17,6 +17,15 @@ export interface SettingsValue {
   /** Full chord spellings (color tones) instead of bare tetrads. */
   advancedChords: boolean
   setAdvancedChords: (advanced: boolean) => void
+  /** Show the triad quality row under the strip. */
+  showTriads: boolean
+  setShowTriads: (show: boolean) => void
+  /** Show the tetrad / advanced-chord row under the strip. */
+  showTetrads: boolean
+  setShowTetrads: (show: boolean) => void
+  /** Show the scale-degree row above the strip. */
+  showGrades: boolean
+  setShowGrades: (show: boolean) => void
 }
 
 export const SettingsContext = createContext<SettingsValue | null>(null)

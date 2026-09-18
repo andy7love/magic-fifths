@@ -26,6 +26,7 @@ import {
 } from '@/lib/music/snap'
 import { encodeKeyToken, readSharePosition } from '@/lib/share'
 import { STORAGE_KEYS, readSetting, writeSetting } from '@/lib/storage'
+import { publishStripActions } from '@/lib/strip-actions'
 
 import '@/styles/cardboard.css'
 
@@ -79,7 +80,7 @@ function replaceShareParams(snapIndex: number, tonicModeId: ModeId) {
 }
 
 export function Canvas() {
-  const { advancedChords } = useSettings()
+  const { advancedChords, showTriads, showTetrads, showGrades } = useSettings()
   const portrait = usePortraitLayout()
   // Landscape scrolls horizontally off the mode-column width; portrait flips the
   // board and scrolls vertically off the mode-row height.
@@ -127,6 +128,13 @@ export function Canvas() {
   }, [snapIndex, tonicModeId])
 
   useEffect(() => {
+    publishStripActions(snapIndex, goTo)
+    return () => {
+      publishStripActions(snapIndex, null)
+    }
+  }, [snapIndex, goTo])
+
+  useEffect(() => {
     if (!(import.meta.env.DEV || import.meta.env.VITE_E2E)) return
 
     window.__mf__ = {
@@ -147,6 +155,32 @@ export function Canvas() {
     }
   }, [snapIndex, tonicModeId, columnWidth, goTo, selectTonicMode])
 
+  // Portrait: name | [grades] | [triads] | [tetrads] | strip. Strip column index
+  // shifts when quality columns are hidden so the paper stays on the right.
+  const portraitStripCol =
+    2 + Number(showGrades) + Number(showTriads) + Number(showTetrads)
+  const portraitCols = [
+    'auto',
+    showGrades ? 'auto' : null,
+    showTriads ? 'auto' : null,
+    showTetrads ? 'auto' : null,
+    'var(--strip-col-w)',
+  ]
+    .filter(Boolean)
+    .join(' ')
+
+  // Landscape: modes | [grades] | strip | [triads] | [tetrads]
+  const landscapeStripRow = 2 + Number(showGrades)
+  const landscapeRows = [
+    'auto',
+    showGrades ? 'auto' : null,
+    'auto',
+    showTriads ? 'auto' : null,
+    showTetrads ? 'auto' : null,
+  ]
+    .filter(Boolean)
+    .join(' ')
+
   const stageStyle = {
     '--toolbar-rail-w': `${TOOLBAR_RAIL_WIDTH}px`,
   } as CSSProperties
@@ -156,6 +190,10 @@ export function Canvas() {
     '--row-h': portrait && columnWidth > 0 ? `${columnWidth}px` : undefined,
     '--canvas-max-w': `${CANVAS_MAX_WIDTH}px`,
     '--tonic-column': String(tonicColumn),
+    '--mf-strip-col': portrait ? String(portraitStripCol) : undefined,
+    '--mf-portrait-cols': portrait ? portraitCols : undefined,
+    '--mf-strip-row': !portrait ? String(landscapeStripRow) : undefined,
+    '--mf-landscape-rows': !portrait ? landscapeRows : undefined,
   } as CSSProperties
 
   return (
@@ -166,6 +204,9 @@ export function Canvas() {
         data-testid="canvas"
         data-orientation={portrait ? 'portrait' : 'landscape'}
         data-advanced={advancedChords ? 'true' : 'false'}
+        data-show-triads={showTriads ? 'true' : 'false'}
+        data-show-tetrads={showTetrads ? 'true' : 'false'}
+        data-show-grades={showGrades ? 'true' : 'false'}
       >
         <div className="mf-board" aria-hidden="true" />
         {portrait ? (
@@ -189,7 +230,7 @@ export function Canvas() {
               tonicModeId={tonicModeId}
               onSelectTonicMode={selectTonicMode}
             />
-            <GradesRow tonicModeId={tonicModeId} />
+            {showGrades ? <GradesRow tonicModeId={tonicModeId} /> : null}
             {/* Empty gutter cell: covers strip bleed under the label column so
                 the paper appears to thread through the board, not over the
                 labels. */}

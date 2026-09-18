@@ -9,6 +9,9 @@
  * Register here at import time (see `main.tsx`), keep the deferred event in a
  * tiny store, and let React subscribe via `useSyncExternalStore`. No polling.
  *
+ * iOS (Safari and Chrome on iOS) never fires BIP. Installation is manual via
+ * Share → Add to Home Screen; `needsIosInstallHelp` surfaces instructional UI.
+ *
  * @see https://developer.mozilla.org/en-US/docs/Web/API/Window/beforeinstallprompt_event
  * @see https://developer.chrome.com/docs/capabilities/get-installed-related-apps
  */
@@ -24,6 +27,11 @@ export interface InstallPromptSnapshot {
   canInstall: boolean
   /** PWA is installed on-device but this tab is still the browser (not standalone). */
   canOpen: boolean
+  /**
+   * iOS in a browser tab: no programmatic install — show Share → Home Screen
+   * guidance instead. Mutually exclusive with `canInstall` in practice.
+   */
+  needsIosInstallHelp: boolean
 }
 
 type Listener = () => void
@@ -31,7 +39,11 @@ type Listener = () => void
 let deferred: BeforeInstallPromptEvent | null = null
 let installed = false
 let started = false
-let snapshot: InstallPromptSnapshot = { canInstall: false, canOpen: false }
+let snapshot: InstallPromptSnapshot = {
+  canInstall: false,
+  canOpen: false,
+  needsIosInstallHelp: false,
+}
 const listeners = new Set<Listener>()
 
 function emit() {
@@ -47,17 +59,41 @@ export function isStandaloneDisplay(): boolean {
   )
 }
 
+/**
+ * Pure iOS / iPadOS detection (including iPadOS 13+ desktop UA with touch).
+ * Exported for unit tests; runtime callers use `isIosDevice()`.
+ */
+export function isIosNavigator(nav: {
+  userAgent: string
+  platform: string
+  maxTouchPoints: number
+}): boolean {
+  if (/iPad|iPhone|iPod/.test(nav.userAgent)) return true
+  // iPadOS 13+ reports as Macintosh but still has a multi-touch trackpad/screen.
+  return nav.platform === 'MacIntel' && nav.maxTouchPoints > 1
+}
+
+export function isIosDevice(): boolean {
+  if (typeof navigator === 'undefined') return false
+  return isIosNavigator(navigator)
+}
+
 function recomputeSnapshot(): InstallPromptSnapshot {
   const standalone = isStandaloneDisplay()
+  const ios = isIosDevice()
   const next: InstallPromptSnapshot = {
     canInstall: !installed && deferred !== null && !standalone,
     canOpen: installed && !standalone,
+    // Hide once launched from Home Screen; there is no reliable "already
+    // installed but browsing in Safari" signal on iOS.
+    needsIosInstallHelp: ios && !standalone,
   }
   // useSyncExternalStore compares with Object.is — must reuse the same
   // object when nothing changed or React loops forever.
   if (
     next.canInstall === snapshot.canInstall &&
-    next.canOpen === snapshot.canOpen
+    next.canOpen === snapshot.canOpen &&
+    next.needsIosInstallHelp === snapshot.needsIosInstallHelp
   ) {
     return snapshot
   }
@@ -121,7 +157,11 @@ export function getInstallPromptSnapshot(): InstallPromptSnapshot {
   return recomputeSnapshot()
 }
 
-const SERVER_SNAPSHOT: InstallPromptSnapshot = { canInstall: false, canOpen: false }
+const SERVER_SNAPSHOT: InstallPromptSnapshot = {
+  canInstall: false,
+  canOpen: false,
+  needsIosInstallHelp: false,
+}
 
 export function getInstallPromptServerSnapshot(): InstallPromptSnapshot {
   return SERVER_SNAPSHOT

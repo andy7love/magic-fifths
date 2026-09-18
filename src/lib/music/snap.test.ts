@@ -4,9 +4,11 @@ import { COLUMNS, TONIC_COLUMN } from './modes'
 import { CHAIN_LENGTH } from './notes'
 import {
   DEFAULT_SNAP,
+  ENHARMONIC_SHIFT,
   MAX_SNAP,
   assignmentsFor,
   clampSnap,
+  enharmonicSnap,
   isSnapIndex,
   offsetFor,
   snapFor,
@@ -25,6 +27,15 @@ describe('snap positions', () => {
 
   it('defaults to C as tonic under Ionian', () => {
     expect(tonicNote(DEFAULT_SNAP).ascii).toBe('C')
+  })
+
+  it('seeks the enharmonic field twelve fifths off center', () => {
+    expect(ENHARMONIC_SHIFT).toBe(12)
+    expect(enharmonicSnap(DEFAULT_SNAP)).toBeNull()
+    expect(enharmonicSnap(DEFAULT_SNAP - 1)).toBe(DEFAULT_SNAP - 1 + 12)
+    expect(enharmonicSnap(DEFAULT_SNAP + 1)).toBe(DEFAULT_SNAP + 1 - 12)
+    expect(enharmonicSnap(0)).toBe(12)
+    expect(enharmonicSnap(MAX_SNAP)).toBe(MAX_SNAP - 12)
   })
 
   it('reads the tonic from a non-Ionian grade-1 column', () => {

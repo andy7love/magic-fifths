@@ -41,6 +41,11 @@
   "notation": {
     "letter": "Letter notation"
   },
+  "playback": {
+    "chord": "Chord",
+    "arpeggio": "Arpeggio",
+    "speed": "Arpeggio speed"
+  },
   "enharmonic": {
     "label": "Enharmonic field",
     "menu": "Enharmonic field",

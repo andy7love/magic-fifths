@@ -19,6 +19,8 @@ interface TetradCellProps {
   mode: Mode
   advanced: boolean
   className: string
+  label: string
+  onPlay: () => void
 }
 
 /**
@@ -26,7 +28,7 @@ interface TetradCellProps {
  * advanced mode appends the color tones in a lighter face, with a space
  * between the two pieces as on the teacher's chart.
  */
-export function TetradCell({ mode, advanced, className }: TetradCellProps) {
+export function TetradCell({ mode, advanced, className, label, onPlay }: TetradCellProps) {
   const { t } = useTranslation('music')
   const base = t(`tetrads.${mode.tetrad}` as 'tetrads.maj7')
   const extra =
@@ -35,12 +37,15 @@ export function TetradCell({ mode, advanced, className }: TetradCellProps) {
       : null
 
   return (
-    <div
+    <button
+      type="button"
       className={className}
       data-row="tetrads"
       data-testid="tetrad-cell"
       data-mode={mode.id}
       data-advanced={advanced ? 'true' : 'false'}
+      aria-label={label}
+      onClick={onPlay}
     >
       <span className="mf-chord">
         <span className="mf-chord-base">{base}</span>
@@ -48,6 +53,6 @@ export function TetradCell({ mode, advanced, className }: TetradCellProps) {
           <span className="mf-chord-extra">{withNaturals(extra)}</span>
         ) : null}
       </span>
-    </div>
+    </button>
   )
 }

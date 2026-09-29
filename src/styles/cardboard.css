@@ -123,7 +123,7 @@
   -webkit-tap-highlight-color: transparent;
 }
 
-.mf-mode-column:last-of-type {
+.mf-mode-column[data-edge='end'] {
   border-right: 1px solid var(--ink-line);
 }
 
@@ -168,7 +168,31 @@
   justify-content: center;
   border-top: 1px solid var(--ink-line);
   border-left: 1px solid var(--ink-line);
+  padding-inline: 0;
   line-height: 1;
+}
+
+button.mf-quality-cell,
+button.mf-pcell {
+  appearance: none;
+  margin: 0;
+  border-radius: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+button.mf-quality-cell:focus-visible,
+button.mf-pcell:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: -2px;
+}
+
+button.mf-quality-cell:active,
+button.mf-pcell:active {
+  background: color-mix(in oklab, var(--board-ink) 8%, transparent);
 }
 
 .mf-quality-cell:last-of-type {

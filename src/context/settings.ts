@@ -1,6 +1,9 @@
 import { createContext, useContext } from 'react'
 
+import type { PlaybackStyle } from '@/lib/audio/schedule'
 import type { LanguageCode } from '@/i18n'
+
+export type { PlaybackStyle }
 
 export type ThemePreference = 'light' | 'dark' | 'system'
 export type ResolvedTheme = 'light' | 'dark'
@@ -39,6 +42,12 @@ export interface SettingsValue {
   /** Fixed-do solfège, or letter names when the switch is on. */
   notation: NoteNotation
   setNotation: (notation: NoteNotation) => void
+  /** Blocked chord, or notes one after another. */
+  playbackStyle: PlaybackStyle
+  setPlaybackStyle: (style: PlaybackStyle) => void
+  /** Gap between arpeggio notes, in milliseconds. */
+  arpeggioMs: number
+  setArpeggioMs: (ms: number) => void
 }
 
 export const SettingsContext = createContext<SettingsValue | null>(null)

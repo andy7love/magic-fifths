@@ -7,9 +7,11 @@ import { ModesHeader } from '@/components/canvas/ModesHeader'
 import { PortraitBoard } from '@/components/canvas/PortraitBoard'
 import { QualityRows } from '@/components/canvas/QualityRows'
 import { useSettings } from '@/context/settings'
+import { useColumnPlayback } from '@/hooks/use-column-playback'
 import { useColumnWidth } from '@/hooks/use-column-width'
 import { useFifthsStrip } from '@/hooks/use-fifths-strip'
 import { usePortraitLayout } from '@/hooks/use-viewport-gate'
+import { getLastPlayback } from '@/lib/audio/piano'
 import { getAlignmentDeltas } from '@/lib/alignment'
 import { CANVAS_MAX_WIDTH, SHARE_MODE_PARAM, SHARE_PARAM, TOOLBAR_RAIL_WIDTH } from '@/lib/config'
 import {
@@ -37,6 +39,7 @@ interface MfBridge {
   setTonicModeId: (modeId: ModeId) => void
   getGeometry: () => { columnWidth: number; offset: number; snapIndex: number }
   getAlignmentDeltas: () => number[]
+  getLastPlayback: () => ReturnType<typeof getLastPlayback>
 }
 
 declare global {
@@ -115,6 +118,8 @@ export function Canvas() {
     onSettle,
   })
 
+  const playVoice = useColumnPlayback(snapIndex)
+
   const selectTonicMode = useCallback((modeId: ModeId) => {
     setTonicModeId(modeId)
     writeSetting(STORAGE_KEYS.tonicMode, modeId)
@@ -149,6 +154,7 @@ export function Canvas() {
         snapIndex,
       }),
       getAlignmentDeltas: () => getAlignmentDeltas(),
+      getLastPlayback: () => getLastPlayback(),
     }
 
     return () => {
@@ -217,6 +223,7 @@ export function Canvas() {
             measureRef={measureRef}
             tonicModeId={tonicModeId}
             onSelectTonicMode={selectTonicMode}
+            onPlayVoice={playVoice}
             snapIndex={snapIndex}
             settled={settled}
             trackRef={trackRef}
@@ -232,6 +239,7 @@ export function Canvas() {
               measureRef={measureRef}
               tonicModeId={tonicModeId}
               onSelectTonicMode={selectTonicMode}
+              onPlayVoice={playVoice}
             />
             {showGrades ? (
               <GradesRow tonicModeId={tonicModeId} showNames={showGradeNames} />
@@ -252,7 +260,7 @@ export function Canvas() {
               onPointerUp={onPointerUp}
               onKeyDown={onKeyDown}
             />
-            <QualityRows />
+            <QualityRows onPlayVoice={playVoice} />
           </>
         )}
       </div>

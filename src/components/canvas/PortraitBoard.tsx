@@ -10,6 +10,7 @@ import { GradeMarks } from '@/components/canvas/GradeMarks'
 import { TetradCell } from '@/components/canvas/TetradCell'
 import { useSettings } from '@/context/settings'
 import { MODES, gradesForTonic, type ModeId } from '@/lib/music/modes'
+import type { VoiceKind } from '@/lib/music/voicing'
 
 const MODE_ALIAS: Partial<Record<ModeId, 'major' | 'minor'>> = {
   ionian: 'major',
@@ -28,6 +29,7 @@ interface PortraitBoardProps {
   onPointerMove: (event: ReactPointerEvent<HTMLElement>) => void
   onPointerUp: (event: ReactPointerEvent<HTMLElement>) => void
   onKeyDown: (event: ReactKeyboardEvent<HTMLElement>) => void
+  onPlayVoice: (column: number, kind: VoiceKind) => void
 }
 
 /**
@@ -54,6 +56,7 @@ export function PortraitBoard({
   onPointerMove,
   onPointerUp,
   onKeyDown,
+  onPlayVoice,
 }: PortraitBoardProps) {
   const { t } = useTranslation('music')
   const { advancedChords, showTriads, showTetrads, showGrades, showGradeNames } = useSettings()
@@ -96,6 +99,7 @@ export function PortraitBoard({
               data-triad={mode.triad}
               data-tetrad={mode.tetrad}
               data-tonic-mode={selected ? 'true' : 'false'}
+              data-edge={index === MODES.length - 1 ? 'end' : undefined}
               aria-pressed={selected}
               aria-label={
                 alias
@@ -107,7 +111,10 @@ export function PortraitBoard({
                       mode: t(`modes.${mode.id}` as 'modes.ionian'),
                     })
               }
-              onClick={() => onSelectTonicMode(mode.id)}
+              onClick={() => {
+                onSelectTonicMode(mode.id)
+                onPlayVoice(mode.column, 'mode')
+              }}
             >
               <span className="mf-mode-label">
                 {t(`modes.${mode.id}` as 'modes.ionian')}
@@ -130,15 +137,29 @@ export function PortraitBoard({
               </div>
             ) : null}
             {showTriads ? (
-              <div className="mf-pcell" data-row="triads" data-mode={mode.id}>
+              <button
+                type="button"
+                className="mf-pcell"
+                data-row="triads"
+                data-testid="triad-cell"
+                data-mode={mode.id}
+                aria-label={t('play.triad', {
+                  mode: t(`modes.${mode.id}` as 'modes.ionian'),
+                })}
+                onClick={() => onPlayVoice(mode.column, 'triad')}
+              >
                 <span>{t(`triads.${mode.triad}` as 'triads.major')}</span>
-              </div>
+              </button>
             ) : null}
             {showTetrads ? (
               <TetradCell
                 mode={mode}
                 advanced={advancedChords}
                 className="mf-pcell"
+                label={t('play.tetrad', {
+                  mode: t(`modes.${mode.id}` as 'modes.ionian'),
+                })}
+                onPlay={() => onPlayVoice(mode.column, 'tetrad')}
               />
             ) : null}
           </div>

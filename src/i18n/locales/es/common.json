@@ -41,6 +41,11 @@
   "notation": {
     "letter": "Cifrado Americano"
   },
+  "playback": {
+    "chord": "Acorde",
+    "arpeggio": "Arpegio",
+    "speed": "Velocidad del arpegio"
+  },
   "enharmonic": {
     "label": "Campo enarmónico",
     "menu": "Campo enarmónico",

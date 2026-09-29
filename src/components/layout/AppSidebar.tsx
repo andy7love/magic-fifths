@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { BookOpen, CircleHelp, Languages, Moon, Music2, Sun, X } from 'lucide-react'
+import { AudioLines, BookOpen, CircleHelp, Languages, Moon, Music2, Sun, X } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 
 import { HowToUseDialog } from '@/components/dialogs/HowToUseDialog'
@@ -37,13 +37,14 @@ import {
   SidebarSeparator,
   useSidebar,
 } from '@/components/ui/sidebar'
+import { Slider } from '@/components/ui/slider'
 import { Switch } from '@/components/ui/switch'
 import { useSettings, type ThemePreference } from '@/context/settings'
 import { useEnharmonicSeek } from '@/hooks/use-enharmonic-seek'
 import { useInstallPrompt } from '@/hooks/use-install-prompt'
 import { cn } from '@/lib/utils'
 import { SUPPORTED_LANGUAGES, type LanguageCode } from '@/i18n'
-import { APP_VERSION } from '@/lib/config'
+import { APP_VERSION, ARPEGGIO_MS } from '@/lib/config'
 import { SCALES } from '@/lib/music/scales'
 
 export function AppSidebar() {
@@ -68,6 +69,10 @@ export function AppSidebar() {
     setShowGradeNames,
     notation,
     setNotation,
+    playbackStyle,
+    setPlaybackStyle,
+    arpeggioMs,
+    setArpeggioMs,
   } = useSettings()
   const { canSeekEnharmonic, suggestEnharmonic, seek } = useEnharmonicSeek()
   const [howtoOpen, setHowtoOpen] = useState(false)
@@ -286,6 +291,53 @@ export function AppSidebar() {
                   }}
                 />
               </div>
+              <div className="space-y-2">
+                <div className="flex h-8 items-center gap-2">
+                  <AudioLines className="size-4 shrink-0" />
+                  <Label
+                    htmlFor="playback-arpeggio"
+                    className="min-w-0 flex-1 truncate font-normal"
+                  >
+                    {playbackStyle === 'arpeggio'
+                      ? t('common:playback.arpeggio')
+                      : t('common:playback.chord')}
+                  </Label>
+                  <Switch
+                    id="playback-arpeggio"
+                    data-testid="playback-arpeggio"
+                    checked={playbackStyle === 'arpeggio'}
+                    onCheckedChange={(checked) =>
+                      setPlaybackStyle(checked ? 'arpeggio' : 'chord')
+                    }
+                  />
+                </div>
+                <div className="space-y-1.5">
+                  <Label
+                    id="arpeggio-speed-label"
+                    htmlFor="arpeggio-speed"
+                    className={cn(playbackStyle !== 'arpeggio' && 'opacity-50')}
+                  >
+                    {t('common:playback.speed')}
+                  </Label>
+                  <Slider
+                    id="arpeggio-speed"
+                    data-testid="arpeggio-speed"
+                    aria-label={t('common:playback.speed')}
+                    aria-labelledby="arpeggio-speed-label"
+                    dir="rtl"
+                    min={ARPEGGIO_MS.min}
+                    max={ARPEGGIO_MS.max}
+                    step={ARPEGGIO_MS.step}
+                    disabled={playbackStyle !== 'arpeggio'}
+                    value={[arpeggioMs]}
+                    onValueChange={(value) => {
+                      const next = value[0]
+                      if (next !== undefined) setArpeggioMs(Math.round(next))
+                    }}
+                  />
+                </div>
+              </div>
+
               <div className="space-y-1.5">
                 <Label htmlFor="scale-select">{t('common:scale.label')}</Label>
                 <Select

@@ -63,3 +63,16 @@ export const SHARE_PARAM = 'key'
  * short and mean C major.
  */
 export const SHARE_MODE_PARAM = 'mode'
+
+/** Octave the lowest note of a played chord or scale is voiced in. */
+export const VOICE_ROOT_OCTAVE = 4
+
+/** How long a blocked chord rings, and the silence before the next one. */
+export const CHORD_HOLD_SEC = 1.5
+export const CHORD_GAP_SEC = 0.25
+
+/** Each arpeggio note rings at least this long, so the piano overlaps. */
+export const ARPEGGIO_HOLD_SEC = 1.1
+
+/** Gap between arpeggio notes, in milliseconds. Right on the slider is faster. */
+export const ARPEGGIO_MS = { min: 40, max: 420, default: 120, step: 10 } as const

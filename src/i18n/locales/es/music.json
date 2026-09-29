@@ -15,8 +15,12 @@
     "locrian": "Locrio"
   },
   "modeSelect": {
-    "label": "Usar {{mode}} como t\u00f3nica",
-    "withAlias": "Usar {{mode}} ({{alias}}) como t\u00f3nica"
+    "label": "Usar {{mode}} como t\u00f3nica y tocar la escala",
+    "withAlias": "Usar {{mode}} ({{alias}}) como t\u00f3nica y tocar la escala"
+  },
+  "play": {
+    "triad": "Tocar la tr\u00edada de {{mode}}",
+    "tetrad": "Tocar el acorde de {{mode}}"
   },
   "triads": {
     "major": "M",

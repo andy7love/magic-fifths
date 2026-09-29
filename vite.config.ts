@@ -27,7 +27,7 @@ export default defineConfig({
       workbox: {
         // Locale JSON chunks are emitted as hashed JS modules by Vite, so the
         // default glob already precaches every language for offline use.
-        globPatterns: ['**/*.{js,css,html,svg,png,woff2,json,ico,webp}'],
+        globPatterns: ['**/*.{js,css,html,svg,png,woff2,json,ico,webp,mp3}'],
         navigateFallback: 'index.html',
         cleanupOutdatedCaches: true,
       },

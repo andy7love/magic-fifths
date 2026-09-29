@@ -12,6 +12,7 @@ import {
   MIN_FLICK_VELOCITY,
   RELEASE_PROJECTION_MS,
   RUBBER_BAND_FACTOR,
+  SIDEBAR_EDGE_SWIPE_PX,
   SNAP_DURATION_MS,
   VELOCITY_SAMPLE_MS,
 } from '@/lib/config'
@@ -231,9 +232,19 @@ export function useFifthsStrip({
     (event: ReactPointerEvent<HTMLElement>) => {
       if (event.pointerType === 'mouse' && event.button !== 0) return
       if (columnWidthRef.current <= 0) return
+      // The hanging paper covers the left screen edge. That zone belongs to
+      // the sidebar swipe; yielding here keeps the chain from moving with it.
+      // Portrait scrolls on Y and the strip sits on the right, so it is exempt.
+      if (axisRef.current === 'x' && event.clientX <= SIDEBAR_EDGE_SWIPE_PX) return
 
       cancelAnimation()
-      event.currentTarget.setPointerCapture(event.pointerId)
+      // Inactive or synthetic pointers cannot be captured. The gesture still
+      // tracks through bubbling pointermoves when capture is unavailable.
+      try {
+        event.currentTarget.setPointerCapture(event.pointerId)
+      } catch {
+        // Pointer id is not active.
+      }
 
       dragRef.current = {
         pointerId: event.pointerId,
@@ -268,8 +279,12 @@ export function useFifthsStrip({
       if (!drag || drag.pointerId !== event.pointerId) return
       dragRef.current = null
 
-      if (event.currentTarget.hasPointerCapture(event.pointerId)) {
-        event.currentTarget.releasePointerCapture(event.pointerId)
+      try {
+        if (event.currentTarget.hasPointerCapture(event.pointerId)) {
+          event.currentTarget.releasePointerCapture(event.pointerId)
+        }
+      } catch {
+        // Pointer was never captured.
       }
 
       // Swipe / flick only — a click with no travel settles back where it was.

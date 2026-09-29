@@ -5,6 +5,13 @@ import type { LanguageCode } from '@/i18n'
 export type ThemePreference = 'light' | 'dark' | 'system'
 export type ResolvedTheme = 'light' | 'dark'
 
+/** Which name system the paper strip prints. One at a time, never both. */
+export type NoteNotation = 'solfege' | 'letter'
+
+export function isNoteNotation(value: unknown): value is NoteNotation {
+  return value === 'solfege' || value === 'letter'
+}
+
 export interface SettingsValue {
   theme: ThemePreference
   setTheme: (theme: ThemePreference) => void
@@ -26,6 +33,12 @@ export interface SettingsValue {
   /** Show the scale-degree row above the strip. */
   showGrades: boolean
   setShowGrades: (show: boolean) => void
+  /** Show Tonic, Supertonic, … under each degree number. */
+  showGradeNames: boolean
+  setShowGradeNames: (show: boolean) => void
+  /** Fixed-do solfège, or letter names when the switch is on. */
+  notation: NoteNotation
+  setNotation: (notation: NoteNotation) => void
 }
 
 export const SettingsContext = createContext<SettingsValue | null>(null)

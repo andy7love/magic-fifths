@@ -9,7 +9,8 @@
       "Lee hacia abajo en cualquier columna para ver el acorde construido sobre esa nota: su tr\u00edada y luego su acorde de s\u00e9ptima.",
       "Desliza una columna a la derecha para a\u00f1adir un sostenido a la tonalidad, una a la izquierda para a\u00f1adir un bemol.",
       "Usa Compartir para copiar un enlace que vuelve a abrir exactamente la posici\u00f3n y el modo t\u00f3nico que est\u00e1s viendo.",
-      "Con el teclado: las flechas izquierda y derecha mueven una columna; Page Up y Page Down saltan un bloque completo de siete; Inicio y Fin van a los extremos de la tira."
+      "Con el teclado: las flechas izquierda y derecha mueven una columna; Page Up y Page Down saltan un bloque completo de siete; Inicio y Fin van a los extremos de la tira.",
+      "Pulsá Campo enarmónico (la marca ≍) para saltar doce quintas hasta los mismos sonidos escritos de la otra forma. El botón se ilumina, con un punto junto al icono, cuando el campo tiene un doble bemol o un doble sostenido. Una nota breve dice entonces que el campo que dejaste es la escritura enarmónica del que quedó a la vista. En el centro natural el botón sigue apagado, porque no hay otro lugar al que saltar."
     ]
   },
   "ways": {

@@ -9,6 +9,7 @@ import {
   assignmentsFor,
   clampSnap,
   enharmonicSnap,
+  fieldHasDoubleAccidental,
   isSnapIndex,
   offsetFor,
   snapFor,
@@ -36,6 +37,16 @@ describe('snap positions', () => {
     expect(enharmonicSnap(DEFAULT_SNAP + 1)).toBe(DEFAULT_SNAP + 1 - 12)
     expect(enharmonicSnap(0)).toBe(12)
     expect(enharmonicSnap(MAX_SNAP)).toBe(MAX_SNAP - 12)
+  })
+
+  it('flags a field that contains a double flat or double sharp', () => {
+    expect(fieldHasDoubleAccidental(0)).toBe(true)
+    expect(fieldHasDoubleAccidental(6)).toBe(true)
+    expect(fieldHasDoubleAccidental(7)).toBe(false)
+    expect(fieldHasDoubleAccidental(DEFAULT_SNAP)).toBe(false)
+    expect(fieldHasDoubleAccidental(21)).toBe(false)
+    expect(fieldHasDoubleAccidental(22)).toBe(true)
+    expect(fieldHasDoubleAccidental(MAX_SNAP)).toBe(true)
   })
 
   it('reads the tonic from a non-Ionian grade-1 column', () => {

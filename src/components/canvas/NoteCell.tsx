@@ -1,6 +1,7 @@
 import { memo } from 'react'
 import { useTranslation } from 'react-i18next'
 
+import { useSettings } from '@/context/settings'
 import type { ChainNote } from '@/lib/music/notes'
 
 interface NoteCellProps {
@@ -11,6 +12,7 @@ interface NoteCellProps {
 
 export const NoteCell = memo(function NoteCell({ note, inWindow, modeId }: NoteCellProps) {
   const { t } = useTranslation('music')
+  const { notation } = useSettings()
 
   return (
     <div
@@ -18,16 +20,18 @@ export const NoteCell = memo(function NoteCell({ note, inWindow, modeId }: NoteC
       data-testid="note-cell"
       data-chain-index={note.index}
       data-note={note.ascii}
+      data-notation={notation}
       data-in-window={inWindow ? 'true' : 'false'}
       data-mode={modeId}
     >
-      <span className="mf-note-solfege">
-        {t(note.solfegeKey as 'solfege.do')}
-      </span>
+      {notation === 'solfege' ? (
+        <span className="mf-note-solfege">{t(note.solfegeKey as 'solfege.do')}</span>
+      ) : (
+        <span className="mf-note-letter">{note.letter}</span>
+      )}
       <span className="mf-note-accidental" aria-hidden={note.glyph === ''}>
         {note.glyph || '\u00a0'}
       </span>
-      <span className="mf-note-letter">{note.letter}</span>
     </div>
   )
 })

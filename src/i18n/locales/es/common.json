@@ -1,7 +1,6 @@
 {
   "app": {
     "name": "Magic Fifths",
-    "tagline": "Los siete modos de la escala mayor, en una sola tira deslizante.",
     "version": "Magic Fifths v.{{version}}"
   },
   "loading": "Cargando\u2026",
@@ -36,11 +35,17 @@
   "display": {
     "triads": "Tríadas",
     "tetrads": "Tétradas",
-    "grades": "Grados"
+    "grades": "Grados",
+    "gradeNames": "Nombres de grados"
+  },
+  "notation": {
+    "letter": "Cifrado Americano"
   },
   "enharmonic": {
     "label": "Campo enarmónico",
-    "menu": "Campo enarmónico"
+    "menu": "Campo enarmónico",
+    "suggest": "Doble bemol o doble sostenido en este campo",
+    "switched": "{{before}} es el campo enarmónico de {{after}}"
   },
   "share": {
     "open": "Compartir",

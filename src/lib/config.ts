@@ -47,6 +47,13 @@ export const SNAP_DURATION_MS = { min: 180, max: 420 } as const
 /** Window over which pointer velocity is averaged. Raw deltas are too jittery. */
 export const VELOCITY_SAMPLE_MS = 80
 
+/**
+ * Left-screen-edge zone that opens the sidebar on a rightward swipe.
+ * Shared with the strip engine: a drag that begins here must not scroll the
+ * paper, and a drag that begins further in must not open the sidebar.
+ */
+export const SIDEBAR_EDGE_SWIPE_PX = 36
+
 /** Query-string parameter carrying the shared position, as a musical key. */
 export const SHARE_PARAM = 'key'
 

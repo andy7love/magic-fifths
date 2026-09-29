@@ -6,6 +6,10 @@
       "body": "The perfect fifth is a consonant interval that helps us organize and clearly see many structures that exist in music. Based on the harmonic series that arises from the natural vibration of a string, we choose it because, taking it as a unit of measure and applying it consecutively, it is an interval that lets us traverse the 12 pitch classes used in Western music (the full chromatic set of sounds)."
     },
     {
+      "heading": "One field at a time",
+      "body": "The usual circle of fifths draws every key on one ring. It is complete, but you have to read the whole circle to find a mode. This board is that same circle, unrolled into a straight strip and cropped to the seven fifths of the field you selected. The mode names stay fixed on the cardboard, so Lydian through Locrian are always in the same place. Slide the strip and only the notes change. You see the modes of one field, and nothing else."
+    },
+    {
       "heading": "The tonic is grade 1",
       "body": "Whichever mode column you mark as grade 1 is the tonic — the home of the scale you are reading. By default that is Ionian, which is just the major scale under its older name. Tap another mode name and the degree numbers rotate so that column becomes 1."
     },

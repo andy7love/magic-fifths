@@ -80,7 +80,8 @@ function replaceShareParams(snapIndex: number, tonicModeId: ModeId) {
 }
 
 export function Canvas() {
-  const { advancedChords, showTriads, showTetrads, showGrades } = useSettings()
+  const { advancedChords, showTriads, showTetrads, showGrades, showGradeNames, notation } =
+    useSettings()
   const portrait = usePortraitLayout()
   // Landscape scrolls horizontally off the mode-column width; portrait flips the
   // board and scrolls vertically off the mode-row height.
@@ -128,11 +129,11 @@ export function Canvas() {
   }, [snapIndex, tonicModeId])
 
   useEffect(() => {
-    publishStripActions(snapIndex, goTo)
+    publishStripActions(snapIndex, tonicModeId, goTo)
     return () => {
-      publishStripActions(snapIndex, null)
+      publishStripActions(snapIndex, tonicModeId, null)
     }
-  }, [snapIndex, goTo])
+  }, [snapIndex, tonicModeId, goTo])
 
   useEffect(() => {
     if (!(import.meta.env.DEV || import.meta.env.VITE_E2E)) return
@@ -207,6 +208,8 @@ export function Canvas() {
         data-show-triads={showTriads ? 'true' : 'false'}
         data-show-tetrads={showTetrads ? 'true' : 'false'}
         data-show-grades={showGrades ? 'true' : 'false'}
+        data-show-grade-names={showGradeNames ? 'true' : 'false'}
+        data-notation={notation}
       >
         <div className="mf-board" aria-hidden="true" />
         {portrait ? (
@@ -230,7 +233,9 @@ export function Canvas() {
               tonicModeId={tonicModeId}
               onSelectTonicMode={selectTonicMode}
             />
-            {showGrades ? <GradesRow tonicModeId={tonicModeId} /> : null}
+            {showGrades ? (
+              <GradesRow tonicModeId={tonicModeId} showNames={showGradeNames} />
+            ) : null}
             {/* Empty gutter cell: covers strip bleed under the label column so
                 the paper appears to thread through the board, not over the
                 labels. */}

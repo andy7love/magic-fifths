@@ -45,6 +45,16 @@
     "mi": "Mi",
     "si": "Si"
   },
+  "degreeNames": {
+    "tonic": "Tonic",
+    "supertonic": "Supertonic",
+    "mediant": "Mediant",
+    "subdominant": "Subdominant",
+    "dominant": "Dominant",
+    "submediant": "Submediant",
+    "leading": "Leading tone",
+    "subtonic": "Subtonic"
+  },
   "scales": {
     "major": "Major",
     "minor": "Minor",

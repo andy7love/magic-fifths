@@ -9,7 +9,8 @@
       "Read down any column to get the chord built on that note: its triad, then its seventh chord.",
       "Slide one column to the right to add a sharp to the key, one to the left to add a flat.",
       "Use Share to copy a link that reopens the exact position and tonic mode you are looking at.",
-      "On a keyboard: left and right arrows move one column; Page Up and Page Down jump a whole block of seven; Home and End go to the far ends of the strip."
+      "On a keyboard: left and right arrows move one column; Page Up and Page Down jump a whole block of seven; Home and End go to the far ends of the strip.",
+      "Press Enharmonic field (the ≍ mark) to jump twelve fifths to the same pitches written the other way. The button lights up, with a dot beside the icon, when the field contains a double flat or a double sharp. A short note then says that the field you left is the enharmonic spelling of the one now in view. At the natural center the button stays off, because there is nowhere else to jump."
     ]
   },
   "ways": {

@@ -19,6 +19,8 @@ export const STORAGE_KEYS = {
   showTriads: 'showTriads',
   showTetrads: 'showTetrads',
   showGrades: 'showGrades',
+  showGradeNames: 'showGradeNames',
+  notation: 'notation',
 } as const
 
 export type StorageKey = (typeof STORAGE_KEYS)[keyof typeof STORAGE_KEYS]

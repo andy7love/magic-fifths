@@ -3,7 +3,9 @@ import { useTranslation } from 'react-i18next'
 
 import {
   SettingsContext,
+  isNoteNotation,
   isThemePreference,
+  type NoteNotation,
   type ResolvedTheme,
   type SettingsValue,
   type ThemePreference,
@@ -63,6 +65,19 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
     serialize: (value) => (value ? 'true' : 'false'),
   })
 
+  const [showGradeNames, setShowGradeNames] = usePersistedState<boolean>({
+    key: STORAGE_KEYS.showGradeNames,
+    fallback: false,
+    parse: (raw) => (raw === 'true' ? true : raw === 'false' ? false : null),
+    serialize: (value) => (value ? 'true' : 'false'),
+  })
+
+  const [notation, setNotation] = usePersistedState<NoteNotation>({
+    key: STORAGE_KEYS.notation,
+    fallback: 'solfege',
+    parse: (raw) => (isNoteNotation(raw) ? raw : null),
+  })
+
   const prefersDark = useMediaQuery('(prefers-color-scheme: dark)')
   const resolvedTheme: ResolvedTheme =
     theme === 'system' ? (prefersDark ? 'dark' : 'light') : theme
@@ -108,6 +123,10 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
       setShowTetrads,
       showGrades,
       setShowGrades,
+      showGradeNames,
+      setShowGradeNames,
+      notation,
+      setNotation,
     }),
     [
       theme,
@@ -125,6 +144,10 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
       setShowTetrads,
       showGrades,
       setShowGrades,
+      showGradeNames,
+      setShowGradeNames,
+      notation,
+      setNotation,
     ],
   )
 

@@ -6,6 +6,7 @@ import type {
 import { useTranslation } from 'react-i18next'
 
 import { FifthsStrip } from '@/components/canvas/FifthsStrip'
+import { GradeMarks } from '@/components/canvas/GradeMarks'
 import { TetradCell } from '@/components/canvas/TetradCell'
 import { useSettings } from '@/context/settings'
 import { MODES, gradesForTonic, type ModeId } from '@/lib/music/modes'
@@ -55,7 +56,7 @@ export function PortraitBoard({
   onKeyDown,
 }: PortraitBoardProps) {
   const { t } = useTranslation('music')
-  const { advancedChords, showTriads, showTetrads, showGrades } = useSettings()
+  const { advancedChords, showTriads, showTetrads, showGrades, showGradeNames } = useSettings()
   const grades = gradesForTonic(tonicModeId)
 
   return (
@@ -125,7 +126,7 @@ export function PortraitBoard({
                 data-grade={grade}
                 data-tonic-grade={grade === 1 ? 'true' : 'false'}
               >
-                <span>{grade}</span>
+                <GradeMarks grade={grade} tonicModeId={tonicModeId} showName={showGradeNames} />
               </div>
             ) : null}
             {showTriads ? (

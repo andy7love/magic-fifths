@@ -7,6 +7,7 @@
       "La nota bajo el grado marcado 1 es la t\u00f3nica. Por defecto es J\u00f3nico (Mayor). Toca el nombre de un modo para que esa columna pase a ser el grado 1.",
       "J\u00f3nico es la escala Mayor habitual; E\u00f3lico es la Menor habitual. Ambos est\u00e1n etiquetados en el cart\u00f3n.",
       "Lee hacia abajo en cualquier columna para ver el acorde construido sobre esa nota: su tr\u00edada y luego su acorde de s\u00e9ptima.",
+      "Toca o haz clic en el nombre de un modo para oír su escala. Las escalas suenan siempre en arpegio. Toca o haz clic en una tríada o una tétrada para oír ese acorde. En Ajustes, Arpegiar acordes hace que las tríadas y las tétradas suenen también en arpegio; apagado, suenan juntas. La velocidad del arpegio sigue marcando el paso de las escalas de los modos.",
       "Desliza una columna a la derecha para a\u00f1adir un sostenido a la tonalidad, una a la izquierda para a\u00f1adir un bemol.",
       "Usa Compartir para copiar un enlace que vuelve a abrir exactamente la posici\u00f3n y el modo t\u00f3nico que est\u00e1s viendo.",
       "Con el teclado: las flechas izquierda y derecha mueven una columna; Page Up y Page Down saltan un bloque completo de siete; Inicio y Fin van a los extremos de la tira.",
@@ -28,6 +29,10 @@
       {
         "heading": "Mantenerme en un modo",
         "body": "Prueba mover el campo para mantenerte en un mismo modo aunque cambies de nota."
+      },
+      {
+        "heading": "Escucharlo",
+        "body": "Toca o haz clic en el nombre de un modo para oír esa escala en arpegio. Toca o haz clic en una tríada o una tétrada para oír el acorde. En Ajustes, activa Arpegiar acordes para que esos acordes suenen en arpegio; déjalo apagado y suenan juntos. Las escalas de los modos siguen en arpegio en ambos casos, y la velocidad del arpegio marca su paso."
       }
     ]
   }

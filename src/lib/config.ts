@@ -64,8 +64,18 @@ export const SHARE_PARAM = 'key'
  */
 export const SHARE_MODE_PARAM = 'mode'
 
-/** Octave the lowest note of a played chord or scale is voiced in. */
+/**
+ * Preferred scientific octave for a chord or scale root, used when two
+ * octaves sit equally close to `VOICE_CENTER_MIDI`.
+ */
 export const VOICE_ROOT_OCTAVE = 4
+
+/**
+ * MIDI pitch a played chord or scale is centered on. The root's octave is
+ * chosen so the voicing's midpoint lands nearest this note. F#4 sits halfway
+ * between the C3 and C6 salamander samples.
+ */
+export const VOICE_CENTER_MIDI = 66
 
 /** How long a blocked chord rings, and the silence before the next one. */
 export const CHORD_HOLD_SEC = 1.5

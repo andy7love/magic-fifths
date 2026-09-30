@@ -11,7 +11,8 @@ export function useColumnPlayback(snapIndex: number) {
   return useCallback(
     (column: number, kind: VoiceKind) => {
       playChords([spellVoice(snapIndex, column, kind, advancedChords)], {
-        style: playbackStyle,
+        // Scales always arpeggiate. The toggle only changes triads and tetrads.
+        style: kind === 'mode' ? 'arpeggio' : playbackStyle,
         arpeggioSeconds: arpeggioMs / 1000,
       })
     },

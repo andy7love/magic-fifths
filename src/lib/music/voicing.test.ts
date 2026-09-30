@@ -28,14 +28,15 @@ describe('spellVoice', () => {
       'B4',
     ])
     expect(spellVoice(DEFAULT_SNAP, 0, 'triad', false)).toEqual(['F4', 'A4', 'C5'])
-    expect(spellVoice(DEFAULT_SNAP, 4, 'triad', false)).toEqual(['A4', 'C5', 'E5'])
-    expect(spellVoice(DEFAULT_SNAP, 6, 'triad', false)).toEqual(['B4', 'D5', 'F5'])
+    expect(spellVoice(DEFAULT_SNAP, 4, 'triad', false)).toEqual(['A3', 'C4', 'E4'])
+    expect(spellVoice(DEFAULT_SNAP, 6, 'triad', false)).toEqual(['B3', 'D4', 'F4'])
   })
 
-  it('adds the printed color tone when advanced chords are on', () => {
-    expect(spellVoice(DEFAULT_SNAP, 0, 'tetrad', true)).toEqual(['F4', 'A4', 'B4', 'C5', 'E5'])
+  it('adds the printed color tone above the seventh, never as an inversion', () => {
+    expect(spellVoice(DEFAULT_SNAP, 0, 'tetrad', true)).toEqual(['F3', 'A3', 'C4', 'E4', 'B4'])
     expect(spellVoice(DEFAULT_SNAP, 5, 'tetrad', false)).toEqual(['E4', 'G4', 'B4', 'D5'])
-    expect(spellVoice(DEFAULT_SNAP, 5, 'tetrad', true)).toEqual(['E4', 'F4', 'A4', 'B4', 'D5'])
+    expect(spellVoice(DEFAULT_SNAP, 5, 'tetrad', true)).toEqual(['E3', 'B3', 'D4', 'F4', 'A4'])
+    expect(spellVoice(DEFAULT_SNAP, 1, 'tetrad', true)).toEqual(['C4', 'E4', 'G4', 'B4', 'F5'])
     expect(spellVoice(DEFAULT_SNAP, 1, 'triad', true)).toEqual(['C4', 'E4', 'G4'])
   })
 

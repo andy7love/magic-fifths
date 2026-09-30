@@ -30,7 +30,7 @@
     "open": "Fifths Theory"
   },
   "advanced": {
-    "toggle": "Advanced chords"
+    "toggle": "Extended chords"
   },
   "display": {
     "triads": "Triads",
@@ -42,8 +42,7 @@
     "letter": "Letter notation"
   },
   "playback": {
-    "chord": "Chord",
-    "arpeggio": "Arpeggio",
+    "arpeggiate": "Arpeggiate chords",
     "speed": "Arpeggio speed"
   },
   "enharmonic": {

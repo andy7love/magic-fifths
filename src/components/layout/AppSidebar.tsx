@@ -275,122 +275,128 @@ export function AppSidebar() {
 
           <SidebarGroup>
             <SidebarGroupLabel>{t('common:sidebar.settings')}</SidebarGroupLabel>
-            <SidebarGroupContent className="space-y-4 px-2">
-              <div className="flex h-8 items-center gap-2">
-                {dark ? <Moon className="size-4 shrink-0" /> : <Sun className="size-4 shrink-0" />}
-                <Label htmlFor="theme-toggle" className="min-w-0 flex-1 truncate font-normal">
-                  {t('common:theme.label')}
-                </Label>
-                <Switch
-                  id="theme-toggle"
-                  data-testid="theme-toggle"
-                  checked={dark}
-                  onCheckedChange={(checked) => {
-                    const next: ThemePreference = checked ? 'dark' : 'light'
-                    setTheme(next)
-                  }}
-                />
-              </div>
-              <div className="space-y-2">
-                <div className="flex h-8 items-center gap-2">
-                  <AudioLines className="size-4 shrink-0" />
-                  <Label
-                    htmlFor="playback-arpeggio"
-                    className="min-w-0 flex-1 truncate font-normal"
-                  >
-                    {playbackStyle === 'arpeggio'
-                      ? t('common:playback.arpeggio')
-                      : t('common:playback.chord')}
-                  </Label>
-                  <Switch
-                    id="playback-arpeggio"
-                    data-testid="playback-arpeggio"
-                    checked={playbackStyle === 'arpeggio'}
-                    onCheckedChange={(checked) =>
-                      setPlaybackStyle(checked ? 'arpeggio' : 'chord')
-                    }
-                  />
-                </div>
-                <div className="space-y-1.5">
-                  <Label
-                    id="arpeggio-speed-label"
-                    htmlFor="arpeggio-speed"
-                    className={cn(playbackStyle !== 'arpeggio' && 'opacity-50')}
-                  >
-                    {t('common:playback.speed')}
-                  </Label>
-                  <Slider
-                    id="arpeggio-speed"
-                    data-testid="arpeggio-speed"
-                    aria-label={t('common:playback.speed')}
-                    aria-labelledby="arpeggio-speed-label"
-                    dir="rtl"
-                    min={ARPEGGIO_MS.min}
-                    max={ARPEGGIO_MS.max}
-                    step={ARPEGGIO_MS.step}
-                    disabled={playbackStyle !== 'arpeggio'}
-                    value={[arpeggioMs]}
-                    onValueChange={(value) => {
-                      const next = value[0]
-                      if (next !== undefined) setArpeggioMs(Math.round(next))
-                    }}
-                  />
-                </div>
-              </div>
-
-              <div className="space-y-1.5">
-                <Label htmlFor="scale-select">{t('common:scale.label')}</Label>
-                <Select
-                  value={scaleId}
-                  onValueChange={(value) => {
-                    if (value) setScaleId(value)
-                  }}
-                >
-                  <SelectTrigger id="scale-select" data-testid="scale-select" className="w-full">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {SCALES.map((scale) => (
-                      <SelectItem
-                        key={scale.id}
-                        value={scale.id}
-                        disabled={!scale.available}
+            <SidebarGroupContent>
+              <SidebarMenu>
+                <SidebarMenuItem>
+                  <div className="flex h-8 w-full min-w-0 items-center gap-2 overflow-hidden rounded-md p-2 text-sm">
+                    {dark ? (
+                      <Moon className="size-4 shrink-0" />
+                    ) : (
+                      <Sun className="size-4 shrink-0" />
+                    )}
+                    <Label htmlFor="theme-toggle" className="min-w-0 flex-1 truncate font-normal">
+                      {t('common:theme.label')}
+                    </Label>
+                    <Switch
+                      id="theme-toggle"
+                      data-testid="theme-toggle"
+                      checked={dark}
+                      onCheckedChange={(checked) => {
+                        const next: ThemePreference = checked ? 'dark' : 'light'
+                        setTheme(next)
+                      }}
+                    />
+                  </div>
+                </SidebarMenuItem>
+                <SidebarMenuItem>
+                  <div className="flex h-8 w-full min-w-0 items-center gap-2 overflow-hidden rounded-md p-2 text-sm">
+                    <AudioLines className="size-4 shrink-0" />
+                    <Label
+                      htmlFor="playback-arpeggio"
+                      className="min-w-0 flex-1 truncate font-normal"
+                    >
+                      {t('common:playback.arpeggiate')}
+                    </Label>
+                    <Switch
+                      id="playback-arpeggio"
+                      data-testid="playback-arpeggio"
+                      checked={playbackStyle === 'arpeggio'}
+                      onCheckedChange={(checked) =>
+                        setPlaybackStyle(checked ? 'arpeggio' : 'chord')
+                      }
+                    />
+                  </div>
+                </SidebarMenuItem>
+                <SidebarMenuItem>
+                  <div className="flex w-full min-w-0 flex-col gap-2 overflow-hidden rounded-md p-2 text-sm">
+                    <Label id="arpeggio-speed-label" htmlFor="arpeggio-speed">
+                      {t('common:playback.speed')}
+                    </Label>
+                    <Slider
+                      id="arpeggio-speed"
+                      data-testid="arpeggio-speed"
+                      aria-label={t('common:playback.speed')}
+                      aria-labelledby="arpeggio-speed-label"
+                      min={ARPEGGIO_MS.min}
+                      max={ARPEGGIO_MS.max}
+                      step={ARPEGGIO_MS.step}
+                      value={[ARPEGGIO_MS.min + ARPEGGIO_MS.max - arpeggioMs]}
+                      onValueChange={(value) => {
+                        const next = value[0]
+                        if (next !== undefined) {
+                          setArpeggioMs(Math.round(ARPEGGIO_MS.min + ARPEGGIO_MS.max - next))
+                        }
+                      }}
+                    />
+                  </div>
+                </SidebarMenuItem>
+                <SidebarMenuItem>
+                  <div className="flex w-full min-w-0 flex-col gap-2 overflow-hidden rounded-md p-2 text-sm">
+                    <Label htmlFor="scale-select">{t('common:scale.label')}</Label>
+                    <Select
+                      value={scaleId}
+                      onValueChange={(value) => {
+                        if (value) setScaleId(value)
+                      }}
+                    >
+                      <SelectTrigger id="scale-select" data-testid="scale-select" className="w-full">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {SCALES.map((scale) => (
+                          <SelectItem
+                            key={scale.id}
+                            value={scale.id}
+                            disabled={!scale.available}
+                          >
+                            {t(`music:scales.${scale.id}` as 'music:scales.major')}
+                            {!scale.available ? ` (${t('common:scale.comingSoon')})` : ''}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </SidebarMenuItem>
+                <SidebarMenuItem>
+                  <div className="flex w-full min-w-0 flex-col gap-2 overflow-hidden rounded-md p-2 text-sm">
+                    <Label htmlFor="language-select">{t('common:language.label')}</Label>
+                    <Select
+                      value={language}
+                      onValueChange={(value) => {
+                        if (value) setLanguage(value as LanguageCode)
+                      }}
+                    >
+                      <SelectTrigger
+                        id="language-select"
+                        data-testid="language-select"
+                        className="w-full"
                       >
-                        {t(`music:scales.${scale.id}` as 'music:scales.major')}
-                        {!scale.available ? ` (${t('common:scale.comingSoon')})` : ''}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-
-              <div className="space-y-1.5">
-                <Label htmlFor="language-select">{t('common:language.label')}</Label>
-                <Select
-                  value={language}
-                  onValueChange={(value) => {
-                    if (value) setLanguage(value as LanguageCode)
-                  }}
-                >
-                  <SelectTrigger
-                    id="language-select"
-                    data-testid="language-select"
-                    className="w-full"
-                  >
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {SUPPORTED_LANGUAGES.map((option) => (
-                      <SelectItem key={option.code} value={option.code}>
-                        <span className="inline-flex items-center gap-2">
-                          <Languages className="size-3.5" />
-                          {option.label}
-                        </span>
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {SUPPORTED_LANGUAGES.map((option) => (
+                          <SelectItem key={option.code} value={option.code}>
+                            <span className="inline-flex items-center gap-2">
+                              <Languages className="size-3.5" />
+                              {option.label}
+                            </span>
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </SidebarMenuItem>
+              </SidebarMenu>
             </SidebarGroupContent>
           </SidebarGroup>
         </SidebarContent>

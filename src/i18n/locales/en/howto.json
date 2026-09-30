@@ -7,6 +7,7 @@
       "The note under the grade marked 1 is the tonic. By default that is Ionian (Major). Tap a mode name to make that column grade 1 instead.",
       "Ionian is the common Major scale; Aeolian is the common Minor. Both are labelled on the board.",
       "Read down any column to get the chord built on that note: its triad, then its seventh chord.",
+      "Click or tap a mode name to play its scale. Scales always sound as arpeggios. Click or tap a triad or a tetrad to play that chord. In Settings, Arpeggiate chords plays triads and tetrads as arpeggios too; with it off they sound together. Arpeggio speed still sets the pace of the mode scales.",
       "Slide one column to the right to add a sharp to the key, one to the left to add a flat.",
       "Use Share to copy a link that reopens the exact position and tonic mode you are looking at.",
       "On a keyboard: left and right arrows move one column; Page Up and Page Down jump a whole block of seven; Home and End go to the far ends of the strip.",
@@ -28,6 +29,10 @@
       {
         "heading": "Staying in a mode",
         "body": "Try moving the field so you stay in the same mode even as you change the note."
+      },
+      {
+        "heading": "Hearing it",
+        "body": "Click or tap a mode name to play that scale as an arpeggio. Click or tap a triad or a tetrad to play the chord. In Settings, turn on Arpeggiate chords to play those chords as arpeggios; leave it off and they sound together. Mode scales stay arpeggios either way, and Arpeggio speed sets their pace."
       }
     ]
   }

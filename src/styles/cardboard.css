@@ -243,7 +243,7 @@ button.mf-pcell:active {
 
 .mf-quality-cell[data-row='triads'] span {
   font-family: var(--font-sans);
-  font-size: clamp(0.82rem, 2vh, 1.15rem);
+  font-size: clamp(0.78rem, 1.75vh, 1.05rem);
   font-weight: 600;
   letter-spacing: 0.02em;
   font-variant-numeric: tabular-nums;
@@ -266,7 +266,7 @@ button.mf-pcell:active {
   transform: rotate(180deg);
   white-space: nowrap;
   font-family: var(--font-sans);
-  font-size: clamp(0.76rem, 1.75vh, 1.05rem);
+  font-size: clamp(0.76rem, 1.55vh, 0.95rem);
   font-weight: 600;
   letter-spacing: 0.08em;
 }
@@ -564,7 +564,7 @@ button.mf-pcell:active {
 }
 
 .mf-pcell[data-row='grades'] .mf-grade-name {
-  font-size: clamp(0.48rem, 1.3vw, 0.62rem);
+  font-size: clamp(0.58rem, 1.55vw, 0.74rem);
 }
 
 .mf-pcell[data-row='grades'][data-tonic-grade='true'] .mf-grade-num {
@@ -572,14 +572,22 @@ button.mf-pcell:active {
   text-underline-offset: 0.15em;
 }
 
-.mf-pcell[data-row='triads'] span,
-.mf-pcell[data-row='tetrads'] .mf-chord {
-  font-size: clamp(0.8rem, 1.95vw, 1.05rem);
+.mf-pcell[data-row='triads'] span {
+  font-family: var(--font-sans);
+  font-size: clamp(0.78rem, 1.75vh, 1.05rem);
   font-weight: 600;
   letter-spacing: 0.01em;
 }
 
-/* Portrait advanced extras wrap under the tetrad so the column stays narrow. */
+.mf-pcell[data-row='tetrads'] .mf-chord {
+  font-family: var(--font-sans);
+  font-size: clamp(0.76rem, 1.55vh, 0.95rem);
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+/* Portrait extensions wrap under the tetrad so the column stays narrow.
+   Base and extension use the same size as the horizontal tetrad. */
 .mf-canvas--portrait .mf-pcell[data-row='tetrads'] .mf-chord {
   display: inline-flex;
   flex-direction: column;
@@ -592,10 +600,6 @@ button.mf-pcell:active {
 
 .mf-canvas--portrait .mf-pcell[data-row='tetrads'] .mf-chord-base + .mf-chord-extra::before {
   content: none;
-}
-
-.mf-canvas--portrait .mf-pcell[data-row='tetrads'] .mf-chord-extra {
-  font-size: 0.78em;
 }
 
 .mf-canvas--portrait[data-advanced='true'] .mf-pcell[data-row='tetrads'] {

@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react'
 
 import { useSidebar } from '@/components/ui/sidebar'
-import { SIDEBAR_EDGE_SWIPE_PX } from '@/lib/config'
+import { sidebarSwipeZoneRight } from '@/lib/sidebar-swipe'
 
 /** Minimum horizontal travel before the drawer opens. */
 const MIN_OPEN_DX = 48
@@ -10,12 +10,13 @@ const MIN_OPEN_DX = 48
 const MAX_VERTICAL_RATIO = 0.75
 
 /**
- * Opens the offcanvas sidebar on a rightward swipe that begins at the left
- * screen edge.
+ * Opens the offcanvas sidebar on a rightward swipe that begins on the toolbox
+ * or in the dark margin to the left of the cardboard.
  *
- * The hanging paper covers that edge, so the strip engine refuses drags that
- * start inside the same zone. Drags that start further in never reach here,
- * and a mostly-vertical move inside the zone does not open the drawer.
+ * The strip engine refuses drags that start inside the same zone, so the
+ * hanging paper does not scroll along with the drawer gesture. A tap in the
+ * zone still reaches the toolbox buttons: the click is swallowed only after
+ * the gesture has actually opened the drawer.
  */
 export function useSidebarEdgeSwipe() {
   const { open, openMobile, isMobile, setOpen, setOpenMobile } = useSidebar()
@@ -47,15 +48,21 @@ export function useSidebarEdgeSwipe() {
       const blockClick = (clickEvent: Event) => {
         clickEvent.preventDefault()
         clickEvent.stopPropagation()
+        cleanup()
+      }
+      const cleanup = () => {
         window.removeEventListener('click', blockClick, true)
       }
       window.addEventListener('click', blockClick, true)
+      // A drag that ends off the start control may never synthesize a click.
+      // Drop the blocker on the next turn so it cannot swallow a later tap.
+      setTimeout(cleanup, 0)
     }
 
     const onPointerDown = (event: PointerEvent) => {
       if (openRef.current) return
       if (event.pointerType === 'mouse' && event.button !== 0) return
-      if (event.clientX > SIDEBAR_EDGE_SWIPE_PX) return
+      if (event.clientX > sidebarSwipeZoneRight()) return
 
       tracking = true
       claimed = false

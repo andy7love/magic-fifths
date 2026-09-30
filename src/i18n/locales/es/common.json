@@ -30,7 +30,7 @@
     "open": "Teor\u00eda de quintas"
   },
   "advanced": {
-    "toggle": "Acordes avanzados"
+    "toggle": "Acordes extendidos"
   },
   "display": {
     "triads": "Tríadas",
@@ -42,8 +42,7 @@
     "letter": "Cifrado Americano"
   },
   "playback": {
-    "chord": "Acorde",
-    "arpeggio": "Arpegio",
+    "arpeggiate": "Arpegiar acordes",
     "speed": "Velocidad del arpegio"
   },
   "enharmonic": {

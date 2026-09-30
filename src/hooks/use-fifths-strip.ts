@@ -12,10 +12,10 @@ import {
   MIN_FLICK_VELOCITY,
   RELEASE_PROJECTION_MS,
   RUBBER_BAND_FACTOR,
-  SIDEBAR_EDGE_SWIPE_PX,
   SNAP_DURATION_MS,
   VELOCITY_SAMPLE_MS,
 } from '@/lib/config'
+import { sidebarSwipeZoneRight } from '@/lib/sidebar-swipe'
 import { COLUMNS } from '@/lib/music/modes'
 import { MAX_SNAP, clampSnap, offsetFor, snapFor } from '@/lib/music/snap'
 
@@ -232,10 +232,10 @@ export function useFifthsStrip({
     (event: ReactPointerEvent<HTMLElement>) => {
       if (event.pointerType === 'mouse' && event.button !== 0) return
       if (columnWidthRef.current <= 0) return
-      // The hanging paper covers the left screen edge. That zone belongs to
-      // the sidebar swipe; yielding here keeps the chain from moving with it.
+      // The toolbox and the dark margin left of the board belong to the
+      // sidebar swipe. Yielding here keeps the chain from moving with it.
       // Portrait scrolls on Y and the strip sits on the right, so it is exempt.
-      if (axisRef.current === 'x' && event.clientX <= SIDEBAR_EDGE_SWIPE_PX) return
+      if (axisRef.current === 'x' && event.clientX <= sidebarSwipeZoneRight()) return
 
       cancelAnimation()
       // Inactive or synthetic pointers cannot be captured. The gesture still

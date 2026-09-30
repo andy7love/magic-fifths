@@ -3,7 +3,9 @@ import { useTranslation } from 'react-i18next'
 
 import {
   SettingsContext,
+  isNoteNotation,
   isThemePreference,
+  type NoteNotation,
   type ResolvedTheme,
   type SettingsValue,
   type ThemePreference,
@@ -11,6 +13,8 @@ import {
 import { useMediaQuery } from '@/hooks/use-media-query'
 import { usePersistedState } from '@/hooks/use-persisted-state'
 import { FALLBACK_LANGUAGE, isLanguageCode, type LanguageCode } from '@/i18n'
+import { isPlaybackStyle, type PlaybackStyle } from '@/lib/audio/schedule'
+import { ARPEGGIO_MS } from '@/lib/config'
 import { DEFAULT_SCALE_ID, isAvailableScaleId } from '@/lib/music/scales'
 import { STORAGE_KEYS, writeSetting } from '@/lib/storage'
 
@@ -63,6 +67,37 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
     serialize: (value) => (value ? 'true' : 'false'),
   })
 
+  const [showGradeNames, setShowGradeNames] = usePersistedState<boolean>({
+    key: STORAGE_KEYS.showGradeNames,
+    fallback: false,
+    parse: (raw) => (raw === 'true' ? true : raw === 'false' ? false : null),
+    serialize: (value) => (value ? 'true' : 'false'),
+  })
+
+  const [notation, setNotation] = usePersistedState<NoteNotation>({
+    key: STORAGE_KEYS.notation,
+    fallback: 'solfege',
+    parse: (raw) => (isNoteNotation(raw) ? raw : null),
+  })
+
+  const [playbackStyle, setPlaybackStyle] = usePersistedState<PlaybackStyle>({
+    key: STORAGE_KEYS.playbackStyle,
+    fallback: 'chord',
+    parse: (raw) => (isPlaybackStyle(raw) ? raw : null),
+  })
+
+  const [arpeggioMs, setArpeggioMs] = usePersistedState<number>({
+    key: STORAGE_KEYS.arpeggioMs,
+    fallback: ARPEGGIO_MS.default,
+    parse: (raw) => {
+      const parsed = Number(raw)
+      if (!Number.isInteger(parsed)) return null
+      if (parsed < ARPEGGIO_MS.min || parsed > ARPEGGIO_MS.max) return null
+      return parsed
+    },
+    serialize: (value) => String(value),
+  })
+
   const prefersDark = useMediaQuery('(prefers-color-scheme: dark)')
   const resolvedTheme: ResolvedTheme =
     theme === 'system' ? (prefersDark ? 'dark' : 'light') : theme
@@ -108,6 +143,14 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
       setShowTetrads,
       showGrades,
       setShowGrades,
+      showGradeNames,
+      setShowGradeNames,
+      notation,
+      setNotation,
+      playbackStyle,
+      setPlaybackStyle,
+      arpeggioMs,
+      setArpeggioMs,
     }),
     [
       theme,
@@ -125,6 +168,14 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
       setShowTetrads,
       showGrades,
       setShowGrades,
+      showGradeNames,
+      setShowGradeNames,
+      notation,
+      setNotation,
+      playbackStyle,
+      setPlaybackStyle,
+      arpeggioMs,
+      setArpeggioMs,
     ],
   )
 

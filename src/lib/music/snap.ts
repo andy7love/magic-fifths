@@ -41,6 +41,19 @@ export function enharmonicSnap(snapIndex: number): number | null {
   return clampSnap(index + delta)
 }
 
+/**
+ * True when the seven notes in the window include a double flat or double sharp.
+ * Those spellings are the ones the enharmonic jump is meant to get you out of.
+ */
+export function fieldHasDoubleAccidental(snapIndex: number): boolean {
+  const start = clampSnap(snapIndex)
+  for (let column = 0; column < COLUMNS; column += 1) {
+    const accidental = noteAt(start + column).accidental
+    if (accidental === -2 || accidental === 2) return true
+  }
+  return false
+}
+
 export function isSnapIndex(value: unknown): value is number {
   return (
     typeof value === 'number' &&

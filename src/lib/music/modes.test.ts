@@ -4,7 +4,9 @@ import {
   DEFAULT_TONIC_MODE,
   MODES,
   gradeRelativeTo,
+  degreeNameId,
   gradesForTonic,
+  isLeadingTone,
   isModeId,
   tonicColumnFor,
 } from './modes'
@@ -28,6 +30,25 @@ describe('gradesForTonic', () => {
 
   it('rotates correctly when Aeolian is home', () => {
     expect(gradesForTonic('aeolian')).toEqual([6, 3, 7, 4, 1, 5, 2])
+  })
+})
+
+describe('degree names', () => {
+  it('uses a leading tone only when degree 7 is a half step under the tonic', () => {
+    expect(isLeadingTone('ionian')).toBe(true)
+    expect(isLeadingTone('lydian')).toBe(true)
+    expect(isLeadingTone('mixolydian')).toBe(false)
+    expect(isLeadingTone('dorian')).toBe(false)
+    expect(isLeadingTone('aeolian')).toBe(false)
+    expect(isLeadingTone('phrygian')).toBe(false)
+    expect(isLeadingTone('locrian')).toBe(false)
+  })
+
+  it('names degree 7 from the home mode', () => {
+    expect(degreeNameId(1, 'aeolian')).toBe('tonic')
+    expect(degreeNameId(7, 'ionian')).toBe('leading')
+    expect(degreeNameId(7, 'aeolian')).toBe('subtonic')
+    expect(degreeNameId(5, 'dorian')).toBe('dominant')
   })
 })
 

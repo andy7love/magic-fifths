@@ -4,22 +4,28 @@
  * subscribe via `useSyncExternalStore`.
  */
 
-import { DEFAULT_SNAP, enharmonicSnap } from '@/lib/music/snap'
+import { DEFAULT_TONIC_MODE, type ModeId } from '@/lib/music/modes'
+import { DEFAULT_SNAP, enharmonicSnap, fieldHasDoubleAccidental } from '@/lib/music/snap'
 
 export type StripGoTo = (index: number, options?: { animate?: boolean }) => void
 
 export interface StripActionsSnapshot {
   snapIndex: number
+  tonicModeId: ModeId
   goTo: StripGoTo | null
   canSeekEnharmonic: boolean
+  /** Double flat or double sharp is in the window, and a jump is possible. */
+  suggestEnharmonic: boolean
 }
 
 type Listener = () => void
 
 let snapshot: StripActionsSnapshot = {
   snapIndex: DEFAULT_SNAP,
+  tonicModeId: DEFAULT_TONIC_MODE,
   goTo: null,
   canSeekEnharmonic: false,
+  suggestEnharmonic: false,
 }
 
 const listeners = new Set<Listener>()
@@ -35,8 +41,10 @@ export function getStripActionsSnapshot(): StripActionsSnapshot {
 export function getStripActionsServerSnapshot(): StripActionsSnapshot {
   return {
     snapIndex: DEFAULT_SNAP,
+    tonicModeId: DEFAULT_TONIC_MODE,
     goTo: null,
     canSeekEnharmonic: false,
+    suggestEnharmonic: false,
   }
 }
 
@@ -47,11 +55,18 @@ export function subscribeStripActions(listener: Listener): () => void {
   }
 }
 
-export function publishStripActions(snapIndex: number, goTo: StripGoTo | null) {
+export function publishStripActions(
+  snapIndex: number,
+  tonicModeId: ModeId,
+  goTo: StripGoTo | null,
+) {
+  const canSeek = goTo !== null && enharmonicSnap(snapIndex) !== null
   snapshot = {
     snapIndex,
+    tonicModeId,
     goTo,
-    canSeekEnharmonic: goTo !== null && enharmonicSnap(snapIndex) !== null,
+    canSeekEnharmonic: canSeek,
+    suggestEnharmonic: canSeek && fieldHasDoubleAccidental(snapIndex),
   }
   emit()
 }

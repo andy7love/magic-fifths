@@ -37,6 +37,12 @@ declare global {
       setTonicModeId: (modeId: string) => void
       getGeometry: () => { columnWidth: number; offset: number; snapIndex: number }
       getAlignmentDeltas: () => number[]
+      getLastPlayback: () => {
+        chords: string[][]
+        style: string
+        arpeggioSeconds: number
+        events: { notes: string[]; time: number; duration: number }[]
+      } | null
     }
   }
 }

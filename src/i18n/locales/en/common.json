@@ -1,7 +1,6 @@
 {
   "app": {
     "name": "Magic Fifths",
-    "tagline": "The seven modes of the major scale, on one sliding strip.",
     "version": "Magic Fifths v.{{version}}"
   },
   "loading": "Loading\u2026",
@@ -31,16 +30,26 @@
     "open": "Fifths Theory"
   },
   "advanced": {
-    "toggle": "Advanced chords"
+    "toggle": "Extended chords"
   },
   "display": {
     "triads": "Triads",
     "tetrads": "Tetrads",
-    "grades": "Degrees"
+    "grades": "Degrees",
+    "gradeNames": "Degrees names"
+  },
+  "notation": {
+    "letter": "Letter notation"
+  },
+  "playback": {
+    "arpeggiate": "Arpeggiate chords",
+    "speed": "Arpeggio speed"
   },
   "enharmonic": {
     "label": "Enharmonic field",
-    "menu": "Enharmonic field"
+    "menu": "Enharmonic field",
+    "suggest": "Double flat or double sharp in this field",
+    "switched": "{{before}} is the enharmonic field of {{after}}"
   },
   "share": {
     "open": "Share",

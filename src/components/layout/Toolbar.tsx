@@ -7,14 +7,16 @@ import { FifthsTheoryDialog } from '@/components/dialogs/FifthsTheoryDialog'
 import { InstallButton } from '@/components/InstallButton'
 import {
   DegreeIcon,
-  EnharmonicIcon,
+  EnharmonicMark,
   NoteCountIcon,
+  enharmonicSuggestClass,
 } from '@/components/layout/ChromeIcons'
 import { ShareButton } from '@/components/ShareButton'
 import { Button } from '@/components/ui/button'
 import { SidebarTrigger, useSidebar } from '@/components/ui/sidebar'
 import { useSettings } from '@/context/settings'
-import { useStripActions } from '@/hooks/use-strip-actions'
+import { useEnharmonicSeek } from '@/hooks/use-enharmonic-seek'
+import { cn } from '@/lib/utils'
 
 /**
  * Collapsed drawer rail. Hidden while the sidebar is open so the open drawer
@@ -32,7 +34,7 @@ export function Toolbar() {
     showGrades,
     setShowGrades,
   } = useSettings()
-  const { canSeekEnharmonic, seekEnharmonic } = useStripActions()
+  const { canSeekEnharmonic, suggestEnharmonic, seek } = useEnharmonicSeek()
   const { open, openMobile, isMobile } = useSidebar()
   const [howtoOpen, setHowtoOpen] = useState(false)
   const [theoryOpen, setTheoryOpen] = useState(false)
@@ -82,19 +84,6 @@ export function Toolbar() {
           </Button>
           <Button
             type="button"
-            variant="ghost"
-            size="icon"
-            data-testid="enharmonic-seek"
-            aria-label={t('enharmonic.label')}
-            disabled={!canSeekEnharmonic}
-            onClick={() => {
-              seekEnharmonic()
-            }}
-          >
-            <EnharmonicIcon />
-          </Button>
-          <Button
-            type="button"
             variant={advancedChords ? 'secondary' : 'ghost'}
             size="icon"
             data-testid="advanced-toggle"
@@ -103,6 +92,25 @@ export function Toolbar() {
             onClick={() => setAdvancedChords(!advancedChords)}
           >
             <Music2 className="size-4" />
+          </Button>
+          <Button
+            type="button"
+            variant="ghost"
+            size="icon"
+            className={cn(suggestEnharmonic && enharmonicSuggestClass)}
+            data-testid="enharmonic-seek"
+            data-suggest={suggestEnharmonic ? 'true' : 'false'}
+            aria-label={
+              suggestEnharmonic
+                ? `${t('enharmonic.label')}. ${t('enharmonic.suggest')}`
+                : t('enharmonic.label')
+            }
+            disabled={!canSeekEnharmonic}
+            onClick={() => {
+              seek()
+            }}
+          >
+            <EnharmonicMark suggest={suggestEnharmonic} />
           </Button>
           <ShareButton variant="icon" />
           <Button

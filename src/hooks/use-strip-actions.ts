@@ -20,7 +20,9 @@ export function useStripActions() {
 
   return {
     snapIndex: snapshot.snapIndex,
+    tonicModeId: snapshot.tonicModeId,
     canSeekEnharmonic: snapshot.canSeekEnharmonic,
+    suggestEnharmonic: snapshot.suggestEnharmonic,
     seekEnharmonic: seekEnharmonicField,
   }
 }

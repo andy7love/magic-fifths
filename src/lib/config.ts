@@ -47,6 +47,13 @@ export const SNAP_DURATION_MS = { min: 180, max: 420 } as const
 /** Window over which pointer velocity is averaged. Raw deltas are too jittery. */
 export const VELOCITY_SAMPLE_MS = 80
 
+/**
+ * Left-screen-edge zone that opens the sidebar on a rightward swipe.
+ * Shared with the strip engine: a drag that begins here must not scroll the
+ * paper, and a drag that begins further in must not open the sidebar.
+ */
+export const SIDEBAR_EDGE_SWIPE_PX = 36
+
 /** Query-string parameter carrying the shared position, as a musical key. */
 export const SHARE_PARAM = 'key'
 
@@ -56,3 +63,26 @@ export const SHARE_PARAM = 'key'
  * short and mean C major.
  */
 export const SHARE_MODE_PARAM = 'mode'
+
+/**
+ * Preferred scientific octave for a chord or scale root, used when two
+ * octaves sit equally close to `VOICE_CENTER_MIDI`.
+ */
+export const VOICE_ROOT_OCTAVE = 4
+
+/**
+ * MIDI pitch a played chord or scale is centered on. The root's octave is
+ * chosen so the voicing's midpoint lands nearest this note. F#4 sits halfway
+ * between the C3 and C6 salamander samples.
+ */
+export const VOICE_CENTER_MIDI = 66
+
+/** How long a blocked chord rings, and the silence before the next one. */
+export const CHORD_HOLD_SEC = 1.5
+export const CHORD_GAP_SEC = 0.25
+
+/** Each arpeggio note rings at least this long, so the piano overlaps. */
+export const ARPEGGIO_HOLD_SEC = 1.1
+
+/** Gap between arpeggio notes, in milliseconds. Right on the slider is faster. */
+export const ARPEGGIO_MS = { min: 40, max: 420, default: 120, step: 10 } as const

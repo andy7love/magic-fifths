@@ -19,6 +19,10 @@ export const STORAGE_KEYS = {
   showTriads: 'showTriads',
   showTetrads: 'showTetrads',
   showGrades: 'showGrades',
+  showGradeNames: 'showGradeNames',
+  notation: 'notation',
+  playbackStyle: 'playbackStyle',
+  arpeggioMs: 'arpeggioMs',
 } as const
 
 export type StorageKey = (typeof STORAGE_KEYS)[keyof typeof STORAGE_KEYS]

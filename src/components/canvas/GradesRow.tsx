@@ -1,12 +1,14 @@
 import { useTranslation } from 'react-i18next'
 
+import { GradeMarks } from '@/components/canvas/GradeMarks'
 import { gradesForTonic, type ModeId } from '@/lib/music/modes'
 
 interface GradesRowProps {
   tonicModeId: ModeId
+  showNames: boolean
 }
 
-export function GradesRow({ tonicModeId }: GradesRowProps) {
+export function GradesRow({ tonicModeId, showNames }: GradesRowProps) {
   const { t } = useTranslation('music')
   const grades = gradesForTonic(tonicModeId)
 
@@ -24,7 +26,7 @@ export function GradesRow({ tonicModeId }: GradesRowProps) {
           data-grade={grade}
           data-tonic-grade={grade === 1 ? 'true' : 'false'}
         >
-          <span>{grade}</span>
+          <GradeMarks grade={grade} tonicModeId={tonicModeId} showName={showNames} />
         </div>
       ))}
     </>

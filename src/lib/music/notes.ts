@@ -103,3 +103,11 @@ export function noteAt(index: number): ChainNote {
   if (!note) throw new RangeError(`Chain index out of range: ${index}`)
   return note
 }
+
+/**
+ * MIDI number of this spelling at a scientific-pitch octave.
+ * The octave belongs to the letter, so `Cbb4` is 58, not the Bb in octave 4.
+ */
+export function spelledMidi(note: ChainNote, octave: number): number {
+  return (octave + 1) * 12 + NATURAL_SEMITONE[note.letter] + note.accidental
+}

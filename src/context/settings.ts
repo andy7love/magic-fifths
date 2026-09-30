@@ -1,9 +1,19 @@
 import { createContext, useContext } from 'react'
 
+import type { PlaybackStyle } from '@/lib/audio/schedule'
 import type { LanguageCode } from '@/i18n'
+
+export type { PlaybackStyle }
 
 export type ThemePreference = 'light' | 'dark' | 'system'
 export type ResolvedTheme = 'light' | 'dark'
+
+/** Which name system the paper strip prints. One at a time, never both. */
+export type NoteNotation = 'solfege' | 'letter'
+
+export function isNoteNotation(value: unknown): value is NoteNotation {
+  return value === 'solfege' || value === 'letter'
+}
 
 export interface SettingsValue {
   theme: ThemePreference
@@ -26,6 +36,18 @@ export interface SettingsValue {
   /** Show the scale-degree row above the strip. */
   showGrades: boolean
   setShowGrades: (show: boolean) => void
+  /** Show Tonic, Supertonic, … under each degree number. */
+  showGradeNames: boolean
+  setShowGradeNames: (show: boolean) => void
+  /** Fixed-do solfège, or letter names when the switch is on. */
+  notation: NoteNotation
+  setNotation: (notation: NoteNotation) => void
+  /** Blocked chord, or notes one after another. */
+  playbackStyle: PlaybackStyle
+  setPlaybackStyle: (style: PlaybackStyle) => void
+  /** Gap between arpeggio notes, in milliseconds. */
+  arpeggioMs: number
+  setArpeggioMs: (ms: number) => void
 }
 
 export const SettingsContext = createContext<SettingsValue | null>(null)

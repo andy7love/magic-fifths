@@ -7,9 +7,11 @@ import { ModesHeader } from '@/components/canvas/ModesHeader'
 import { PortraitBoard } from '@/components/canvas/PortraitBoard'
 import { QualityRows } from '@/components/canvas/QualityRows'
 import { useSettings } from '@/context/settings'
+import { useColumnPlayback } from '@/hooks/use-column-playback'
 import { useColumnWidth } from '@/hooks/use-column-width'
 import { useFifthsStrip } from '@/hooks/use-fifths-strip'
 import { usePortraitLayout } from '@/hooks/use-viewport-gate'
+import { getLastPlayback } from '@/lib/audio/piano'
 import { getAlignmentDeltas } from '@/lib/alignment'
 import { CANVAS_MAX_WIDTH, SHARE_MODE_PARAM, SHARE_PARAM, TOOLBAR_RAIL_WIDTH } from '@/lib/config'
 import {
@@ -37,6 +39,7 @@ interface MfBridge {
   setTonicModeId: (modeId: ModeId) => void
   getGeometry: () => { columnWidth: number; offset: number; snapIndex: number }
   getAlignmentDeltas: () => number[]
+  getLastPlayback: () => ReturnType<typeof getLastPlayback>
 }
 
 declare global {
@@ -80,7 +83,8 @@ function replaceShareParams(snapIndex: number, tonicModeId: ModeId) {
 }
 
 export function Canvas() {
-  const { advancedChords, showTriads, showTetrads, showGrades } = useSettings()
+  const { advancedChords, showTriads, showTetrads, showGrades, showGradeNames, notation } =
+    useSettings()
   const portrait = usePortraitLayout()
   // Landscape scrolls horizontally off the mode-column width; portrait flips the
   // board and scrolls vertically off the mode-row height.
@@ -114,6 +118,8 @@ export function Canvas() {
     onSettle,
   })
 
+  const playVoice = useColumnPlayback(snapIndex)
+
   const selectTonicMode = useCallback((modeId: ModeId) => {
     setTonicModeId(modeId)
     writeSetting(STORAGE_KEYS.tonicMode, modeId)
@@ -128,11 +134,11 @@ export function Canvas() {
   }, [snapIndex, tonicModeId])
 
   useEffect(() => {
-    publishStripActions(snapIndex, goTo)
+    publishStripActions(snapIndex, tonicModeId, goTo)
     return () => {
-      publishStripActions(snapIndex, null)
+      publishStripActions(snapIndex, tonicModeId, null)
     }
-  }, [snapIndex, goTo])
+  }, [snapIndex, tonicModeId, goTo])
 
   useEffect(() => {
     if (!(import.meta.env.DEV || import.meta.env.VITE_E2E)) return
@@ -148,6 +154,7 @@ export function Canvas() {
         snapIndex,
       }),
       getAlignmentDeltas: () => getAlignmentDeltas(),
+      getLastPlayback: () => getLastPlayback(),
     }
 
     return () => {
@@ -207,6 +214,8 @@ export function Canvas() {
         data-show-triads={showTriads ? 'true' : 'false'}
         data-show-tetrads={showTetrads ? 'true' : 'false'}
         data-show-grades={showGrades ? 'true' : 'false'}
+        data-show-grade-names={showGradeNames ? 'true' : 'false'}
+        data-notation={notation}
       >
         <div className="mf-board" aria-hidden="true" />
         {portrait ? (
@@ -214,6 +223,7 @@ export function Canvas() {
             measureRef={measureRef}
             tonicModeId={tonicModeId}
             onSelectTonicMode={selectTonicMode}
+            onPlayVoice={playVoice}
             snapIndex={snapIndex}
             settled={settled}
             trackRef={trackRef}
@@ -229,8 +239,11 @@ export function Canvas() {
               measureRef={measureRef}
               tonicModeId={tonicModeId}
               onSelectTonicMode={selectTonicMode}
+              onPlayVoice={playVoice}
             />
-            {showGrades ? <GradesRow tonicModeId={tonicModeId} /> : null}
+            {showGrades ? (
+              <GradesRow tonicModeId={tonicModeId} showNames={showGradeNames} />
+            ) : null}
             {/* Empty gutter cell: covers strip bleed under the label column so
                 the paper appears to thread through the board, not over the
                 labels. */}
@@ -247,7 +260,7 @@ export function Canvas() {
               onPointerUp={onPointerUp}
               onKeyDown={onKeyDown}
             />
-            <QualityRows />
+            <QualityRows onPlayVoice={playVoice} />
           </>
         )}
       </div>

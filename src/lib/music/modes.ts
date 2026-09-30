@@ -93,3 +93,43 @@ export function gradesForTonic(tonicModeId: ModeId): readonly number[] {
   const tonicDegree = MODE_BY_ID[tonicModeId].degree
   return MODES.map((mode) => gradeRelativeTo(mode.degree, tonicDegree))
 }
+
+/** Semitone of each major-scale degree, used to tell a leading tone from a subtonic. */
+const MAJOR_DEGREE_SEMITONE = [0, 2, 4, 5, 7, 9, 11] as const
+
+export type DegreeNameId =
+  | 'tonic'
+  | 'supertonic'
+  | 'mediant'
+  | 'subdominant'
+  | 'dominant'
+  | 'submediant'
+  | 'leading'
+  | 'subtonic'
+
+const DEGREE_NAME_BY_NUMBER: Record<number, DegreeNameId> = {
+  1: 'tonic',
+  2: 'supertonic',
+  3: 'mediant',
+  4: 'subdominant',
+  5: 'dominant',
+  6: 'submediant',
+}
+
+/**
+ * True when degree 7 of this mode sits a half step under the tonic.
+ * A whole step under the tonic is the subtonic (natural minor, Mixolydian, …).
+ */
+export function isLeadingTone(tonicModeId: ModeId): boolean {
+  const tonicDegree = MODE_BY_ID[tonicModeId].degree
+  const below = tonicDegree === 1 ? 7 : tonicDegree - 1
+  const interval =
+    (MAJOR_DEGREE_SEMITONE[tonicDegree - 1] - MAJOR_DEGREE_SEMITONE[below - 1] + 12) % 12
+  return interval === 1
+}
+
+/** Functional name of a scale degree (1..7) for the mode currently treated as home. */
+export function degreeNameId(grade: number, tonicModeId: ModeId): DegreeNameId {
+  if (grade === 7) return isLeadingTone(tonicModeId) ? 'leading' : 'subtonic'
+  return DEGREE_NAME_BY_NUMBER[grade] ?? 'tonic'
+}

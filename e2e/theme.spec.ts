@@ -9,6 +9,7 @@ test.describe('theme', () => {
 
     await page.getByTestId('sidebar-trigger').click()
     const toggle = page.getByTestId('theme-toggle')
+    await toggle.scrollIntoViewIfNeeded()
 
     // Force light first so the assertion is deterministic regardless of OS preference.
     if (await toggle.isChecked()) {

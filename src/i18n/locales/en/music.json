@@ -15,8 +15,12 @@
     "locrian": "Locrian"
   },
   "modeSelect": {
-    "label": "Set {{mode}} as tonic",
-    "withAlias": "Set {{mode}} ({{alias}}) as tonic"
+    "label": "Set {{mode}} as tonic and play the scale",
+    "withAlias": "Set {{mode}} ({{alias}}) as tonic and play the scale"
+  },
+  "play": {
+    "triad": "Play {{mode}} triad",
+    "tetrad": "Play {{mode}} chord"
   },
   "triads": {
     "major": "M",
@@ -44,6 +48,16 @@
     "la": "La",
     "mi": "Mi",
     "si": "Si"
+  },
+  "degreeNames": {
+    "tonic": "Tonic",
+    "supertonic": "Supertonic",
+    "mediant": "Mediant",
+    "subdominant": "Subdominant",
+    "dominant": "Dominant",
+    "submediant": "Submediant",
+    "leading": "Leading tone",
+    "subtonic": "Subtonic"
   },
   "scales": {
     "major": "Major",
